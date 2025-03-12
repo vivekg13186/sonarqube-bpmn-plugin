@@ -1,0 +1,119 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>sonarqube-bpmn-plugin</groupId>
+  <artifactId>sonar-bpmn-plugin</artifactId>
+  <version>1.0</version>
+
+  <name>Example Plugin for SonarQube Server 10.x</name>
+  <description>Example of Plugin for SonarQube Server: Foo Language, FooLint, Custom Metrics and MeasureComputers</description>
+
+
+  <packaging>sonar-plugin</packaging>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <sonar.apiVersion>10.11.0.2468</sonar.apiVersion>
+    <sonar.testingHarnessVersion>10.7.0.96327</sonar.testingHarnessVersion>
+    <jdk.min.version>17</jdk.min.version>
+    <sonar.sources>src/main/java,src/main/js</sonar.sources>
+  </properties>
+  <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.dom4j/dom4j -->
+    <dependency>
+      <groupId>org.dom4j</groupId>
+      <artifactId>dom4j</artifactId>
+      <version>2.1.4</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/jaxen/jaxen -->
+    <dependency>
+      <groupId>jaxen</groupId>
+      <artifactId>jaxen</artifactId>
+      <version>1.1.6</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.groovy/groovy -->
+    <dependency>
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy</artifactId>
+      <version>4.0.26</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.groovy/groovy-xml -->
+    <dependency>
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy-xml</artifactId>
+      <version>4.0.26</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.sonarsource.api.plugin</groupId>
+      <artifactId>sonar-plugin-api</artifactId>
+      <version>${sonar.apiVersion}</version>
+      <scope>provided</scope>
+    </dependency>
+    <!-- XML Parsing (Apache Xerces for line number support) -->
+    <dependency>
+      <groupId>xerces</groupId>
+      <artifactId>xercesImpl</artifactId>
+      <version>2.12.2</version>
+    </dependency>
+
+    <!-- XML Parsing API -->
+    <dependency>
+      <groupId>xml-apis</groupId>
+      <artifactId>xml-apis</artifactId>
+      <version>1.4.01</version>
+    </dependency>
+
+    <!-- Logging (SLF4J for better debugging) -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.36</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>1.7.36</version>
+    </dependency>
+
+    <!-- Unit Testing (JUnit) -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jsoup</groupId>
+      <artifactId>jsoup</artifactId>
+      <version>1.10.2</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
+        <artifactId>sonar-packaging-maven-plugin</artifactId>
+        <version>1.23.0.740</version>
+        <extensions>true</extensions>
+        <configuration>
+          <pluginKey>bpmn</pluginKey>
+          <pluginClass>sq.bpmn.plugin.BpmnPlugin</pluginClass>
+          <!-- Optional, only if you are sure to support older versions of the plugin API than the one you are compiling against -->
+          <pluginApiMinVersion>9.9</pluginApiMinVersion>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <release>11</release>
+        </configuration>
+      </plugin>
+
+    </plugins>
+  </build>
+</project>
