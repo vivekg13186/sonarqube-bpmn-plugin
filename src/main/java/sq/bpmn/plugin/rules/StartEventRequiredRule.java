@@ -15,20 +15,7 @@ public class StartEventRequiredRule implements BpmnRule {
 
 
     @Override
-    public void execute(SensorContext sensorContext, Document document, InputFile file, RuleKey ruleKey)    {
-        try{
-            if(!validate(document)){
-                NewIssue newIssue = sensorContext.newIssue();
-                newIssue
-                        .forRule(ruleKey)
-                        .at(newIssue.newLocation()
-                                .on(file)
-                                .at(file.selectLine(1)))
-                        .save();
-            }
-        } catch (Exception ignored) {
-            ;
-        }
+    public void execute(SensorContext sensorContext, Document document, InputFile file, RuleKey ruleKey,IssueMaker issueMaker)    {
 
 
     }

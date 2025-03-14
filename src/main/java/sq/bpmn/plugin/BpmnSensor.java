@@ -3,6 +3,7 @@ package sq.bpmn.plugin;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.parser.Parser;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.batch.sensor.SensorContext;
@@ -10,6 +11,7 @@ import org.sonar.api.batch.sensor.SensorDescriptor;
 
 import sq.bpmn.plugin.languages.BpmnLanguage;
 import sq.bpmn.plugin.rules.BpmnRule;
+import sq.bpmn.plugin.rules.PluginIssueMaker;
 import sq.bpmn.plugin.rules.SingleBlankStartEventRule;
 import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.rule.CheckFactory;
@@ -38,8 +40,9 @@ public class BpmnSensor implements Sensor {
         FilePredicates p = context.fileSystem().predicates();
         for (InputFile inputFile : context.fileSystem().inputFiles(p.hasLanguages(BpmnLanguage.KEY))) {
             try{
-                Document document = Jsoup.parse(inputFile.contents());
-                checks.all().forEach(check -> check.execute(context, document,inputFile, checks.ruleKey(check)));
+                Document document = Jsoup.parse(inputFile.contents(), Parser.xmlParser().setTrackPosition(true));
+                PluginIssueMaker issueMaker = new PluginIssueMaker();
+                checks.all().forEach(check -> check.execute(context, document,inputFile, checks.ruleKey(check),issueMaker));
             } catch (Exception ignored) {
                 ;
             }

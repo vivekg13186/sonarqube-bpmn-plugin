@@ -3,6 +3,7 @@ package sq.bpmn.plugin.rules;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.jsoup.select.Evaluator;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.issue.NewIssue;
@@ -15,16 +16,17 @@ public class SingleBlankStartEventRule implements BpmnRule {
 
 
     @Override
-    public void execute(SensorContext sensorContext, Document  document,InputFile file, RuleKey ruleKey)    {
+    public void execute(SensorContext sensorContext, Document  document, InputFile file, RuleKey ruleKey, IssueMaker issueMaker)    {
         try{
-            if(!validate(document)){
-                NewIssue newIssue = sensorContext.newIssue();
-                newIssue
-                        .forRule(ruleKey)
-                        .at(newIssue.newLocation()
-                                .on(file)
-                                .at(file.selectLine(1)))
-                        .save();
+            Elements elements = document.select(Helper.startEvent);
+            int blankStarts=0;
+            for (Element element : elements) {
+                if(element.select(Helper.eventDefinitions).isEmpty()){
+                    blankStarts++;
+                }
+            }
+            if(blankStarts > 1){
+                issueMaker.newIssue(elements.last(),"sada",file,sensorContext,ruleKey);
             }
         } catch (Exception ignored) {
              ;
@@ -33,14 +35,5 @@ public class SingleBlankStartEventRule implements BpmnRule {
 
     }
 
-    public static boolean validate(Document document){
-        Elements elements = document.select("bpmn|startEvent");
-        int blankStarts=0;
-        for (Element element : elements) {
-            if(element.select("bpmn|eventDefinitions").isEmpty()){
-                blankStarts++;
-            }
-        }
-        return blankStarts <= 1;
-    }
+
 }

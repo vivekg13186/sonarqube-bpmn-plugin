@@ -2,35 +2,44 @@ package sq.bpmn.plugin;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import org.jsoup.parser.Parser;
 import org.junit.Test;
-import sq.bpmn.plugin.rules.SingleBlankStartEventRule;
-import sq.bpmn.plugin.rules.StartEventRequiredRule;
+import sq.bpmn.plugin.rules.*;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class RuleTest {
 
 
-    @Test
-    public void singleBlankStartEventTest() throws IOException {
-        String file ="C:\\Users\\vivek\\Developer\\bpmnlint\\docs\\rules\\examples\\single-blank-start-event-incorrect.bpmn";
-        Document doc = Jsoup.parse(new File(file), "utf-8");
-        assert (!SingleBlankStartEventRule.validate(doc));
-        file ="C:\\Users\\vivek\\Developer\\bpmnlint\\docs\\rules\\examples\\single-blank-start-event-correct.bpmn";
-        doc = Jsoup.parse(new File(file), "utf-8");
-        assert (SingleBlankStartEventRule.validate(doc));
+    private String root = "C:\\Users\\Vivek\\Developer\\bpmnlint\\docs\\rules\\examples\\";
+    private Document getDocument(String filename){
+        try{
+            BufferedReader reader = new BufferedReader(new FileReader(root+filename));
+            StringBuilder text  = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                text.append(line);
+            }
+            return Jsoup.parse(text.toString(), Parser.xmlParser().setTrackPosition(true));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  null;
+
     }
 
     @Test
-    public void startEventRequiredTest() throws IOException {
-        String file ="C:\\Users\\vivek\\Developer\\bpmnlint\\docs\\rules\\examples\\start-event-required-incorrect.bpmn";
-        Document doc = Jsoup.parse(new File(file), "utf-8");
-        assert (!StartEventRequiredRule.validate(doc));
-        file ="C:\\Users\\vivek\\Developer\\bpmnlint\\docs\\rules\\examples\\start-event-required-correct.bpmn";
-        doc = Jsoup.parse(new File(file), "utf-8");
-        assert (StartEventRequiredRule.validate(doc));
+    public void adHocSubProcessEventsTest() throws IOException {
+        TestIssueMaker testIssueMaker = new TestIssueMaker();
+
+        AdHocSubProcessEvents adHocSubProcessEvents = new AdHocSubProcessEvents();
+        adHocSubProcessEvents.execute(null,getDocument("ad-hoc-sub-process-incorrect.bpmn"),null, null,testIssueMaker);
+        assert (testIssueMaker.failed);
+        testIssueMaker.failed=false;
+        adHocSubProcessEvents.execute(null,getDocument("ad-hoc-sub-process-correct.bpmn"),null, null,testIssueMaker);
+        assert (!testIssueMaker.failed);
     }
+
+
 }
