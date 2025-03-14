@@ -10,13 +10,10 @@ import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.SensorDescriptor;
 
 import sq.bpmn.plugin.languages.BpmnLanguage;
-import sq.bpmn.plugin.rules.BpmnRule;
-import sq.bpmn.plugin.rules.PluginIssueMaker;
-import sq.bpmn.plugin.rules.SingleBlankStartEventRule;
+import sq.bpmn.plugin.rules.*;
 import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.rule.CheckFactory;
 import org.sonar.api.batch.rule.Checks;
-import sq.bpmn.plugin.rules.StartEventRequiredRule;
 
 public class BpmnSensor implements Sensor {
 
@@ -24,6 +21,9 @@ public class BpmnSensor implements Sensor {
 
     public BpmnSensor(CheckFactory checkFactory) {
         checks = checkFactory.create(BpmnRulesDefinition.REPO_KEY);
+        checks.addAnnotatedChecks(AdHocSubProcessEvents.class);
+        checks.addAnnotatedChecks(ConditionalFlow.class);
+        checks.addAnnotatedChecks(EndEventRequired.class);
         checks.addAnnotatedChecks(SingleBlankStartEventRule.class);
         checks.addAnnotatedChecks(StartEventRequiredRule.class);
     }
@@ -44,7 +44,7 @@ public class BpmnSensor implements Sensor {
                 PluginIssueMaker issueMaker = new PluginIssueMaker();
                 checks.all().forEach(check -> check.execute(context, document,inputFile, checks.ruleKey(check),issueMaker));
             } catch (Exception ignored) {
-                ;
+                
             }
 
         }

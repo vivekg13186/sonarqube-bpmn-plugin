@@ -5,8 +5,7 @@ package sq.bpmn.plugin.languages;
 
 import org.sonar.api.server.profile.BuiltInQualityProfilesDefinition;
 import sq.bpmn.plugin.BpmnRulesDefinition;
-import sq.bpmn.plugin.Values;
-import sq.bpmn.plugin.rules.SingleBlankStartEventRule;
+import sq.bpmn.plugin.rules.AdHocSubProcessEvents;
 import sq.bpmn.plugin.rules.StartEventRequiredRule;
 
 
@@ -20,8 +19,9 @@ public final class BpmnQualityProfile implements BuiltInQualityProfilesDefinitio
         NewBuiltInQualityProfile profile = context.createBuiltInQualityProfile("BPMN Rules", BpmnLanguage.KEY);
         profile.setDefault(true);
 
-        NewBuiltInActiveRule rule1 = profile.activateRule(BpmnRulesDefinition.REPO_KEY,SingleBlankStartEventRule.RULE_KEY);
-        rule1.overrideSeverity("BLOCKER");
+
+        NewBuiltInActiveRule adhocSubProcessEventRule = profile.activateRule(BpmnRulesDefinition.REPO_KEY, AdHocSubProcessEvents.RULE_KEY);
+        adhocSubProcessEventRule.overrideSeverity("BLOCKER");
 
 
         NewBuiltInActiveRule rule2 = profile.activateRule(BpmnRulesDefinition.REPO_KEY, StartEventRequiredRule.RULE_KEY);

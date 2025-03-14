@@ -3,10 +3,7 @@ package sq.bpmn.plugin;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinitionAnnotationLoader;
 import sq.bpmn.plugin.languages.BpmnLanguage;
-import sq.bpmn.plugin.rules.SingleBlankStartEventRule;
-import sq.bpmn.plugin.rules.StartEventRequiredRule;
-
-import static sq.bpmn.plugin.Values.PLUGIN_REPO;
+import sq.bpmn.plugin.rules.*;
 
 public class BpmnRulesDefinition implements RulesDefinition {
     static final String KEY = "bpmn";
@@ -19,7 +16,9 @@ public class BpmnRulesDefinition implements RulesDefinition {
 
         RulesDefinitionAnnotationLoader rulesDefinitionAnnotationLoader = new RulesDefinitionAnnotationLoader();
         rulesDefinitionAnnotationLoader.load(repository, SingleBlankStartEventRule.class, StartEventRequiredRule.class);
-
+        rulesDefinitionAnnotationLoader.load(repository,AdHocSubProcessEvents.class);
+        rulesDefinitionAnnotationLoader.load(repository, ConditionalFlow.class);
+        rulesDefinitionAnnotationLoader.load(repository, EndEventRequired.class);
         repository.done();
     }
 }
