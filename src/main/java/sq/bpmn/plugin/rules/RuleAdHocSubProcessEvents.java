@@ -8,11 +8,11 @@ import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.check.Rule;
 
-@Rule(key = AdHocSubProcessEvents.RULE_KEY, name = "Ensure that an Ad-Hoc Sub-Process is valid according to the BPMN specification", description = "Ensure that an Ad-Hoc Sub-Process is valid according to the BPMN specification:\n" +
+@Rule(key = RuleAdHocSubProcessEvents.RULE_KEY, name = "Ensure that an Ad-Hoc Sub-Process is valid according to the BPMN specification", description = "Ensure that an Ad-Hoc Sub-Process is valid according to the BPMN specification:\n" +
         "\n" +
         "Must not contain start or end events.\n" +
         "Every intermediate event must have an outgoing sequence flow.")
-public class AdHocSubProcessEvents implements BpmnRule{
+public class RuleAdHocSubProcessEvents implements BpmnRule{
 
     public static final String RULE_KEY = "ad-hoc-sub-process-start-event";
 

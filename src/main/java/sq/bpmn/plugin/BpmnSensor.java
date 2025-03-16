@@ -21,11 +21,12 @@ public class BpmnSensor implements Sensor {
 
     public BpmnSensor(CheckFactory checkFactory) {
         checks = checkFactory.create(BpmnRulesDefinition.REPO_KEY);
-        checks.addAnnotatedChecks(AdHocSubProcessEvents.class);
+        checks.addAnnotatedChecks(RuleAdHocSubProcessEvents.class);
         checks.addAnnotatedChecks(ConditionalFlow.class);
-        checks.addAnnotatedChecks(EndEventRequired.class);
-        checks.addAnnotatedChecks(SingleBlankStartEventRule.class);
-        checks.addAnnotatedChecks(StartEventRequiredRule.class);
+        checks.addAnnotatedChecks(RuleEndEventRequired.class);
+        checks.addAnnotatedChecks(RuleEventSubProcessTypedStartEvent.class);
+        checks.addAnnotatedChecks(RuleSingleBlankStartEvent.class);
+        checks.addAnnotatedChecks(RuleStartEventRequired.class);
     }
 
     @Override
@@ -44,7 +45,7 @@ public class BpmnSensor implements Sensor {
                 PluginIssueMaker issueMaker = new PluginIssueMaker();
                 checks.all().forEach(check -> check.execute(context, document,inputFile, checks.ruleKey(check),issueMaker));
             } catch (Exception ignored) {
-                
+
             }
 
         }

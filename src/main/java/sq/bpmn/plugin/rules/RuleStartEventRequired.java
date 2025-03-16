@@ -5,12 +5,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.sensor.SensorContext;
-import org.sonar.api.batch.sensor.issue.NewIssue;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.check.Rule;
 
-@Rule(key = StartEventRequiredRule.RULE_KEY, name = "Start event required", description = " A rule that checks for the presence of a start event per scope.")
-public class StartEventRequiredRule implements BpmnRule {
+@Rule(key = RuleStartEventRequired.RULE_KEY, name = "Start event required", description = " A rule that checks for the presence of a start event per scope.")
+public class RuleStartEventRequired implements BpmnRule {
     public static final String RULE_KEY = "start-event-required";
 
 

@@ -34,11 +34,11 @@ public class RuleTest {
     public void adHocSubProcessEventsTest() {
         TestIssueMaker testIssueMaker = new TestIssueMaker();
 
-        AdHocSubProcessEvents adHocSubProcessEvents = new AdHocSubProcessEvents();
-        adHocSubProcessEvents.execute(null,getDocument("ad-hoc-sub-process-incorrect.bpmn"),null, null,testIssueMaker);
+        RuleAdHocSubProcessEvents ruleAdHocSubProcessEvents = new RuleAdHocSubProcessEvents();
+        ruleAdHocSubProcessEvents.execute(null,getDocument("ad-hoc-sub-process-incorrect.bpmn"),null, null,testIssueMaker);
         assert (testIssueMaker.failed);
         testIssueMaker.failed=false;
-        adHocSubProcessEvents.execute(null,getDocument("ad-hoc-sub-process-correct.bpmn"),null, null,testIssueMaker);
+        ruleAdHocSubProcessEvents.execute(null,getDocument("ad-hoc-sub-process-correct.bpmn"),null, null,testIssueMaker);
         assert (!testIssueMaker.failed);
     }
     @Test
@@ -57,11 +57,23 @@ public class RuleTest {
     public void endEventRequired() {
         TestIssueMaker testIssueMaker = new TestIssueMaker();
 
-        EndEventRequired test = new EndEventRequired();
+        RuleEndEventRequired test = new RuleEndEventRequired();
         test.execute(null, Objects.requireNonNull(getDocument("end-event-required-incorrect.bpmn")),null, null,testIssueMaker);
         assert (testIssueMaker.failed);
         testIssueMaker.failed=false;
         test.execute(null, Objects.requireNonNull(getDocument("end-event-required-correct.bpmn")),null, null,testIssueMaker);
+        assert (!testIssueMaker.failed);
+    }
+
+    @Test
+    public void eventSubProcessTypedStartEvent() {
+        TestIssueMaker testIssueMaker = new TestIssueMaker();
+
+        RuleEventSubProcessTypedStartEvent test = new RuleEventSubProcessTypedStartEvent();
+        test.execute(null, Objects.requireNonNull(getDocument("event-sub-process-typed-start-event-incorrect.bpmn")),null, null,testIssueMaker);
+        assert (testIssueMaker.failed);
+        testIssueMaker.failed=false;
+        test.execute(null, Objects.requireNonNull(getDocument("event-sub-process-typed-start-event-correct.bpmn")),null, null,testIssueMaker);
         assert (!testIssueMaker.failed);
     }
 

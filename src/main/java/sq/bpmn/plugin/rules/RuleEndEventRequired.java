@@ -8,9 +8,9 @@ import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.check.Rule;
 
-@Rule(key = EndEventRequired.RULE_KEY, name = "End Event Required", description = "Ensures that every process and sub-process has an end event. Explicitly modeling it improves the understandability of drawn process diagrams.")
+@Rule(key = RuleEndEventRequired.RULE_KEY, name = "End Event Required", description = "Ensures that every process and sub-process has an end event. Explicitly modeling it improves the understandability of drawn process diagrams.")
 
-public class EndEventRequired implements BpmnRule{
+public class RuleEndEventRequired implements BpmnRule{
     public static final String RULE_KEY = "end-event-required";
     @Override
     public void execute(SensorContext sensorContext, Document document, InputFile file, RuleKey ruleKey, IssueMaker issueMaker) {

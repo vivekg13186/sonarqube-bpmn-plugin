@@ -15,10 +15,11 @@ public class BpmnRulesDefinition implements RulesDefinition {
         NewRepository repository = context.createRepository(REPO_KEY, BpmnLanguage.KEY).setName(REPO_NAME);
 
         RulesDefinitionAnnotationLoader rulesDefinitionAnnotationLoader = new RulesDefinitionAnnotationLoader();
-        rulesDefinitionAnnotationLoader.load(repository, SingleBlankStartEventRule.class, StartEventRequiredRule.class);
-        rulesDefinitionAnnotationLoader.load(repository,AdHocSubProcessEvents.class);
+        rulesDefinitionAnnotationLoader.load(repository, RuleSingleBlankStartEvent.class, RuleStartEventRequired.class);
+        rulesDefinitionAnnotationLoader.load(repository, RuleAdHocSubProcessEvents.class);
         rulesDefinitionAnnotationLoader.load(repository, ConditionalFlow.class);
-        rulesDefinitionAnnotationLoader.load(repository, EndEventRequired.class);
+        rulesDefinitionAnnotationLoader.load(repository, RuleEndEventRequired.class);
+        rulesDefinitionAnnotationLoader.load(repository, RuleEventSubProcessTypedStartEvent.class);
         repository.done();
     }
 }

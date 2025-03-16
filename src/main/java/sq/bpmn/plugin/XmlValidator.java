@@ -7,7 +7,7 @@ import org.jsoup.select.Elements;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.issue.NewIssue;
 import org.sonar.api.rule.RuleKey;
-import sq.bpmn.plugin.rules.SingleBlankStartEventRule;
+import sq.bpmn.plugin.rules.RuleSingleBlankStartEvent;
 
 public class XmlValidator {
 
@@ -26,7 +26,7 @@ public class XmlValidator {
 
 
             if (!singleBlankStartEvent(doc)) {
-                createIssue( context, RuleKey.of(Values.PLUGIN_REPO, SingleBlankStartEventRule.RULE_KEY));
+                createIssue( context, RuleKey.of(Values.PLUGIN_REPO, RuleSingleBlankStartEvent.RULE_KEY));
             }
 
             if (!missingLabel(doc)) {
