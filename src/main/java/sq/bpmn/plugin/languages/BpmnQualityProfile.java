@@ -8,9 +8,6 @@ import sq.bpmn.plugin.BpmnRulesDefinition;
 import sq.bpmn.plugin.rules.*;
 
 
-/**
- * Default, BuiltIn Quality Profile for the projects having files of the language "foo"
- */
 public final class BpmnQualityProfile implements BuiltInQualityProfilesDefinition {
 
     private NewBuiltInQualityProfile profile;
@@ -27,9 +24,9 @@ public final class BpmnQualityProfile implements BuiltInQualityProfilesDefinitio
 
         addRuleToProfile( RuleSingleBlankStartEvent.RULE_KEY, BLOCKER);
         addRuleToProfile( RuleAdHocSubProcessEvents.RULE_KEY, BLOCKER);
-        addRuleToProfile(  ConditionalFlow.RULE_KEY, BLOCKER);
-        addRuleToProfile(  RuleEndEventRequired.RULE_KEY, BLOCKER);
-         addRuleToProfile( RuleEventSubProcessTypedStartEvent.RULE_KEY, BLOCKER);
+        addRuleToProfile( ConditionalFlow.RULE_KEY, BLOCKER);
+        addRuleToProfile( RuleEndEventRequired.RULE_KEY, BLOCKER);
+        addRuleToProfile( RuleEventSubProcessTypedStartEvent.RULE_KEY, BLOCKER);
         addRuleToProfile( RuleFakeJoins.RULE_KEY,MINOR);
 
 
