@@ -4,6 +4,9 @@
 
 
 ## How to install 
+- Copy **"sonar-bpmn-plugin-1.0.jar"** from **"dist"** folder
+- Paste the file in following "<sonar server path>/extensions/plugins"
+- Restart the server
 
 
 
