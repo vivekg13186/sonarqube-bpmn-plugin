@@ -5,8 +5,7 @@ package sq.bpmn.plugin.languages;
 
 import org.sonar.api.server.profile.BuiltInQualityProfilesDefinition;
 import sq.bpmn.plugin.BpmnRulesDefinition;
-import sq.bpmn.plugin.rules.RuleAdHocSubProcessEvents;
-import sq.bpmn.plugin.rules.RuleStartEventRequired;
+import sq.bpmn.plugin.rules.*;
 
 
 /**
@@ -14,23 +13,32 @@ import sq.bpmn.plugin.rules.RuleStartEventRequired;
  */
 public final class BpmnQualityProfile implements BuiltInQualityProfilesDefinition {
 
+    private NewBuiltInQualityProfile profile;
+    public static final String INFO = "INFO";
+    public static final String MINOR = "MINOR";
+    public static final String MAJOR = "MAJOR";
+    public static final String CRITICAL = "CRITICAL";
+    public static final String BLOCKER = "BLOCKER";
+
     @Override
     public void define(Context context) {
-        NewBuiltInQualityProfile profile = context.createBuiltInQualityProfile("BPMN Rules", BpmnLanguage.KEY);
+         profile = context.createBuiltInQualityProfile("BPMN Rules", BpmnLanguage.KEY);
         profile.setDefault(true);
 
-
-        NewBuiltInActiveRule adhocSubProcessEventRule = profile.activateRule(BpmnRulesDefinition.REPO_KEY, RuleAdHocSubProcessEvents.RULE_KEY);
-        adhocSubProcessEventRule.overrideSeverity("BLOCKER");
-
-
-        NewBuiltInActiveRule rule2 = profile.activateRule(BpmnRulesDefinition.REPO_KEY, RuleStartEventRequired.RULE_KEY);
-        rule2.overrideSeverity("BLOCKER");
-
+        addRuleToProfile( RuleSingleBlankStartEvent.RULE_KEY, BLOCKER);
+        addRuleToProfile( RuleAdHocSubProcessEvents.RULE_KEY, BLOCKER);
+        addRuleToProfile(  ConditionalFlow.RULE_KEY, BLOCKER);
+        addRuleToProfile(  RuleEndEventRequired.RULE_KEY, BLOCKER);
+         addRuleToProfile( RuleEventSubProcessTypedStartEvent.RULE_KEY, BLOCKER);
+        addRuleToProfile( RuleFakeJoins.RULE_KEY,MINOR);
 
 
 
         profile.done();
     }
 
+    private void addRuleToProfile(String ruleKey,String severity){
+        NewBuiltInActiveRule rule = profile.activateRule(BpmnRulesDefinition.REPO_KEY, ruleKey);
+        rule.overrideSeverity(severity);
+    }
 }

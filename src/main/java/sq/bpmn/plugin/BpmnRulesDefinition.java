@@ -20,6 +20,7 @@ public class BpmnRulesDefinition implements RulesDefinition {
         rulesDefinitionAnnotationLoader.load(repository, ConditionalFlow.class);
         rulesDefinitionAnnotationLoader.load(repository, RuleEndEventRequired.class);
         rulesDefinitionAnnotationLoader.load(repository, RuleEventSubProcessTypedStartEvent.class);
+        rulesDefinitionAnnotationLoader.load(repository, RuleFakeJoins.class);
         repository.done();
     }
 }

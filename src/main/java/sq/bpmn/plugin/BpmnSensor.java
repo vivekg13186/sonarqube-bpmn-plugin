@@ -25,6 +25,8 @@ public class BpmnSensor implements Sensor {
         checks.addAnnotatedChecks(ConditionalFlow.class);
         checks.addAnnotatedChecks(RuleEndEventRequired.class);
         checks.addAnnotatedChecks(RuleEventSubProcessTypedStartEvent.class);
+        checks.addAnnotatedChecks(RuleFakeJoins.class);
+
         checks.addAnnotatedChecks(RuleSingleBlankStartEvent.class);
         checks.addAnnotatedChecks(RuleStartEventRequired.class);
     }

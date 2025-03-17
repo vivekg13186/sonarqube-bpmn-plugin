@@ -76,6 +76,18 @@ public class RuleTest {
         test.execute(null, Objects.requireNonNull(getDocument("event-sub-process-typed-start-event-correct.bpmn")),null, null,testIssueMaker);
         assert (!testIssueMaker.failed);
     }
+    @Test
+    public void fakeJoints() {
+        TestIssueMaker testIssueMaker = new TestIssueMaker();
+
+        RuleFakeJoins test = new RuleFakeJoins();
+        test.execute(null, Objects.requireNonNull(getDocument("fake-join-incorrect.bpmn")),null, null,testIssueMaker);
+        assert (testIssueMaker.failed);
+        testIssueMaker.failed=false;
+        test.execute(null, Objects.requireNonNull(getDocument("fake-join-correct.bpmn")),null, null,testIssueMaker);
+        assert (!testIssueMaker.failed);
+    }
+
 
 
 }

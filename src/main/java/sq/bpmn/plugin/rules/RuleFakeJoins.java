@@ -17,15 +17,39 @@ public class RuleFakeJoins  implements BpmnRule{
     @Override
     public void execute(SensorContext sensorContext, Document document, InputFile file, RuleKey ruleKey, IssueMaker issueMaker)    {
         try{
-            Elements elements = document.select(Helper.startEvent);
-            int blankStarts=0;
-            for (Element element : elements) {
-                if(element.select(Helper.eventDefinitions).isEmpty()){
-                    blankStarts++;
+            String activitySelector = "*|adhocSubProcess," +
+                    "*|businessRuleTask," +
+                    "*|callActivity," +
+                    "*|manualTask," +
+                    "*|receiveTask," +
+                    "*|scriptTask," +
+                    "*|sendTask," +
+                    "*|serviceTask," +
+                    "*|subProcess," +
+                    "*|task," +
+                    "*|transaction," +
+                    "*|userTask";
+            Elements activities = document.select(activitySelector);
+
+            for (Element activity : activities) {
+                if(activity.select("*|incoming").size()>1){
+                    issueMaker.newIssue(activity,"Incoming flows do not join",file,sensorContext,ruleKey);
                 }
             }
-            if(blankStarts > 1){
-                issueMaker.newIssue(elements.last(),"sada",file,sensorContext,ruleKey);
+            String eventSelector = "*|boundaryEvent," +
+                    "*|catchEvent," +
+                    "*|endEvent," +
+                    "*|implicitThrowEvent," +
+                    "*|intermediateCatchEvent," +
+                    "*|intermediateThrowEvent," +
+                    "*|startEvent," +
+                    "*|throwEvent" ;
+            Elements events = document.select(eventSelector);
+
+            for (Element event : events) {
+                if(event.select("*|incoming").size()>1){
+                    issueMaker.newIssue(event,"Incoming flows do not join",file,sensorContext,ruleKey);
+                }
             }
         } catch (Exception ignored) {
             ;
