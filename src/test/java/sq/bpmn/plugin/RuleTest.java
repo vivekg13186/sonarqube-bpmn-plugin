@@ -89,5 +89,29 @@ public class RuleTest {
     }
 
 
+    @Test
+    public void noComplexJoints() {
+        TestIssueMaker testIssueMaker = new TestIssueMaker();
+
+        RuleNoComplexGateway test = new RuleNoComplexGateway();
+        test.execute(null, Objects.requireNonNull(getDocument("no-complex-gateway-incorrect.bpmn")),null, null,testIssueMaker);
+        assert (testIssueMaker.failed);
+        testIssueMaker.failed=false;
+        test.execute(null, Objects.requireNonNull(getDocument("no-complex-gateway-correct.bpmn")),null, null,testIssueMaker);
+        assert (!testIssueMaker.failed);
+    }
+
+    @Test
+    public void singleEventDef() {
+        TestIssueMaker testIssueMaker = new TestIssueMaker();
+
+        RuleSingleEventDefinition test = new RuleSingleEventDefinition();
+        test.execute(null, Objects.requireNonNull(getDocument("single-event-definition-incorrect.bpmn")),null, null,testIssueMaker);
+        assert (testIssueMaker.failed);
+        testIssueMaker.failed=false;
+        test.execute(null, Objects.requireNonNull(getDocument("single-event-definition-correct.bpmn")),null, null,testIssueMaker);
+        assert (!testIssueMaker.failed);
+    }
+
 
 }

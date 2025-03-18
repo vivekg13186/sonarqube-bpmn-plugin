@@ -24,7 +24,7 @@
 |label-required|        |
 |link-event|        |
 |no-bpmndi|        |
-|no-complex-gateway|        |
+|no-complex-gateway|    ✅    |
 |no-disconnected|        |
 |duplicate-sequence-flows|        |
 |no-gateway-join-fork|        |
@@ -34,7 +34,7 @@
 |no-inclusive-gateway|        |
 |no-overlapping-elements|        |
 |single-blank-start-event|        |
-|single-event-definition|        |
+|single-event-definition|   ✅     |
 |start-event-required|        |
 |sub-process-blank-start-event|        |
 |superfluous-gateway|        |

@@ -152,6 +152,9 @@ public class BPMNModel{
     public interface  BoundaryEvent
             extends  CatchEvent
     {}
+    public interface  Escalation
+            extends  RootElement
+    {}
 
     public interface  EventDefinition
             extends  RootElement
@@ -173,9 +176,6 @@ public class BPMNModel{
             extends  EventDefinition
     {}
 
-    public interface  Escalation
-            extends  RootElement
-    {}
 
     public interface  CompensateEventDefinition
             extends  EventDefinition

@@ -28,6 +28,8 @@ public final class BpmnQualityProfile implements BuiltInQualityProfilesDefinitio
         addRuleToProfile( RuleEndEventRequired.RULE_KEY, BLOCKER);
         addRuleToProfile( RuleEventSubProcessTypedStartEvent.RULE_KEY, BLOCKER);
         addRuleToProfile( RuleFakeJoins.RULE_KEY,MINOR);
+        addRuleToProfile(RuleNoComplexGateway.RULE_KEY,BLOCKER);
+        addRuleToProfile(RuleSingleEventDefinition.RULE_KEY,BLOCKER);
 
 
 
