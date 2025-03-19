@@ -1,6 +1,8 @@
 package sq.bpmn.plugin.rules;
 
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.sensor.issue.NewIssueLocation;
 
@@ -20,5 +22,10 @@ public static  final String eventDefinitions = "*|eventDefinitions";
                 element.sourceRange().end().lineNumber(),element.sourceRange().end().columnNumber()
         ));
         location.message(message);
+    }
+
+    public static Elements getAllGatewayElements(Document doc){
+       String selector="*|complexGateway,*|exclusiveGateway,*|inclusiveGateway,*|parallelGateway,*|eventBasedGateway";
+       return doc.select(selector);
     }
 }

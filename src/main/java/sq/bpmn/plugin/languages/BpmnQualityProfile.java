@@ -30,7 +30,7 @@ public final class BpmnQualityProfile implements BuiltInQualityProfilesDefinitio
         addRuleToProfile( RuleFakeJoins.RULE_KEY,MINOR);
         addRuleToProfile(RuleNoComplexGateway.RULE_KEY,BLOCKER);
         addRuleToProfile(RuleSingleEventDefinition.RULE_KEY,BLOCKER);
-
+        addRuleToProfile(RuleSuperfluousGateway.RULE_KEY,BLOCKER);
 
 
         profile.done();

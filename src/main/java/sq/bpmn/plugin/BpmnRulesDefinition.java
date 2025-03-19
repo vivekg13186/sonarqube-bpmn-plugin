@@ -23,6 +23,8 @@ public class BpmnRulesDefinition implements RulesDefinition {
         rulesDefinitionAnnotationLoader.load(repository, RuleFakeJoins.class);
         rulesDefinitionAnnotationLoader.load(repository, RuleNoComplexGateway.class);
         rulesDefinitionAnnotationLoader.load(repository,RuleSingleEventDefinition.class);
+        rulesDefinitionAnnotationLoader.load(repository,RuleSuperfluousGateway.class);
+
         repository.done();
     }
 }

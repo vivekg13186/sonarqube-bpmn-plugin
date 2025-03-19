@@ -28,6 +28,7 @@ public class BpmnSensor implements Sensor {
         checks.addAnnotatedChecks(RuleFakeJoins.class);
         checks.addAnnotatedChecks(RuleNoComplexGateway.class);
         checks.addAnnotatedChecks(RuleSingleEventDefinition.class);
+        checks.addAnnotatedChecks(RuleSuperfluousGateway.class);
 
         checks.addAnnotatedChecks(RuleSingleBlankStartEvent.class);
         checks.addAnnotatedChecks(RuleStartEventRequired.class);

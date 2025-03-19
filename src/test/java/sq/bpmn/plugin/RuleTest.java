@@ -113,5 +113,17 @@ public class RuleTest {
         assert (!testIssueMaker.failed);
     }
 
+    @Test
+    public void superfluousGateway() {
+        TestIssueMaker testIssueMaker = new TestIssueMaker();
+
+        RuleSuperfluousGateway test = new RuleSuperfluousGateway();
+        test.execute(null, Objects.requireNonNull(getDocument("superfluous-gateway-incorrect.bpmn")),null, null,testIssueMaker);
+        assert (testIssueMaker.failed);
+        testIssueMaker.failed=false;
+        test.execute(null, Objects.requireNonNull(getDocument("superfluous-gateway-correct.bpmn")),null, null,testIssueMaker);
+        assert (!testIssueMaker.failed);
+    }
+
 
 }
