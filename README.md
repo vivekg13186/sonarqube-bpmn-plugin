@@ -39,4 +39,3 @@
 | sub-process-blank-start-event       |        |
 | superfluous-gateway                 | ✅      |
 | superfluous-termination             |        |
-| ad-hoc-sub-process                  |        |
