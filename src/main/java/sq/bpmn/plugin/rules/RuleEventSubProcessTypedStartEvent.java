@@ -10,7 +10,7 @@ import org.sonar.check.Rule;
 
 @Rule(key = RuleEventSubProcessTypedStartEvent.RULE_KEY, name = "Event Sub Process Typed Start Event", description = "Ensures that start events inside event sub-processes are typed (have an event definition). This is required by the BPMN 2.0 standard.")
 
-public class RuleEventSubProcessTypedStartEvent {
+public class RuleEventSubProcessTypedStartEvent implements BpmnRule{
 
     public static final String RULE_KEY ="event-sub-process-typed-start-event";
 

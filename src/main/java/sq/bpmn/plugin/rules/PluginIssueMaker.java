@@ -11,6 +11,14 @@ public class PluginIssueMaker implements IssueMaker{
     public void newIssue(Element element, String message, InputFile file, SensorContext sensorContext, RuleKey ruleKey) {
         NewIssue newIssue = sensorContext.newIssue();
         newIssue.forRule(ruleKey);
-        Helper.setLocation(file,element, newIssue.newLocation(),message);
+
+        int line = element.sourceRange().start().lineNumber();
+        newIssue
+                .forRule(ruleKey)
+                .at(newIssue.newLocation()
+                        .on(file)
+                        .at(file.selectLine(line)))
+                .save();
+
     }
 }

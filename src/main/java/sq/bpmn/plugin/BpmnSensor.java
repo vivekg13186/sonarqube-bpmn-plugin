@@ -30,8 +30,7 @@ public class BpmnSensor implements Sensor {
         checks.addAnnotatedChecks(RuleSingleEventDefinition.class);
         checks.addAnnotatedChecks(RuleSuperfluousGateway.class);
 
-        checks.addAnnotatedChecks(RuleSingleBlankStartEvent.class);
-        checks.addAnnotatedChecks(RuleStartEventRequired.class);
+
     }
 
     @Override
@@ -44,13 +43,15 @@ public class BpmnSensor implements Sensor {
     @Override
     public void execute(SensorContext context) {
         FilePredicates p = context.fileSystem().predicates();
+
         for (InputFile inputFile : context.fileSystem().inputFiles(p.hasLanguages(BpmnLanguage.KEY))) {
             try{
+                System.out.println("BPMN Sensor scanning "+inputFile.filename());
                 Document document = Jsoup.parse(inputFile.contents(), Parser.xmlParser().setTrackPosition(true));
                 PluginIssueMaker issueMaker = new PluginIssueMaker();
                 checks.all().forEach(check -> check.execute(context, document,inputFile, checks.ruleKey(check),issueMaker));
-            } catch (Exception ignored) {
-
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
 
         }

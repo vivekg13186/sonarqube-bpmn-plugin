@@ -9,10 +9,10 @@ public class BpmnPlugin implements Plugin {
     @Override
     public void define(Context context) {
 
-        context.addExtension(BpmnLanguage.class);
-        context.addExtension(BpmnQualityProfile.class);
+        context.addExtensions(BpmnLanguage.class,BpmnQualityProfile.class);
+
         context.addExtensions(BpmnLanguageProperties.getProperties());
-        context.addExtension(BpmnSensor.class);
-        context.addExtension(BpmnRulesDefinition.class);
+        context.addExtensions(BpmnRulesDefinition.class,BpmnSensor.class);
+
     }
 }
