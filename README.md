@@ -10,7 +10,7 @@
 
 
 
-## bpmnlint rules migration
+## bpmnlint rules migration status
 [https://github.com/bpmn-io/bpmnlint/tree/main/docs/rules](https://github.com/bpmn-io/bpmnlint/tree/main/docs/rules)
 
 | Rule                                | Status |
