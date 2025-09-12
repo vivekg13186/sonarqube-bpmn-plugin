@@ -6,10 +6,11 @@
   <artifactId>sonar-bpmn-plugin</artifactId>
   <version>1.0</version>
 
-  <name>Example Plugin for SonarQube Server 10.x</name>
-  <description>Example of Plugin for SonarQube Server: Foo Language, FooLint, Custom Metrics and MeasureComputers</description>
+  <name>BPMN Plugin for SonarQube Server 10.x</name>
+  <description>Plugin to scan camunda BPMN files</description>
     <modules>
         <module>bpmnlint</module>
+        <module>plugin</module>
     </modules>
 
 
