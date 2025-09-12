@@ -21,14 +21,14 @@ public class BpmnSensor implements Sensor {
 
     public BpmnSensor(CheckFactory checkFactory) {
         checks = checkFactory.create(BpmnRulesDefinition.REPO_KEY);
-        checks.addAnnotatedChecks(RuleAdHocSubProcessEvents.class);
-        checks.addAnnotatedChecks(ConditionalFlow.class);
-        checks.addAnnotatedChecks(RuleEndEventRequired.class);
-        checks.addAnnotatedChecks(RuleEventSubProcessTypedStartEvent.class);
-        checks.addAnnotatedChecks(RuleFakeJoins.class);
-        checks.addAnnotatedChecks(RuleNoComplexGateway.class);
-        checks.addAnnotatedChecks(RuleSingleEventDefinition.class);
-        checks.addAnnotatedChecks(RuleSuperfluousGateway.class);
+        checks.addAnnotatedChecks(AdHocSubProcessEventsRule.class);
+        checks.addAnnotatedChecks(ConditionalFlowRule.class);
+        checks.addAnnotatedChecks(EndEventRequiredRule.class);
+        checks.addAnnotatedChecks(EventSubProcessTypedStartEventRule.class);
+        checks.addAnnotatedChecks(FakeJoinsRule.class);
+        checks.addAnnotatedChecks(NoComplexGatewayRule.class);
+        checks.addAnnotatedChecks(SingleEventDefinitionRule.class);
+        checks.addAnnotatedChecks(SuperfluousGatewayRule.class);
 
 
     }

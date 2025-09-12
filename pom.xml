@@ -8,9 +8,12 @@
 
   <name>Example Plugin for SonarQube Server 10.x</name>
   <description>Example of Plugin for SonarQube Server: Foo Language, FooLint, Custom Metrics and MeasureComputers</description>
+    <modules>
+        <module>bpmnlint</module>
+    </modules>
 
 
-  <packaging>sonar-plugin</packaging>
+    <packaging>pom</packaging>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <sonar.apiVersion>10.11.0.2468</sonar.apiVersion>
@@ -91,6 +94,11 @@
       <artifactId>jsoup</artifactId>
       <version>1.17.2</version> <!-- Latest version as of now -->
     </dependency>
+      <dependency>
+          <groupId>org.camunda.bpm.model</groupId>
+          <artifactId>camunda-bpmn-model</artifactId>
+          <version>7.23.0</version>
+      </dependency>
   </dependencies>
   <build>
     <plugins>

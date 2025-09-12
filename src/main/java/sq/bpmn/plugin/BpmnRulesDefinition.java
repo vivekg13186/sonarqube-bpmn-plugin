@@ -16,14 +16,14 @@ public class BpmnRulesDefinition implements RulesDefinition {
 
         RulesDefinitionAnnotationLoader rulesDefinitionAnnotationLoader = new RulesDefinitionAnnotationLoader();
         rulesDefinitionAnnotationLoader.load(repository, RuleSingleBlankStartEvent.class, RuleStartEventRequired.class);
-        rulesDefinitionAnnotationLoader.load(repository, RuleAdHocSubProcessEvents.class);
-        rulesDefinitionAnnotationLoader.load(repository, ConditionalFlow.class);
-        rulesDefinitionAnnotationLoader.load(repository, RuleEndEventRequired.class);
-        rulesDefinitionAnnotationLoader.load(repository, RuleEventSubProcessTypedStartEvent.class);
-        rulesDefinitionAnnotationLoader.load(repository, RuleFakeJoins.class);
-        rulesDefinitionAnnotationLoader.load(repository, RuleNoComplexGateway.class);
-        rulesDefinitionAnnotationLoader.load(repository,RuleSingleEventDefinition.class);
-        rulesDefinitionAnnotationLoader.load(repository,RuleSuperfluousGateway.class);
+        rulesDefinitionAnnotationLoader.load(repository, AdHocSubProcessEventsRule.class);
+        rulesDefinitionAnnotationLoader.load(repository, ConditionalFlowRule.class);
+        rulesDefinitionAnnotationLoader.load(repository, EndEventRequiredRule.class);
+        rulesDefinitionAnnotationLoader.load(repository, EventSubProcessTypedStartEventRule.class);
+        rulesDefinitionAnnotationLoader.load(repository, FakeJoinsRule.class);
+        rulesDefinitionAnnotationLoader.load(repository, NoComplexGatewayRule.class);
+        rulesDefinitionAnnotationLoader.load(repository, SingleEventDefinitionRule.class);
+        rulesDefinitionAnnotationLoader.load(repository, SuperfluousGatewayRule.class);
 
         repository.done();
     }

@@ -23,14 +23,14 @@ public final class BpmnQualityProfile implements BuiltInQualityProfilesDefinitio
         profile.setDefault(true);
 
         addRuleToProfile( RuleSingleBlankStartEvent.RULE_KEY, BLOCKER);
-        addRuleToProfile( RuleAdHocSubProcessEvents.RULE_KEY, BLOCKER);
-        addRuleToProfile( ConditionalFlow.RULE_KEY, BLOCKER);
-        addRuleToProfile( RuleEndEventRequired.RULE_KEY, BLOCKER);
-        addRuleToProfile( RuleEventSubProcessTypedStartEvent.RULE_KEY, BLOCKER);
-        addRuleToProfile( RuleFakeJoins.RULE_KEY,MINOR);
-        addRuleToProfile(RuleNoComplexGateway.RULE_KEY,BLOCKER);
-        addRuleToProfile(RuleSingleEventDefinition.RULE_KEY,BLOCKER);
-        addRuleToProfile(RuleSuperfluousGateway.RULE_KEY,BLOCKER);
+        addRuleToProfile( AdHocSubProcessEventsRule.RULE_KEY, BLOCKER);
+        addRuleToProfile( ConditionalFlowRule.RULE_KEY, BLOCKER);
+        addRuleToProfile( EndEventRequiredRule.RULE_KEY, BLOCKER);
+        addRuleToProfile( EventSubProcessTypedStartEventRule.RULE_KEY, BLOCKER);
+        addRuleToProfile( FakeJoinsRule.RULE_KEY,MINOR);
+        addRuleToProfile(NoComplexGatewayRule.RULE_KEY,BLOCKER);
+        addRuleToProfile(SingleEventDefinitionRule.RULE_KEY,BLOCKER);
+        addRuleToProfile(SuperfluousGatewayRule.RULE_KEY,BLOCKER);
 
 
         profile.done();
