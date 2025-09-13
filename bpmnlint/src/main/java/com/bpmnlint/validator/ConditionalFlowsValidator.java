@@ -14,18 +14,22 @@ import static com.bpmnlint.Util.*;
 public class ConditionalFlowsValidator {
 
     public static List<Issue> validate(Document doc) {
+
         List<Issue> result = new ArrayList<>();
 
         // Select all gateways and activities that can have conditional flows
-        Elements nodes = doc.select("*|exclusiveGateway, *|inclusiveGateway, *|activity");
+        Elements nodes = doc.select(":has(> *|outgoing)");
 
         for (Element node : nodes) {
+
+            if(node.id().isEmpty())continue;
+            System.out.println("*|sequenceFlow[sourceRef=" + node.attr("id") + "]");
             Elements outgoingFlows = doc.select("*|sequenceFlow[sourceRef=" + node.attr("id") + "]");
 
             for (Element flow : outgoingFlows) {
                 boolean hasCondition = !flow.select("*|conditionExpression").isEmpty();
                 boolean isDefault = node.hasAttr("default") && node.attr("default").equals(flow.attr("id"));
-
+                System.out.println("hasCondition "+hasCondition+" isDefault "+isDefault);
                 if (!hasCondition && !isDefault) {
                     result.add(issue(flow, "Sequence flow is missing condition"));
                 }

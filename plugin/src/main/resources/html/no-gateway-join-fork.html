@@ -1,0 +1,25 @@
+<h1>No Gateway Join Fork (no-gateway-join-fork)</h1>
+<p>A rule that checks, whether a gateway forks and joins at the same time.</p>
+<p>Example of <strong>incorrect</strong> usage for this rule:</p>
+<p><img alt="Incorrect usage example" src="https://github.com/bpmn-io/bpmnlint/blob/main/docs/rules/examples/no-gateway-join-fork-incorrect.png" /></p>
+<p><code>xml
+    ...
+    &lt;bpmn:exclusiveGateway id="ExclusiveGateway_1"&gt;
+      &lt;bpmn:incoming&gt;SequenceFlow_1&lt;/bpmn:incoming&gt;
+      &lt;bpmn:incoming&gt;SequenceFlow_2&lt;/bpmn:incoming&gt;
+      &lt;bpmn:outgoing&gt;SequenceFlow_3&lt;/bpmn:outgoing&gt;
+      &lt;bpmn:outgoing&gt;SequenceFlow_4&lt;/bpmn:outgoing&gt;
+    &lt;/bpmn:exclusiveGateway&gt;
+    ...</code></p>
+<p>Cf. <a href="https://github.com/bpmn-io/bpmnlint/blob/main/docs/rules/examples/no-gateway-join-fork-incorrect.bpmn"><code>no-gateway-join-fork-incorrect.bpmn</code></a>.</p>
+<p>Example of <strong>correct</strong> usage for this rule:</p>
+<p><img alt="Correct usage example" src="https://github.com/bpmn-io/bpmnlint/blob/main/docs/rules/examples/no-gateway-join-fork-correct.png" /></p>
+<p><code>xml
+    ...
+    &lt;bpmn:exclusiveGateway id="ExclusiveGateway_1"&gt;
+      &lt;bpmn:incoming&gt;SequenceFlow_1&lt;/bpmn:incoming&gt;
+      &lt;bpmn:incoming&gt;SequenceFlow_2&lt;/bpmn:incoming&gt;
+      &lt;bpmn:outgoing&gt;SequenceFlow_3&lt;/bpmn:outgoing&gt;
+    &lt;/bpmn:exclusiveGateway&gt;
+    ...</code></p>
+<p>Cf. <a href="https://github.com/bpmn-io/bpmnlint/blob/main/docs/rules/examples/no-gateway-join-fork-correct.bpmn"><code>no-gateway-join-fork-correct.bpmn</code></a>.</p>

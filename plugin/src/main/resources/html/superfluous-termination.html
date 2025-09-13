@@ -1,0 +1,8 @@
+<h1>Redundant Termination (superfluous-termination)</h1>
+<p>A rule that checks, whether termination is used in a meaningful manner. It cancels other tokens in a running process instance, hence it is superfluous (and potentially missleading) in scenarios where no other tokens to be canceled can exist.</p>
+<p>Example of <strong>incorrect</strong> usage for this rule:</p>
+<p><img alt="Incorrect usage example" src="https://github.com/bpmn-io/bpmnlint/blob/main/docs/rules/examples/superfluous-termination-incorrect.png" /></p>
+<p>Cf. <a href="https://github.com/bpmn-io/bpmnlint/blob/main/docs/rules/examples/superfluous-termination-incorrect.bpmn"><code>superfluous-termination-incorrect.bpmn</code></a>.</p>
+<p>Example of <strong>correct</strong> usage for this rule:</p>
+<p><img alt="Correct usage example" src="https://github.com/bpmn-io/bpmnlint/blob/main/docs/rules/examples/superfluous-termination-correct.png" /></p>
+<p>Cf. <a href="https://github.com/bpmn-io/bpmnlint/blob/main/docs/rules/examples/superfluous-termination-correct.bpmn"><code>superfluous-termination.bpmn</code></a>.</p>

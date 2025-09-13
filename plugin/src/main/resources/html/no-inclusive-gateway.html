@@ -1,0 +1,8 @@
+<h1>No Inclusive Gateway (no-inclusive-gateway)</h1>
+<p>Checks for the presence of inclusive gateways. The complex split and join semantics of inclusive gateways make it hard to follow the token flow in bigger diagrams. Furthermore, the inclusive gateway is not well supported by BPMN engines, including <a href="https://docs.camunda.org/manual/latest/reference/bpmn20/gateways/inclusive-gateway/#camunda-specific-behavior">Camunda BPM</a>. In most cases, a combination of exclusive and parallel gateways can express inclusive gateway semantics in a clearer, albeit more verbose manner.</p>
+<p>Example of <strong>incorrect</strong> usage for this rule:</p>
+<p><img alt="Incorrect usage example" src="https://github.com/bpmn-io/bpmnlint/blob/main/docs/rules/examples/no-inclusive-gateway-incorrect.png" /></p>
+<p>Cf. <a href="https://github.com/bpmn-io/bpmnlint/blob/main/docs/rules/examples/no-inclusive-gateway-incorrect.bpmn"><code>no-inclusive-gateway-incorrect.bpmn</code></a>.</p>
+<p>Example of <strong>correct</strong> usage for this rule:</p>
+<p><img alt="Correct usage example" src="https://github.com/bpmn-io/bpmnlint/blob/main/docs/rules/examples/no-inclusive-gateway-correct.png" /></p>
+<p>Cf. <a href="https://github.com/bpmn-io/bpmnlint/blob/main/docs/rules/examples/no-inclusive-gateway-correct.bpmn"><code>no-inclusive-gateway-correct.bpmn</code></a>.</p>

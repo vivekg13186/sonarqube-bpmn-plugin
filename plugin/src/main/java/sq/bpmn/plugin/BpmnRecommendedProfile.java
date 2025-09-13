@@ -45,6 +45,7 @@ public class BpmnRecommendedProfile  implements BuiltInQualityProfilesDefinition
 
     private void addRuleToProfile(String ruleKey,String severity){
         NewBuiltInActiveRule rule = profile.activateRule(BpmnRepo ,ruleKey);
+
         rule.overrideSeverity(severity);
     }
 }
