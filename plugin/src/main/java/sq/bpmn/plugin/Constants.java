@@ -1,12 +1,13 @@
 package sq.bpmn.plugin;
 
 public class Constants {
+    public static final String BpmnRepo = "bpmn-repo";
     public static final String ID_AdHocSubProcess = "ad-hoc-sub-process";
     public static final String ID_ConditionalFlows = "conditional-flows";
     public static final String ID_EndEventRequired = "end-event-required";
-    public static final String ID_EventSubProcessTypedStartEvent = "no-overlapping-elements";
+    public static final String ID_EventSubProcessTypedStartEvent = "event-sub-process-typed-start-event";
     public static final String ID_FakeJoin = "fake-join";
-    public static final String ID_GlobalElement = "";
+    //public static final String ID_GlobalElement = "";
     public static final String ID_LabelRequired = "label-required";
     public static final String ID_LinkEvent = "link-event";
     public static final String ID_NoBPMNDI = "no-bpmndi";

@@ -9,12 +9,13 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>plugin</artifactId>
+    <artifactId>sq-bpmn-plugin</artifactId>
 
     <properties>
         <maven.compiler.source>23</maven.compiler.source>
         <maven.compiler.target>23</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.finalName>sq-bpmn-plugin-1.0</project.build.finalName>
     </properties>
     <dependencies>
         <dependency>
@@ -24,5 +25,29 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
+                <artifactId>sonar-packaging-maven-plugin</artifactId>
+                <version>1.23.0.740</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <pluginKey>bpmn</pluginKey>
+                    <pluginClass>sq.bpmn.plugin.BpmnPlugin</pluginClass>
+                    <!-- Optional, only if you are sure to support older versions of the plugin API than the one you are compiling against -->
+                    <pluginApiMinVersion>9.9</pluginApiMinVersion>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <release>11</release>
+                </configuration>
+            </plugin>
 
+        </plugins>
+    </build>
 </project>

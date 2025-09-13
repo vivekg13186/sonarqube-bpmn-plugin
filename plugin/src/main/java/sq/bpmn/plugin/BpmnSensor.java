@@ -15,7 +15,6 @@ import org.sonar.api.rule.RuleKey;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.locks.Condition;
 
 import static sq.bpmn.plugin.Constants.*;
 
@@ -28,7 +27,7 @@ public class BpmnSensor implements Sensor {
     public void newIssue( int lno,String message, InputFile file, SensorContext sensorContext, String ruleKey) {
         NewIssue newIssue = sensorContext.newIssue();
         newIssue
-                .forRule(RuleKey.of("bpmn-repo", ruleKey))
+                .forRule(RuleKey.of(BpmnRepo, ruleKey))
                 .at(newIssue.newLocation()
                         .on(file).message(message)
                         .at(file.selectLine(lno)))

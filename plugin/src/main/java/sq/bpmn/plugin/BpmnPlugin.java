@@ -8,7 +8,7 @@ public class BpmnPlugin implements Plugin {
         context.addExtensions(
                 BpmnLanguage.class,
                 BpmnSensor.class,
-                BpmnRuleDefinition.class // Your rule definitions
+                BpmnRuleDefinition.class,BpmnRecommendedProfile.class // Your rule definitions
         );
     }
 }
