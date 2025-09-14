@@ -4,6 +4,7 @@ package com.bpmnlint;
 import com.bpmnlint.validator.AdHocSubProcessValidator;
 import com.bpmnlint.validator.ConditionalFlowsValidator;
 import com.bpmnlint.validator.EndEventRequiredValidator;
+import com.bpmnlint.validator.EventSubProcessTypedStartEventValidator;
 import org.assertj.core.groups.Tuple;
 
 
@@ -46,7 +47,7 @@ class RuleTest3 {
     }
 
     public static void match(String path,Callback callback) throws Exception {
-        System.out.println(path);
+        //System.out.println(path);
         List<Object> records = getResult(path);
         Tuple[] tuples =new Tuple[records.size()];
         for(int i=0;i<records.size();i++){
@@ -75,6 +76,7 @@ class RuleTest3 {
         }
     }
     public static Document loadDoc(String path) throws Exception {
+       // System.out.println(readFile(path));
         return DOMLineNumberParser.parseWithLineNumbers(readFile(path));
     }
 
@@ -109,6 +111,19 @@ class RuleTest3 {
          match("test/rules/end-event-required/valid.bpmn",(EndEventRequiredValidator::validate));
          match("test/rules/end-event-required/valid-sub-process.bpmn",(EndEventRequiredValidator::validate));
          match("test/rules/end-event-required/valid-sub-process-sub-types.bpmn",(EndEventRequiredValidator::validate));
+
+     }
+
+     @Test
+     public void eventSubProcessTypedStartEventValidator() throws Exception{
+         match("test/event-sub-process-typed-start-event-correct.bpmn",(EventSubProcessTypedStartEventValidator::validate));
+         match("test/event-sub-process-typed-start-event-incorrect.bpmn",(EventSubProcessTypedStartEventValidator::validate));
+         match("test/rules/event-sub-process-typed-start-event/invalid.bpmn",(EventSubProcessTypedStartEventValidator::validate));
+         match("test/rules/event-sub-process-typed-start-event/valid.bpmn",(EventSubProcessTypedStartEventValidator::validate));
+         match("test/rules/event-sub-process-typed-start-event/valid-empty.bpmn",(EventSubProcessTypedStartEventValidator::validate));
+         match("test/rules/event-sub-process-typed-start-event/valid-empty-sub-process.bpmn",(EventSubProcessTypedStartEventValidator::validate));
+         match("test/rules/event-sub-process-typed-start-event/valid-intermediate-event.bpmn",(EventSubProcessTypedStartEventValidator::validate));
+         match("test/rules/event-sub-process-typed-start-event/valid-sub-process.bpmn",(EventSubProcessTypedStartEventValidator::validate));
 
      }
 

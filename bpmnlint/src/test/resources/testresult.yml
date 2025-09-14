@@ -55,3 +55,21 @@ test/rules/end-event-required/valid-sub-process.bpmn:
   result: []
 test/rules/end-event-required/valid-sub-process-sub-types.bpmn:
   result: []
+test/event-sub-process-typed-start-event-correct.bpmn:
+  result: []
+test/event-sub-process-typed-start-event-incorrect.bpmn:
+  result:
+    - ["StartEvent_0ydcpql", 1, "Start event is missing event definition"]
+test/rules/event-sub-process-typed-start-event/invalid.bpmn:
+  result:
+    - ["StartEvent", 1, "Start event is missing event definition"]
+test/rules/event-sub-process-typed-start-event/valid.bpmn:
+  result: []
+test/rules/event-sub-process-typed-start-event/valid-empty.bpmn:
+  result: []
+test/rules/event-sub-process-typed-start-event/valid-empty-sub-process.bpmn:
+  result: []
+test/rules/event-sub-process-typed-start-event/valid-intermediate-event.bpmn:
+  result: []
+test/rules/event-sub-process-typed-start-event/valid-sub-process.bpmn:
+  result: []
