@@ -1,0 +1,57 @@
+test/conditional-flows-correct.bpmn:
+  result: []
+test/conditional-flows-incorrect.bpmn:
+  result:
+    - ["SequenceFlow_0q9ussl", 1, "Sequence flow is missing condition"]
+test/rules/conditional-flows/invalid-fork-after-exclusive-gateway.bpmn:
+  result:
+    - ["Flow_2", 1, "Sequence flow is missing condition"]
+test/rules/conditional-flows/invalid-fork-after-exclusive-gateway-default.bpmn:
+  result:
+    - ["Flow_1", 1, "Sequence flow is missing condition"]
+test/rules/conditional-flows/invalid-fork-after-task.bpmn:
+  result:
+    - ["Flow_1", 1, "Sequence flow is missing condition"]
+test/rules/conditional-flows/invalid-fork-after-task-default.bpmn:
+  result:
+    - ["Flow_1", 1, "Sequence flow is missing condition"]
+test/rules/conditional-flows/valid-conditional-fork.bpmn:
+  result: []
+test/rules/conditional-flows/valid-no-condition-after-merge.bpmn:
+  result: []
+test/rules/conditional-flows/valid-split.bpmn:
+  result: []
+test/rules/conditional-flows/valid-split-after-task.bpmn:
+  result: []
+test/ad-hoc-sub-process-correct.bpmn:
+  result: []
+test/ad-hoc-sub-process-incorrect.bpmn:
+  result:
+    - ["Event_03k6pnd", 1, "A <Start Event> is not allowed in <Ad Hoc Sub Process>"]
+    - ["Event_03gcp25", 1, "An <End Event> is not allowed in <Ad Hoc Sub Process>"]
+test/rules/ad-hoc-sub-process/valid.bpmn:
+  result: []
+test/rules/ad-hoc-sub-process/invalid-start-end.bpmn:
+  result:
+    - [ "StartEvent", 1, "A <Start Event> is not allowed in <Ad Hoc Sub Process>" ]
+    - [ "EndEvent", 1, "An <End Event> is not allowed in <Ad Hoc Sub Process>" ]
+test/end-event-required-correct.bpmn:
+  result: []
+test/end-event-required-incorrect.bpmn:
+  result:
+    - ["Process_1qgckdh", 1, "Process is missing end event"]
+test/rules/end-event-required/invalid.bpmn:
+  result:
+    - ["Process", 1, "Process is missing end event"]
+test/rules/end-event-required/invalid-sub-process.bpmn:
+  result:
+    - ["SubProcess", 1, "Process is missing end event"]
+test/rules/end-event-required/invalid-sub-process-sub-types.bpmn:
+  result:
+    - ["EVENT_SUBPROCESS", 1, "Process is missing end event"]
+test/rules/end-event-required/valid.bpmn:
+  result: []
+test/rules/end-event-required/valid-sub-process.bpmn:
+  result: []
+test/rules/end-event-required/valid-sub-process-sub-types.bpmn:
+  result: []
