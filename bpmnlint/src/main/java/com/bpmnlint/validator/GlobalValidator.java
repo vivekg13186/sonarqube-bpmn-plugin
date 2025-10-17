@@ -1,126 +1,114 @@
 package com.bpmnlint.validator;
 
 import com.bpmnlint.Issue;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.xml.xpath.*;
+import java.util.*;
 
 import static com.bpmnlint.Util.issue;
+// Note: Util.issue is assumed to handle org.w3c.dom.Element or be updated
 
-public class GlobalValidator {
+public class GlobalElementValidator {
 
-    private static final String[] GLOBAL_TYPES = {
-            "Error",
-            "Escalation",
-            "Message",
-            "Signal"
-    };
+    private static final XPathFactory XPATH_FACTORY = XPathFactory.newInstance();
+    private static final XPath XPATH = XPATH_FACTORY.newXPath();
+    
+    // Note: The XPath expression uses the * wildcard for namespaces, similar to Jsoup's *|
+    private static final String GLOBAL_ELEMENTS_XPATH = 
+        "//*[local-name()='error' or local-name()='escalation' or local-name()='message' or local-name()='signal']";
+
+    // --- Core XPath Execution Helper ---
+
+    /**
+     * Executes an XPath expression and returns a NodeList.
+     * @param node The context node for the evaluation (usually the Document).
+     * @param expression The XPath query string.
+     * @return A NodeList containing the matching elements.
+     */
+    private static NodeList evaluateXPath(Object node, String expression) {
+        try {
+            XPathExpression expr = XPATH.compile(expression);
+            return (NodeList) expr.evaluate(node, XPathConstants.NODESET);
+        } catch (XPathExpressionException e) {
+            // In a real application, you'd handle this more gracefully
+            throw new RuntimeException("XPath evaluation failed: " + expression, e);
+        }
+    }
+
+    // --- Validation Method ---
 
     public static List<Issue> validate(Document doc) {
-        List<Issue> issues = new ArrayList<>();
+        List<Issue> result = new ArrayList<>();
 
-        Element definitions = doc.selectFirst("*|definitions");
-        if (definitions == null) {
-            return issues;
-        }
+        // Select all global elements using XPath
+        NodeList globals = evaluateXPath(doc, GLOBAL_ELEMENTS_XPATH);
 
-        List<Element> rootElements = getRootElements(definitions);
-        List<Element> referencingElements = getReferencingElements(definitions);
+        // Track names per type to check uniqueness
+        Map<String, Set<String>> nameRegistry = new HashMap<>();
 
-        for (Element root : rootElements) {
-            String id   = root.attr("id");
-            String name = root.hasAttr("name") ? root.attr("name").trim() : "";
+        for (int i = 0; i < globals.getLength(); i++) {
+            Element global = (Element) globals.item(i);
+            
+            // Use localName for the type, as it ignores the namespace prefix (e.g., bpmn:error -> error)
+            String type = global.getLocalName().toLowerCase(); 
+            String name = global.getAttribute("name").trim();
+            String id = global.getAttribute("id");
 
-            // 1. must have a name
+            // 1. Must have a name
             if (name.isEmpty()) {
-                issues.add(issue(root, "Element is missing name"));
+                result.add(issue(global, "Global element <" + type + "> is missing a name"));
             }
 
-            // 2. must be referenced at least once
-            if (!isReferenced(root, referencingElements)) {
-                issues.add(issue(root, "Element is unused"));
+            // 2. Must be unique by name per type
+            nameRegistry.putIfAbsent(type, new HashSet<>());
+            if (!name.isEmpty() && !nameRegistry.get(type).add(name)) {
+                result.add(issue(global, "Global element <" + type + "> has a non-unique name: \"" + name + "\""));
             }
 
-            // 3. name must be unique among same type
-            if (!isUnique(root, rootElements)) {
-                issues.add(issue(root, "Element name is not unique"));
+            // 3. Must be referenced
+            if (!isReferenced(global, doc)) {
+                result.add(issue(global, "Global element <" + type + "> is unused"));
             }
         }
 
-        return issues;
+        return result;
     }
 
-    // gather global elements directly under <definitions>
-    private static List<Element> getRootElements(Element definitions) {
-        List<Element> roots = new ArrayList<>();
-        for (String type : GLOBAL_TYPES) {
-            roots.addAll(definitions.select("> *|" + type));
-        }
-        return roots;
-    }
+    // --- Reference Check Method ---
 
-    // collect all places that could reference a global element
-    private static List<Element> getReferencingElements(Element definitions) {
-        List<Element> refs = new ArrayList<>();
+    private static boolean isReferenced(Element global, Document doc) {
+        String id = global.getAttribute("id");
 
-        // event definitions
-        refs.addAll(definitions.select("*|errorEventDefinition"));
-        refs.addAll(definitions.select("*|escalationEventDefinition"));
-        refs.addAll(definitions.select("*|messageEventDefinition"));
-        refs.addAll(definitions.select("*|signalEventDefinition"));
-
-        // message flows and tasks
-        refs.addAll(definitions.select("*|messageFlow"));
-        refs.addAll(definitions.select("*|receiveTask"));
-        refs.addAll(definitions.select("*|sendTask"));
-
-        return refs;
-    }
-
-    private static boolean isReferenced(Element root, List<Element> refs) {
-        String rootId   = root.attr("id");
-        String localType = root.tagName().substring(root.tagName().indexOf(':') + 1);
-
-        switch (localType) {
-            case "Error":
-                return refs.stream()
-                        .filter(e -> e.tagName().endsWith("errorEventDefinition"))
-                        .anyMatch(e -> rootId.equals(e.attr("errorRef")));
-            case "Escalation":
-                return refs.stream()
-                        .filter(e -> e.tagName().endsWith("escalationEventDefinition"))
-                        .anyMatch(e -> rootId.equals(e.attr("escalationRef")));
-            case "Message":
-                return refs.stream()
-                        .filter(e -> {
-                            String t = e.tagName();
-                            return t.endsWith("messageEventDefinition")
-                                    || t.endsWith("messageFlow")
-                                    || t.endsWith("receiveTask")
-                                    || t.endsWith("sendTask");
-                        })
-                        .anyMatch(e -> rootId.equals(e.attr("messageRef")));
-            case "Signal":
-                return refs.stream()
-                        .filter(e -> e.tagName().endsWith("signalEventDefinition"))
-                        .anyMatch(e -> rootId.equals(e.attr("signalRef")));
+        // Reference XPath expressions
+        String refXPath;
+        
+        // Use getLocalName() to get the element type without the prefix
+        switch (global.getLocalName()) {
+            case "error":
+                // XPath: Find any element that is an 'errorEventDefinition' AND has an 'errorRef' attribute 
+                // equal to the ID of the current global error.
+                refXPath = "//*[local-name()='errorEventDefinition' and @errorRef='" + id + "']";
+                break;
+            case "escalation":
+                refXPath = "//*[local-name()='escalationEventDefinition' and @escalationRef='" + id + "']";
+                break;
+            case "message":
+                // Checks two possible referencing elements
+                refXPath = "//*[local-name()='messageEventDefinition' and @messageRef='" + id + "']"
+                         + " | " 
+                         + "//*[local-name()='messageFlow' and @messageRef='" + id + "']";
+                break;
+            case "signal":
+                refXPath = "//*[local-name()='signalEventDefinition' and @signalRef='" + id + "']";
+                break;
             default:
                 return false;
         }
-    }
 
-    private static boolean isUnique(Element root, List<Element> roots) {
-        String name      = root.attr("name");
-        String localType = root.tagName().substring(root.tagName().indexOf(':') + 1);
-
-        long count = roots.stream()
-                .filter(r -> r.tagName().endsWith(localType))
-                .filter(r -> name.equals(r.attr("name")))
-                .count();
-
-        return count == 1;
+        // Evaluate the XPath. If the resulting NodeList has a length > 0, the element is referenced.
+        return evaluateXPath(doc, refXPath).getLength() > 0;
     }
 }
