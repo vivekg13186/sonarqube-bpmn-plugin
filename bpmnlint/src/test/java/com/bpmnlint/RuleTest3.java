@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RuleTest3 {
 
-    private static Yaml yaml;
+
 
     interface  Callback{
         List<Issue> validate(Document document) throws Exception;
@@ -53,7 +53,7 @@ class RuleTest3 {
         }
         Document document =loadDoc(path);
         if(records.isEmpty()){
-            List<Issue> issue = callback.validate(document);
+             callback.validate(document);
             assertTrue(callback.validate(document).isEmpty());
         }else {
             assertThat(callback.validate(document)).extracting("id", "line", "message")
