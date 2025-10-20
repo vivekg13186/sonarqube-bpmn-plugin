@@ -9,7 +9,10 @@ import java.util.List;
 
 import static com.bpmnlint.Util.*;
 public class SuperfluousTerminationValidator {
-
+    public static List<Issue> validate(org.w3c.dom.Document doc) {
+        List<Issue> result = new ArrayList<>();
+        return null;
+    }
     public static List<Issue> validate(Document doc) {
         List<Issue> result = new ArrayList<>();
 

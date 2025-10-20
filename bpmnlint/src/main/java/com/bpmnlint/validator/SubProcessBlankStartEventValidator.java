@@ -23,7 +23,10 @@ public class SubProcessBlankStartEventValidator {
             "compensateEventDefinition",
             "conditionalEventDefinition"
     };
-
+    public static List<Issue> validate(org.w3c.dom.Document doc) {
+        List<Issue> result = new ArrayList<>();
+        return null;
+    }
     public static List<Issue> validate(Document doc) {
         List<Issue> result = new ArrayList<>();
         Elements subProcesses = doc.select("*|subProcess");

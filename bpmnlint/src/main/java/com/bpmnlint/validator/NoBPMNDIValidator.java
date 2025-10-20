@@ -19,7 +19,10 @@ import java.util.stream.Collectors;
 
 
 public class NoBPMNDIValidator {
-
+    public static List<Issue> validate(org.w3c.dom.Document doc) {
+        List<Issue> result = new ArrayList<>();
+        return null;
+    }
     // Only check elements that are expected to have visual representation
     private static final List<String> visualTags = Arrays.asList(
             ":startEvent", ":endEvent", ":task", ":userTask", ":serviceTask", ":scriptTask",
