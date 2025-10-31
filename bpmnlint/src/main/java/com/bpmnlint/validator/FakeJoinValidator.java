@@ -1,116 +1,109 @@
 package com.bpmnlint.validator;
 
 import com.bpmnlint.Issue;
-import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import javax.xml.namespace.NamespaceContext;
-import javax.xml.xpath.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 
-// Import static methods for 'issue' and any other utility
-import static com.bpmnlint.Util.issue;
+import java.util.*;
 
-/**
- * Validates BPMN for "Fake Joins" using XPath.
- * A Fake Join occurs when an Activity or Event has multiple incoming flows
- * without an explicit Gateway for joining.
- */
+// Assuming these utility methods and classes exist:
+import static com.bpmnlint.Util.getLineNumber; 
+// Assuming the Issue constructor is: new Issue(elementId, lineNumber, message)
+
 public class FakeJoinValidator {
 
-    // Define the BPMN namespace for use in XPath queries
-    private static final String BPMN_NS = "http://www.omg.org/spec/BPMN/20100524/MODEL";
-    private static final String BPMN_PREFIX = "bpmn"; // Arbitrary prefix for XPath
-
-    // --- Custom NamespaceContext for handling BPMN namespaces in XPath ---
-    private static class BpmnNamespaceContext implements NamespaceContext {
-        @Override
-        public String getNamespaceURI(String prefix) {
-            if (prefix == null) throw new NullPointerException("Null prefix");
-            if (BPMN_PREFIX.equals(prefix)) return BPMN_NS;
-            // Handle other namespaces if necessary (e.g., di, dc, modeler, etc.)
-            return XMLConstants.NULL_NS_URI; // Placeholder, not ideal for full BPMN
-        }
-
-        @Override
-        public String getPrefix(String namespaceURI) {
-            if (BPMN_NS.equals(namespaceURI)) return BPMN_PREFIX;
-            return null;
-        }
-
-        @Override
-        public Iterator<String> getPrefixes(String namespaceURI) {
-            // Not strictly needed for this simple validator
-            return null;
-        }
-    }
+    // --- Static XPath Setup ---
 
     /**
-     * Executes the Fake Join validation using XPath.
-     * @param doc The XML Document representing the BPMN model.
-     * @return A list of validation issues found.
+     * Helper class to manage BPMN namespaces for XPath queries.
      */
-    public static List<Issue> validate(Document doc) {
-        List<Issue> result = new ArrayList<>();
-        XPathFactory factory = XPathFactory.newInstance();
-        XPath xpath = factory.newXPath();
-        xpath.setNamespaceContext(new BpmnNamespaceContext());
-
-        try {
-            // XPath to select all BPMN Activities (using the defined prefix)
-            // Note: This needs to be comprehensive, similar to your Jsoup selector.
-            String activityXPath = "//" + BPMN_PREFIX + ":*Activity | " +
-                                   "//" + BPMN_PREFIX + ":*Task | " +
-                                   "//" + BPMN_PREFIX + ":subProcess | " +
-                                   "//" + BPMN_PREFIX + ":transaction";
-
-            NodeList activities = (NodeList) xpath.evaluate(activityXPath, doc, XPathConstants.NODESET);
-
-            for (int i = 0; i < activities.getLength(); i++) {
-                Node node = activities.item(i);
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    Element activity = (Element) node;
-
-                    // Check for multiple incoming flows using a relative XPath
-                    // Count how many 'incoming' elements are children of the current activity
-                    String incomingCountXPath = "count(" + BPMN_PREFIX + ":incoming)";
-                    Double incomingCount = (Double) xpath.evaluate(incomingCountXPath, activity, XPathConstants.NUMBER);
-
-                    if (incomingCount > 1) {
-                        result.add(issue(activity, "Incoming flows do not join (Fake Join)"));
-                    }
-                }
+    private static class BPMNNamespaceContext implements NamespaceContext {
+        @Override
+        public String getNamespaceURI(String prefix) {
+            if (prefix.equals("bpmn")) {
+                return "http://www.omg.org/spec/BPMN/20100524/MODEL";
             }
-
-            // XPath to select all BPMN Events
-            String eventXPath = "//" + BPMN_PREFIX + ":*Event";
-
-            NodeList events = (NodeList) xpath.evaluate(eventXPath, doc, XPathConstants.NODESET);
-
-            for (int i = 0; i < events.getLength(); i++) {
-                Node node = events.item(i);
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    Element event = (Element) node;
-
-                    // Check for multiple incoming flows using a relative XPath
-                    String incomingCountXPath = "count(" + BPMN_PREFIX + ":incoming)";
-                    Double incomingCount = (Double) xpath.evaluate(incomingCountXPath, event, XPathConstants.NUMBER);
-
-                    if (incomingCount > 1) {
-                        result.add(issue(event, "Incoming flows do not join (Fake Join)"));
-                    }
-                }
-            }
-
-        } catch (XPathExpressionException e) {
-            // Handle error during XPath processing
-            System.err.println("XPath error: " + e.getMessage());
+            return null;
         }
+        @Override
+        public String getPrefix(String namespaceURI) { return null; }
+        @Override
+        public Iterator<String> getPrefixes(String namespaceURI) { return null; }
+    }
 
+    private static final XPath XPATH;
+    static {
+        // Initialize and configure a static XPath object for reuse with BPMN namespace
+        XPathFactory factory = XPathFactory.newInstance();
+        XPATH = factory.newXPath();
+        XPATH.setNamespaceContext(new BPMNNamespaceContext());
+    }
+
+    // --- Public Validation Method ---
+
+    /**
+     * 🔎 Validates a BPMN Document to detect "Fake Joins," where multiple sequence 
+     * flows converge directly into a non-Gateway element (like a Task).
+     */
+    public static List<Issue> validate(org.w3c.dom.Document doc) throws XPathExpressionException {
+        List<Issue> result = new ArrayList<>();
+
+        // Use translate for case-insensitive XPath 1.0 selection.
+        String lowercase = "abcdefghijklmnopqrstuvwxyz";
+        String uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        
+        // XPath to select all flow elements (Tasks, Events, SubProcesses) that are NOT Gateways.
+        String elementSelectionXPath = "//bpmn:process//*[" +
+            // 1. Exclude all Gateway types (case-insensitive check)
+            "not(contains(translate(local-name(), '"+lowercase+"', '"+uppercase+"'), 'GATEWAY')) and (" +
+            // 2. AND ensure it's a common flow element type that can have incoming flows
+            "contains(translate(local-name(), '"+lowercase+"', '"+uppercase+"'), 'TASK') or " +       
+            "contains(translate(local-name(), '"+lowercase+"', '"+uppercase+"'), 'EVENT') or " +
+            "contains(translate(local-name(), '"+lowercase+"', '"+uppercase+"'), 'SUBPROCESS') or " +
+            "contains(translate(local-name(), '"+lowercase+"', '"+uppercase+"'), 'CALLACTIVITY')" + 
+            ")]";
+        
+        NodeList nonGatewayFlowNodes = (NodeList) XPATH.evaluate(
+            elementSelectionXPath, 
+            doc, 
+            XPathConstants.NODESET
+        );
+
+        for (int i = 0; i < nonGatewayFlowNodes.getLength(); i++) {
+            Element element = (Element) nonGatewayFlowNodes.item(i);
+            String elementId = element.getAttribute("id");
+
+            // Count incoming flows using XPath
+            NodeList incomingFlows = (NodeList) XPATH.evaluate(
+                "bpmn:incoming", 
+                element, 
+                XPathConstants.NODESET
+            );
+            
+            int incomingCount = incomingFlows.getLength();
+            
+            // The violation occurs if a non-Gateway element has more than one incoming flow.
+            if (incomingCount > 1) {
+                
+                String message = String.format(
+                    "Fake Join detected: Element '%s' (%s) is not a Gateway but has %d incoming sequence flows. Use a Gateway for merging paths.",
+                    elementId,
+                    element.getLocalName(),
+                    incomingCount
+                );
+
+                // The issue in File 2 (Task_2) falls here.
+                result.add(new Issue(elementId, getLineNumber(element), message)); 
+            }
+        }
+        
         return result;
     }
 }

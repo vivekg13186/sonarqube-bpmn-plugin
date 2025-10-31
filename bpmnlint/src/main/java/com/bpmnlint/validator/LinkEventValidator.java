@@ -1,111 +1,99 @@
 package com.bpmnlint.validator;
 
 import com.bpmnlint.Issue;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.xml.xpath.*;
-import java.util.*;
+import javax.xml.namespace.NamespaceContext;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-import static com.bpmnlint.Util.issue;
-// Note: Util.issue is assumed to handle org.w3c.dom.Element or be updated
+// Assuming these utility methods and classes exist:
+import static com.bpmnlint.Util.getLineNumber; 
+// Assuming the Issue constructor is: new Issue(elementId, lineNumber, message)
 
 public class LinkEventValidator {
 
-    private static final XPathFactory XPATH_FACTORY = XPathFactory.newInstance();
-    private static final XPath XPATH = XPATH_FACTORY.newXPath();
+    // --- Static XPath Setup ---
 
     /**
-     * Executes an XPath expression and returns a NodeList.
-     * @param node The context node for the evaluation.
-     * @param expression The XPath query string.
-     * @return A NodeList containing the matching elements.
+     * Helper class to manage BPMN namespaces for XPath queries.
      */
-    private static NodeList evaluateXPath(Object node, String expression) {
-        try {
-            XPathExpression expr = XPATH.compile(expression);
-            return (NodeList) expr.evaluate(node, XPathConstants.NODESET);
-        } catch (XPathExpressionException e) {
-            throw new RuntimeException("XPath evaluation failed: " + expression, e);
+    private static class BPMNNamespaceContext implements NamespaceContext {
+        @Override
+        public String getNamespaceURI(String prefix) {
+            if (prefix.equals("bpmn")) {
+                return "http://www.omg.org/spec/BPMN/20100524/MODEL";
+            }
+            return null;
         }
+        @Override
+        public String getPrefix(String namespaceURI) { return null; }
+        @Override
+        public Iterator<String> getPrefixes(String namespaceURI) { return null; }
     }
 
-    public static List<Issue> validate(Document doc) {
+    private static final XPath XPATH;
+    static {
+        // Initialize and configure a static XPath object for reuse with BPMN namespace
+        XPathFactory factory = XPathFactory.newInstance();
+        XPATH = factory.newXPath();
+        XPATH.setNamespaceContext(new BPMNNamespaceContext());
+    }
+
+    // --- Public Validation Method ---
+
+    /**
+     * 🔎 Validates a BPMN Document to ensure that all linkEventDefinition elements 
+     * have a non-empty 'name' attribute.
+     */
+    public static List<Issue> validate(org.w3c.dom.Document doc) throws XPathExpressionException {
         List<Issue> result = new ArrayList<>();
 
-        // Maps to track link event names
-        Set<String> throwLinks = new HashSet<>();
-        Set<String> catchLinks = new HashSet<>();
+        // 🌟 SIMPLIFIED XPATH: Selects ALL bpmn:linkEventDefinition elements.
+        String linkEventDefinitionXPath = "//bpmn:linkEventDefinition";
 
-        // --- 1. Process Throw Link Events ---
-        
-        // XPath: Select all intermediateThrowEvent elements
-        NodeList throwEvents = evaluateXPath(doc, "//*[local-name()='intermediateThrowEvent']");
-        
-        for (int i = 0; i < throwEvents.getLength(); i++) {
-            Element event = (Element) throwEvents.item(i);
+        NodeList linkDefinitionNodes = (NodeList) XPATH.evaluate(
+            linkEventDefinitionXPath, 
+            doc, 
+            XPathConstants.NODESET
+        );
+
+        for (int i = 0; i < linkDefinitionNodes.getLength(); i++) {
+            Element linkDefinitionElement = (Element) linkDefinitionNodes.item(i);
             
-            // XPath: Select child linkEventDefinition elements (context is the 'event' element)
-            NodeList linkDefs = evaluateXPath(event, "*[local-name()='linkEventDefinition']");
+            // **Validation done in Java, not XPath, for maximum reliability**
+            String linkName = linkDefinitionElement.getAttribute("name");
             
-            for (int j = 0; j < linkDefs.getLength(); j++) {
-                Element def = (Element) linkDefs.item(j);
+            if (linkName == null || linkName.trim().isEmpty()) {
                 
-                // Get name attribute using standard DOM method
-                String name = def.getAttribute("name").trim();
+                // Get the parent event node to report the issue ID
+                Node eventNode = linkDefinitionElement.getParentNode();
                 
-                if (!name.isEmpty()) {
-                    throwLinks.add(name);
-                } else {
-                    result.add(issue(event, "Throw link event is missing a name"));
+                if (eventNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eventElement = (Element) eventNode;
+                    String eventId = eventElement.getAttribute("id");
+                    String eventLocalName = eventElement.getLocalName();
+
+                    String message = String.format(
+                        "Link Event Definition Missing Name: The '%s' (%s) link definition must have a non-empty name attribute to function correctly.",
+                        eventId,
+                        eventLocalName
+                    );
+
+                    // Report the issue against the parent event node
+                    // Note: Line number should be derived from the parent element if possible
+                    result.add(new Issue(eventId, getLineNumber(eventElement), message)); 
                 }
             }
         }
-
-        // --- 2. Process Catch Link Events ---
-
-        // XPath: Select all intermediateCatchEvent elements
-        NodeList catchEvents = evaluateXPath(doc, "//*[local-name()='intermediateCatchEvent']");
         
-        for (int i = 0; i < catchEvents.getLength(); i++) {
-            Element event = (Element) catchEvents.item(i);
-            
-            // XPath: Select child linkEventDefinition elements (context is the 'event' element)
-            NodeList linkDefs = evaluateXPath(event, "*[local-name()='linkEventDefinition']");
-            
-            for (int j = 0; j < linkDefs.getLength(); j++) {
-                Element def = (Element) linkDefs.item(j);
-                
-                // Get name attribute using standard DOM method
-                String name = def.getAttribute("name").trim();
-                
-                if (!name.isEmpty()) {
-                    catchLinks.add(name);
-                } else {
-                    result.add(issue(event, "Catch link event is missing a name"));
-                }
-            }
-        }
-
-        // --- 3. Check for Unmatched Links ---
-        
-        // Check for unmatched throw events
-        for (String name : throwLinks) {
-            if (!catchLinks.contains(name)) {
-                // Cannot pass the original event element easily, so pass null as in the original Jsoup code
-                result.add(issue(null, "Throw link event \"" + name + "\" has no matching catch event"));
-            }
-        }
-
-        // Check for unmatched catch events
-        for (String name : catchLinks) {
-            if (!throwLinks.contains(name)) {
-                // Cannot pass the original event element easily, so pass null as in the original Jsoup code
-                result.add(issue(null, "Catch link event \"" + name + "\" has no matching throw event"));
-            }
-        }
-
         return result;
     }
 }

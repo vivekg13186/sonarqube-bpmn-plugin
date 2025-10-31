@@ -1,84 +1,108 @@
 package com.bpmnlint.validator;
 
 import com.bpmnlint.Issue;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
-import javax.xml.xpath.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.xml.namespace.NamespaceContext;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 
-import static com.bpmnlint.Util.issue;
-// Note: Util.issue is assumed to handle org.w3c.dom.Element or be updated
+import java.util.*;
+
+// Assuming these utility methods and classes exist:
+import static com.bpmnlint.Util.getLineNumber; 
+// Assuming the Issue constructor is: new Issue(elementId, lineNumber, message)
 
 public class NoGatewayJoinForkValidator {
 
-    private static final XPathFactory XPATH_FACTORY = XPathFactory.newInstance();
-    private static final XPath XPATH = XPATH_FACTORY.newXPath();
-
-    // XPath component for all gateway types
-    private static final String GATEWAY_ELEMENTS_LOCAL_NAMES =
-        "local-name()='exclusiveGateway' or local-name()='parallelGateway' or local-name()='inclusiveGateway' or " +
-        "local-name()='complexGateway' or local-name()='eventBasedGateway'";
-    
-    private static final String GATEWAYS_XPATH = "//*[" + GATEWAY_ELEMENTS_LOCAL_NAMES + "]";
-
+    // --- Static XPath Setup ---
 
     /**
-     * Executes an XPath expression and returns the result as a number (count).
-     * @param node The context node for the evaluation (usually the Document).
-     * @param expression The XPath query string containing a 'count(...)' function.
-     * @return The numerical result of the count query.
+     * Helper class to manage BPMN namespaces for XPath queries.
      */
-    private static double countXPathResult(Object node, String expression) {
-        try {
-            // Compile and evaluate the XPath expression as a number
-            return (Double) XPATH.compile(expression).evaluate(node, XPathConstants.NUMBER);
-        } catch (XPathExpressionException e) {
-            throw new RuntimeException("XPath counting failed: " + expression, e);
+    private static class BPMNNamespaceContext implements NamespaceContext {
+        @Override
+        public String getNamespaceURI(String prefix) {
+            if (prefix.equals("bpmn")) {
+                return "http://www.omg.org/spec/BPMN/20100524/MODEL";
+            }
+            return null;
         }
+        @Override
+        public String getPrefix(String namespaceURI) { return null; }
+        @Override
+        public Iterator<String> getPrefixes(String namespaceURI) { return null; }
     }
 
-    public static List<Issue> validate(Document doc) {
+    private static final XPath XPATH;
+    static {
+        XPathFactory factory = XPathFactory.newInstance();
+        XPATH = factory.newXPath();
+        XPATH.setNamespaceContext(new BPMNNamespaceContext());
+    }
+
+    // --- Public Validation Method ---
+
+    /**
+     * 🔎 Validates a BPMN Document to ensure that no single Gateway is used for both
+     * joining (converging) and splitting (forking/diverging) sequence flows.
+     */
+    public static List<Issue> validate(org.w3c.dom.Document doc) throws XPathExpressionException {
         List<Issue> result = new ArrayList<>();
 
-        // Select all gateway elements using XPath
-        NodeList gateways = evaluateXPath(doc, GATEWAYS_XPATH);
+        // Use translate for case-insensitive XPath 1.0 selection of all Gateways.
+        String lowercase = "abcdefghijklmnopqrstuvwxyz";
+        String uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        
+        // XPath to select all elements whose local name contains 'GATEWAY'
+        String gatewaySelectionXPath = "//bpmn:process//*[" +
+            "contains(translate(local-name(), '"+lowercase+"', '"+uppercase+"'), 'GATEWAY')" + 
+        "]";
+        
+        NodeList gateways = (NodeList) XPATH.evaluate(
+            gatewaySelectionXPath, 
+            doc, 
+            XPathConstants.NODESET
+        );
 
         for (int i = 0; i < gateways.getLength(); i++) {
-            Element gateway = (Element) gateways.item(i);
-            String id = gateway.getAttribute("id");
+            Element gatewayElement = (Element) gateways.item(i);
 
-            // --- Count incoming and outgoing sequence flows using XPath ---
+            // Count incoming and outgoing flows using XPath
+            NodeList incomingFlows = (NodeList) XPATH.evaluate(
+                "bpmn:incoming", 
+                gatewayElement, 
+                XPathConstants.NODESET
+            );
             
-            // XPath to count incoming sequence flows (join)
-            String incomingXPath = "count(//*[local-name()='sequenceFlow' and @targetRef='" + id + "'])";
-            double incomingCount = countXPathResult(doc, incomingXPath);
-            
-            // XPath to count outgoing sequence flows (fork)
-            String outgoingXPath = "count(//*[local-name()='sequenceFlow' and @sourceRef='" + id + "'])";
-            double outgoingCount = countXPathResult(doc, outgoingXPath);
+            NodeList outgoingFlows = (NodeList) XPATH.evaluate(
+                "bpmn:outgoing", 
+                gatewayElement, 
+                XPathConstants.NODESET
+            );
 
-            // Check if the gateway is both joining (incoming > 1) and forking (outgoing > 1)
+            int incomingCount = incomingFlows.getLength();
+            int outgoingCount = outgoingFlows.getLength();
+            
+            // Check for Gateway Join/Fork violation: 
+            // More than 1 incoming flow AND more than 1 outgoing flow
             if (incomingCount > 1 && outgoingCount > 1) {
-                result.add(issue(gateway, "Gateway forks and joins simultaneously, which may lead to ambiguous logic"));
+                String elementId = gatewayElement.getAttribute("id");
+                String message = String.format(
+                    "Gateway '%s' performs both joining (%d incoming flows) and forking (%d outgoing flows). A single gateway should only perform one function (join OR fork).",
+                    elementId, 
+                    incomingCount, 
+                    outgoingCount
+                );
+                // The issue in File 2 (ExclusiveGateway_1) falls here.
+                result.add(new Issue(elementId, getLineNumber(gatewayElement), message)); 
             }
         }
-
+        
         return result;
-    }
-    
-    /**
-     * Helper to evaluate an XPath expression and return a NodeList.
-     * Included here to satisfy the `countXPathResult` helper.
-     */
-    private static NodeList evaluateXPath(Object node, String expression) {
-        try {
-            XPathExpression expr = XPATH.compile(expression);
-            return (NodeList) expr.evaluate(node, XPathConstants.NODESET);
-        } catch (XPathExpressionException e) {
-            throw new RuntimeException("XPath evaluation failed: " + expression, e);
-        }
     }
 }

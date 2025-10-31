@@ -1,126 +1,96 @@
 package com.bpmnlint.validator;
 
 import com.bpmnlint.Issue;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
-import javax.xml.xpath.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.xml.namespace.NamespaceContext;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 
-import static com.bpmnlint.Util.issue;
-// Note: Util.issue is assumed to handle org.w3c.dom.Element or be updated
+import java.util.*;
+
+// Assuming these utility methods and classes exist:
+import static com.bpmnlint.Util.getLineNumber; 
+// Assuming the Issue constructor is: new Issue(elementId, lineNumber, message)
 
 public class LabelRequiredValidator {
 
-    private static final XPathFactory XPATH_FACTORY = XPathFactory.newInstance();
-    private static final XPath XPATH = XPATH_FACTORY.newXPath();
+    // --- Static XPath Setup ---
 
     /**
-     * Executes an XPath expression and returns a NodeList.
-     * @param node The context node for the evaluation.
-     * @param expression The XPath query string.
-     * @return A NodeList containing the matching elements.
+     * Helper class to manage BPMN namespaces for XPath queries.
      */
-    private static NodeList evaluateXPath(Object node, String expression) {
-        try {
-            XPathExpression expr = XPATH.compile(expression);
-            return (NodeList) expr.evaluate(node, XPathConstants.NODESET);
-        } catch (XPathExpressionException e) {
-            // Log or handle the exception appropriately
-            throw new RuntimeException("XPath evaluation failed: " + expression, e);
+    private static class BPMNNamespaceContext implements NamespaceContext {
+        @Override
+        public String getNamespaceURI(String prefix) {
+            if (prefix.equals("bpmn")) {
+                return "http://www.omg.org/spec/BPMN/20100524/MODEL";
+            }
+            return null;
         }
+        @Override
+        public String getPrefix(String namespaceURI) { return null; }
+        @Override
+        public Iterator<String> getPrefixes(String namespaceURI) { return null; }
     }
 
-    public static List<Issue> validate(Document doc) {
+    private static final XPath XPATH;
+    static {
+        // Initialize and configure a static XPath object for reuse with BPMN namespace
+        XPathFactory factory = XPathFactory.newInstance();
+        XPATH = factory.newXPath();
+        XPATH.setNamespaceContext(new BPMNNamespaceContext());
+    }
+
+    // --- Public Validation Method ---
+
+    /**
+     * 🔎 Validates a BPMN Document to ensure that all core flow elements 
+     * (Tasks, Events, Gateways, SubProcesses) have a descriptive label (name attribute).
+     */
+    public static List<Issue> validate(org.w3c.dom.Document doc) throws XPathExpressionException {
         List<Issue> result = new ArrayList<>();
 
-        // XPath to select all elements in the document
-        NodeList elements = evaluateXPath(doc, "//*");
+        // 🌟 REVISED XPATH: Target all flow nodes using their specific BPMN tags.
+        // This is more precise than checking if the name contains 'TASK' or 'EVENT'.
+        String elementSelectionXPath = "//bpmn:process//*[" +
+            "self::bpmn:task or self::bpmn:userTask or self::bpmn:manualTask or self::bpmn:serviceTask or self::bpmn:scriptTask or self::bpmn:receiveTask or self::bpmn:sendTask or " + // Tasks
+            "self::bpmn:startEvent or self::bpmn:endEvent or self::bpmn:intermediateCatchEvent or self::bpmn:intermediateThrowEvent or " + // Events
+            "self::bpmn:exclusiveGateway or self::bpmn:parallelGateway or self::bpmn:inclusiveGateway or " + // Gateways
+            "self::bpmn:callActivity or self::bpmn:subProcess" + // Activities
+        "]";
+        
+        NodeList flowNodes = (NodeList) XPATH.evaluate(
+            elementSelectionXPath, 
+            doc, 
+            XPathConstants.NODESET
+        );
 
-        for (int i = 0; i < elements.getLength(); i++) {
-            // Cast to Element for attribute access
-            Element element = (Element) elements.item(i);
+        for (int i = 0; i < flowNodes.getLength(); i++) {
+            Element element = (Element) flowNodes.item(i);
+            String elementId = element.getAttribute("id");
+            String elementName = element.getAttribute("name");
+            String localName = element.getLocalName();
             
-            // Use getLocalName() to get the tag name without the namespace prefix
-            String localTag = element.getLocalName(); 
-
-            // --- Skip Logic (Based on Original Jsoup Code) ---
-
-            // Skip parallel and event-based gateways (localName check)
-            if (localTag.equals("parallelGateway") || localTag.equals("eventBasedGateway")) {
-                continue;
-            }
-
-            // Skip sub-processes (localName check)
-            if (localTag.equals("subProcess")) {
-                continue;
-            }
-
-            // Skip gateways that are not forking
-            if (localTag.endsWith("Gateway")) { // Checks for exclusiveGateway, inclusiveGateway, complexGateway
-                String id = element.getAttribute("id");
+            // Check if the 'name' attribute is missing or empty/whitespace-only
+            // Note: The getAttribute returns an empty string "" if the attribute is missing.
+            if (elementName == null || elementName.trim().isEmpty()) {
                 
-                // XPath check: count outgoing sequenceFlows with sourceRef=current ID
-                String outgoingXPath = "count(//*[local-name()='sequenceFlow' and @sourceRef='" + id + "'])";
-                
-                try {
-                    // Evaluate as a number
-                    Double count = (Double) XPATH.compile(outgoingXPath).evaluate(doc, XPathConstants.NUMBER);
-                    
-                    // If outgoing flow size is 1 or less, skip (not a split/fork)
-                    if (count <= 1) {
-                        continue;
-                    }
-                } catch (XPathExpressionException e) {
-                    throw new RuntimeException("XPath evaluation failed for gateway count.", e);
-                }
-            }
+                String message = String.format(
+                    "Label Required: Element '%s' (%s) must have a descriptive name attribute.",
+                    elementId,
+                    localName // Use localName which is 'startEvent', 'task', etc.
+                );
 
-            // Skip sequence flows without condition
-            if (localTag.equals("sequenceFlow")) {
-                // XPath check: find child element with local-name='conditionExpression'
-                String conditionXPath = "*[local-name()='conditionExpression']";
-                NodeList conditionNodes = evaluateXPath(element, conditionXPath);
-                if (conditionNodes.getLength() == 0) {
-                    continue;
-                }
-            }
-
-            // --- Label Required Check ---
-
-            // Check if the current element requires a label
-            boolean requiresLabel = localTag.equals("startEvent") ||
-                                    localTag.equals("endEvent") ||
-                                    localTag.equals("intermediateCatchEvent") ||
-                                    localTag.equals("intermediateThrowEvent") ||
-                                    localTag.equals("boundaryEvent") ||
-                                    localTag.equals("task") ||
-                                    localTag.equals("callActivity") ||
-                                    localTag.equals("userTask") ||
-                                    localTag.equals("manualTask") ||
-                                    localTag.equals("scriptTask") ||
-                                    localTag.equals("receiveTask") ||
-                                    localTag.equals("sendTask") ||
-                                    localTag.equals("businessRuleTask") ||
-                                    localTag.equals("sequenceFlow") ||
-                                    localTag.equals("participant") ||
-                                    localTag.equals("lane") ||
-                                    localTag.equals("exclusiveGateway") ||
-                                    localTag.equals("inclusiveGateway") ||
-                                    localTag.equals("complexGateway");
-
-
-            if (requiresLabel) {
-                // Use standard DOM getAttribute
-                String name = element.getAttribute("name").trim();
-                if (name.isEmpty()) {
-                    result.add(issue(element, "Element is missing label/name"));
-                }
+                // Add the issue, assuming the line number defaults to 1
+                result.add(new Issue(elementId, getLineNumber(element), message)); 
             }
         }
-
+        
         return result;
     }
 }

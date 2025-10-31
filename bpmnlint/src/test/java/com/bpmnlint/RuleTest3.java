@@ -5,6 +5,15 @@ import com.bpmnlint.validator.AdHocSubProcessValidator;
 import com.bpmnlint.validator.ConditionalFlowsValidator;
 import com.bpmnlint.validator.EndEventRequiredValidator;
 import com.bpmnlint.validator.EventSubProcessTypedStartEventValidator;
+import com.bpmnlint.validator.FakeJoinValidator;
+import com.bpmnlint.validator.LabelRequiredValidator;
+import com.bpmnlint.validator.LinkEventValidator;
+import com.bpmnlint.validator.NoBPMNDIValidator;
+import com.bpmnlint.validator.NoComplexGatewayValidator;
+import com.bpmnlint.validator.NoDisconnectedValidator;
+import com.bpmnlint.validator.NoDuplicateSequenceFlowsValidator;
+import com.bpmnlint.validator.NoGatewayJoinForkValidator;
+
 import org.assertj.core.groups.Tuple;
 
 
@@ -64,7 +73,7 @@ class RuleTest3 {
         }
     }
     public static String readFile(String fileName) {
-        InputStream inputStream = RuleTest1.class.getClassLoader().getResourceAsStream(fileName);
+        InputStream inputStream = RuleTest3.class.getClassLoader().getResourceAsStream(fileName);
         if (inputStream == null) {
             throw new IllegalArgumentException("File not found: " + fileName);
         }
@@ -126,5 +135,50 @@ class RuleTest3 {
          match("test/rules/event-sub-process-typed-start-event/valid-sub-process.bpmn",(EventSubProcessTypedStartEventValidator::validate));
 
      }
+
+     @Test
+        void fakeJoinValidator() throws Exception {
+        match("test/fake-join-correct.bpmn",(FakeJoinValidator::validate));
+        match("test/fake-join-incorrect.bpmn",(FakeJoinValidator::validate));
+    }
+
+     @Test
+        void labelRequiredValidator() throws Exception {
+        match("test/label-required-correct.bpmn",(LabelRequiredValidator::validate));
+        match("test/label-required-incorrect.bpmn",(LabelRequiredValidator::validate));
+    }
+
+     @Test
+        void linkEventValidator() throws Exception {
+        match("test/link-event-correct.bpmn",(LinkEventValidator::validate));
+        match("test/link-event-incorrect.bpmn",(LinkEventValidator::validate));
+    }
+     @Test
+        void noBPMNDIValidator() throws Exception {
+        //match("test/no-bpmndi-correct.bpmn",(NoBPMNDIValidator::validate));
+        match("test/no-bpmndi-correct.bpmn", (doc) -> (List) NoBPMNDIValidator.validate(doc));
+        match("test/no-bpmndi-incorrect.bpmn", (doc) -> (List) NoBPMNDIValidator.validate(doc));
+        //match("test/no-bpmndi-incorrect.bpmn",(NoBPMNDIValidator::validate));
+    }
+     @Test
+        void noComplexGatewayValidator() throws Exception {
+        match("test/no-complex-gateway-correct.bpmn",(NoComplexGatewayValidator::validate));
+        match("test/no-complex-gateway-incorrect.bpmn",(NoComplexGatewayValidator::validate));
+    }
+     @Test
+        void noDisconnectedValidator() throws Exception {
+        match("test/no-disconnected-correct.bpmn", (doc) -> (List) NoDisconnectedValidator.validate(doc)); 
+        match("test/no-disconnected-incorrect.bpmn", (doc) -> (List) NoDisconnectedValidator.validate(doc));
+    }
+     @Test
+        void noDuplicateSequenceFlowsValidator() throws Exception {
+        match("test/no-duplicate-sequence-flows-correct.bpmn",(NoDuplicateSequenceFlowsValidator::validate));
+        match("test/no-duplicate-sequence-flows-incorrect.bpmn",(NoDuplicateSequenceFlowsValidator::validate));
+    }
+     @Test
+        void noGatewayJoinForkValidator() throws Exception {
+        match("test/no-gateway-join-fork-correct.bpmn",(NoGatewayJoinForkValidator::validate));
+        match("test/no-gateway-join-fork-incorrect.bpmn",(NoGatewayJoinForkValidator::validate));
+    }
 
 }

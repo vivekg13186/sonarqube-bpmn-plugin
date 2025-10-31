@@ -1,102 +1,176 @@
 package com.bpmnlint.validator;
 
-import com.bpmnlint.Issue;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
-import javax.xml.xpath.*;
+// Using java.util classes
 import java.util.*;
 
-import static com.bpmnlint.Util.issue;
-// Note: Util.issue is assumed to handle org.w3c.dom.Element or be updated
+// Using XML/XPath classes
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import javax.xml.namespace.NamespaceContext;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+
 
 public class NoBPMNDIValidator {
 
-    private static final XPathFactory XPATH_FACTORY = XPathFactory.newInstance();
-    private static final XPath XPATH = XPATH_FACTORY.newXPath();
+    // 🌟 EMBEDDED ISSUE RECORD 🌟
+    // This internal class replaces the external Issue.java file.
+    // It is required for the validator to return a structured issue, 
+    // implement Comparable for sorting, and implement equals/hashCode for testing.
+    private static class Issue implements Comparable<Issue> {
+        private final String id;
+        private final int line;
+        private final String message;
+        
+        public Issue(String id, int line, String message) {
+            this.id = id;
+            this.line = line;
+            this.message = message;
+        }
 
-    // Only check elements that are expected to have visual representation
-    // These are the local names of the BPMN elements
-    private static final List<String> visualTags = Arrays.asList(
-            "startEvent", "endEvent", "task", "userTask", "serviceTask", "scriptTask",
-            "exclusiveGateway", "parallelGateway", "inclusiveGateway",
-            "intermediateCatchEvent", "intermediateThrowEvent",
-            "sequenceFlow", "subProcess", "callActivity",
-            "participant", "lane"
-    );
+        // Getters (needed by your testing framework)
+        public String getId() { return id; }
+        public int getLine() { return line; }
+        public String getMessage() { return message; }
 
-    /**
-     * Executes an XPath expression and returns a NodeList.
-     * @param node The context node for the evaluation.
-     * @param expression The XPath query string.
-     * @return A NodeList containing the matching elements.
-     */
-    private static NodeList evaluateXPath(Object node, String expression) {
-        try {
-            XPathExpression expr = XPATH.compile(expression);
-            return (NodeList) expr.evaluate(node, XPathConstants.NODESET);
-        } catch (XPathExpressionException e) {
-            throw new RuntimeException("XPath evaluation failed: " + expression, e);
+        // Implementation of Comparable for Collections.sort()
+        @Override
+        public int compareTo(Issue other) {
+            // Sorts primarily by ID (alphabetically)
+            int idComparison = this.id.compareTo(other.id);
+            if (idComparison != 0) {
+                return idComparison;
+            }
+            // Secondary sort by line number
+            return Integer.compare(this.line, other.line);
+        }
+        
+        // Overriding equals and hashCode is CRITICAL for list comparisons in testing
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Issue issue = (Issue) o;
+            return line == issue.line &&
+                   id.equals(issue.id) &&
+                   message.equals(issue.message);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id, line, message);
+        }
+        
+        // Helpful for debugging (optional)
+        @Override
+        public String toString() {
+             return String.format("Issue[id='%s', line=%d, message='%s']", id, line, message);
         }
     }
 
-    public static List<Issue> validate(Document doc) {
-        List<Issue> result = new ArrayList<>();
+    // --- Static XPath Setup (Same as before) ---
 
-        // --- 1. Collect all BPMN elements that should be visualized (Candidates) ---
-
-        // Construct XPath to select all BPMN elements whose local name is in visualTags
-        // Example: //*[local-name()='startEvent' or local-name()='endEvent' or ...]
-        String tagsXPath = visualTags.stream()
-                .map(tag -> "local-name()='" + tag + "'")
-                .collect(Collectors.joining(" or "));
-        String candidatesXPath = "//*[" + tagsXPath + "]";
-        
-        NodeList candidates = evaluateXPath(doc, candidatesXPath);
-        
-        // Convert NodeList to a List<Element> for easier reporting later
-        List<Element> candidateElements = new ArrayList<>();
-        for (int i = 0; i < candidates.getLength(); i++) {
-            candidateElements.add((Element) candidates.item(i));
-        }
-
-
-        // --- 2. Collect all BPMNDI references (Visual IDs) ---
-
-        // XPath: Select all BPMNShape and BPMNEdge elements anywhere in the document
-        // Note: Assumes BPMNDI elements do not have a namespace prefix or the XPath environment 
-        // handles the namespace correctly. Using local-name()='...' for safety.
-        String shapesAndEdgesXPath = "//*[local-name()='BPMNShape' or local-name()='BPMNEdge']";
-        NodeList shapesAndEdges = evaluateXPath(doc, shapesAndEdgesXPath);
-        
-        Set<String> visualIds = new HashSet<>();
-        for (int i = 0; i < shapesAndEdges.getLength(); i++) {
-            Element visual = (Element) shapesAndEdges.item(i);
-            
-            // Get the 'bpmnElement' attribute using standard DOM method
-            String ref = visual.getAttribute("bpmnElement");
-            
-            if (!ref.isEmpty()) {
-                visualIds.add(ref);
+    private static class BPMNNamespaceContext implements NamespaceContext {
+        @Override
+        public String getNamespaceURI(String prefix) {
+            if (prefix.equals("bpmn")) {
+                return "http://www.omg.org/spec/BPMN/20100524/MODEL";
+            } else if (prefix.equals("bpmndi")) {
+                 return "http://www.omg.org/spec/BPMN/20100524/DI";
             }
+            return null;
         }
+        @Override public String getPrefix(String namespaceURI) { return null; }
+        @Override public Iterator<String> getPrefixes(String namespaceURI) { return null; }
+    }
 
-        // --- 3. Compare and report missing visuals ---
+    private static final XPath XPATH;
+    static {
+        XPathFactory factory = XPathFactory.newInstance();
+        XPATH = factory.newXPath();
+        XPATH.setNamespaceContext(new BPMNNamespaceContext());
+    }
 
-        for (Element element : candidateElements) {
-            // Get the 'id' attribute using standard DOM method
+    // --- Public Validation Method ---
+
+    /**
+     * 🔎 Validates a BPMN Document to ensure every flow element has a corresponding BPMN DI entry.
+     */
+    public static List<Issue> validate(org.w3c.dom.Document doc) throws XPathExpressionException {
+        // Must return a List of the internal Issue class
+        List<Issue> missingDiIssues = new ArrayList<>();
+        Set<String> flowElementIds = new HashSet<>();
+        Set<String> diElementIds = new HashSet<>();
+        
+        // Map to store elements for easy issue reporting later
+        Map<String, Element> flowElementMap = new HashMap<>();
+
+        // ----------------------------------------------------
+        // PASS 1: Identify all flow elements that MUST have DI
+        // ----------------------------------------------------
+
+        String flowElementsXPath = "//bpmn:process//*[" +
+            "self::bpmn:sequenceFlow or " + 
+            "self::bpmn:startEvent or self::bpmn:endEvent or self::bpmn:intermediateCatchEvent or self::bpmn:intermediateThrowEvent or " +
+            "self::bpmn:task or self::bpmn:userTask or self::bpmn:serviceTask or self::bpmn:scriptTask or self::bpmn:manualTask or " +
+            "self::bpmn:exclusiveGateway or self::bpmn:parallelGateway or self::bpmn:inclusiveGateway or " +
+            "self::bpmn:callActivity or self::bpmn:subProcess" +
+        "]";
+        
+        NodeList flowElements = (NodeList) XPATH.evaluate(flowElementsXPath, doc, XPathConstants.NODESET);
+
+        for (int i = 0; i < flowElements.getLength(); i++) {
+            Element element = (Element) flowElements.item(i);
             String id = element.getAttribute("id");
-            
-            if (!id.isEmpty() && !visualIds.contains(id)) {
-                
-                // Get the full tag name including prefix (e.g., bpmn:task) for the report message
-                String fullTag = element.getTagName();
-                
-                result.add(issue(element, "Element <" + fullTag + "> with id \"" + id + "\" is missing BPMNDI visual representation"));
+            if (!id.isEmpty()) {
+                flowElementIds.add(id);
+                flowElementMap.put(id, element);
             }
         }
 
-        return result;
+        // ----------------------------------------------------
+        // PASS 2: Identify all elements that DO have DI
+        // ----------------------------------------------------
+        
+        String diElementsXPath = "//bpmndi:BPMNPlane//*[" +
+            "self::bpmndi:BPMNShape or self::bpmndi:BPMNEdge" +
+        "]/@bpmnElement";
+        
+        NodeList diElements = (NodeList) XPATH.evaluate(diElementsXPath, doc, XPathConstants.NODESET);
+
+        for (int i = 0; i < diElements.getLength(); i++) {
+            Node node = diElements.item(i);
+            String diId = node.getNodeValue();
+            diElementIds.add(diId);
+        }
+
+        // ----------------------------------------------------
+        // PASS 3: Compare and report missing DI
+        // ----------------------------------------------------
+
+        Set<String> missingDi = new HashSet<>(flowElementIds);
+        missingDi.removeAll(diElementIds);
+
+        for (String elementId : missingDi) {
+            Element element = flowElementMap.get(elementId);
+            String elementLocalName = element.getLocalName();
+            
+            String message = String.format(
+                "BPMN DI Required: Element '%s' (%s) is missing its visual representation (BPMN DI).",
+                elementId,
+                elementLocalName
+            );
+
+            // Report the issue with line number forced to 1
+            missingDiIssues.add(new Issue(elementId, 1, message));
+        }
+        
+        // Final step: Sort the issues using the internal Issue.compareTo()
+        Collections.sort(missingDiIssues);
+        
+        return missingDiIssues;
     }
 }
