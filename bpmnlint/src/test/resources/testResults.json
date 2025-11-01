@@ -34,7 +34,7 @@
   "test/end-event-required-incorrect.bpmn": [
     {
       "id": "Process_1qgckdh",
-      "line": 1,
+      "line": 3,
       "message": "Process is missing end event"
     }
   ],
@@ -215,26 +215,26 @@
   "test/rules/end-event-required/invalid-sub-process-sub-types.bpmn": [
     {
       "id": "TRANSACTION",
-      "line": 1,
+      "line": 5,
       "message": "Sub process is missing end event"
     },
     {
       "id": "EVENT_SUBPROCESS",
-      "line": 1,
+      "line": 6,
       "message": "Sub process is missing end event"
     }
   ],
   "test/rules/end-event-required/invalid-sub-process.bpmn": [
     {
       "id": "SubProcess",
-      "line": 1,
+      "line": 5,
       "message": "Sub process is missing end event"
     }
   ],
   "test/rules/end-event-required/invalid.bpmn": [
     {
       "id": "Process",
-      "line": 1,
+      "line": 3,
       "message": "Process is missing end event"
     }
   ],

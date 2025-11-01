@@ -18,16 +18,16 @@ public class EndEventRequiredValidator {
         List<Issue> result = new ArrayList<>();
 
         // Select all processes and sub-processes
-        Elements containers = doc.select("*|process, *|subProcess");
+        Elements containers = doc.select("*|process, *|subProcess,*|transaction");
 
         for (Element container : containers) {
-            String containerId = container.attr("id");
-
             // Find all end events within this container
             Elements endEvents = container.select("*|endEvent");
-
             if (endEvents.isEmpty()) {
-                result.add(issue(container, "Process is missing end event"));
+                String t =container.tagName();
+                String message = t.endsWith("subProcess") || t.endsWith("transaction") ? "Sub process is missing end event"
+                :"Process is missing end event";
+                result.add(issue(container, message));
             }
         }
 

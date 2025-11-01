@@ -97,12 +97,16 @@ public class RuleTestCase {
 
     }
     @Test
-    public void endEventRequiredValidator(){
-        assert EndEventRequiredValidator.validate(loadDoc("test/end-event-required-correct.bpmn")).isEmpty();
-        List<Issue> issueList =EndEventRequiredValidator.validate(loadDoc("test/end-event-required-incorrect.bpmn"));
-        assertThat(issueList).extracting("id", "line", "message")
-                .contains(
-                        tuple("Process_1qgckdh", 3, "Process is missing end event") );
+    void endEventRequiredValidator() throws Exception{
+        test("test/end-event-required-correct.bpmn",(EndEventRequiredValidator::validate));
+        test("test/end-event-required-incorrect.bpmn",(EndEventRequiredValidator::validate));
+        test("test/rules/end-event-required/invalid.bpmn",(EndEventRequiredValidator::validate));
+        test("test/rules/end-event-required/invalid-sub-process.bpmn",(EndEventRequiredValidator::validate));
+        test("test/rules/end-event-required/invalid-sub-process-sub-types.bpmn",(EndEventRequiredValidator::validate));
+        test("test/rules/end-event-required/valid.bpmn",(EndEventRequiredValidator::validate));
+        test("test/rules/end-event-required/valid-sub-process.bpmn",(EndEventRequiredValidator::validate));
+        test("test/rules/end-event-required/valid-sub-process-sub-types.bpmn",(EndEventRequiredValidator::validate));
+
 
     }
 
