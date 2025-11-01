@@ -1069,17 +1069,17 @@
   "test/label-required-incorrect.bpmn": [
     {
       "id": "StartEvent_1",
-      "line": 1,
+      "line": 4,
       "message": "Label Required: Element 'StartEvent_1' (startEvent) must have a descriptive name attribute."
     },
     {
       "id": "Task_1",
-      "line": 1,
+      "line": 7,
       "message": "Label Required: Element 'Task_1' (task) must have a descriptive name attribute."
     },
     {
       "id": "EndEvent_1",
-      "line": 1,
+      "line": 12,
       "message": "Label Required: Element 'EndEvent_1' (endEvent) must have a descriptive name attribute."
     }
   ],

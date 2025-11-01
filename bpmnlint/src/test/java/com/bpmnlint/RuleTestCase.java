@@ -129,15 +129,9 @@ public class RuleTestCase {
     }
 
     @Test
-    public void labelRequiredValidator(){
-        assert LabelRequiredValidator.validate(loadDoc("test/label-required-correct.bpmn")).isEmpty();
-        List<Issue> issueList =LabelRequiredValidator.validate(loadDoc("test/label-required-incorrect.bpmn"));
-        assertThat(issueList).extracting("id", "line", "message")
-                .contains(
-                        tuple("StartEvent_1", 4, "Element is missing label/name") ,
-                        tuple("Task_1", 7, "Element is missing label/name") ,
-                        tuple("EndEvent_1", 12, "Element is missing label/name") );
-
+    public void labelRequiredValidator() throws Exception{
+        test("test/label-required-correct.bpmn",(LabelRequiredValidator::validate));
+        test("test/label-required-incorrect.bpmn",(LabelRequiredValidator::validate));
 
     }
 

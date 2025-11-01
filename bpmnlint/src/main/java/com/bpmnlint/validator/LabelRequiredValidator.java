@@ -10,7 +10,8 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.bpmnlint.Util.*;public class LabelRequiredValidator {
+import static com.bpmnlint.Util.*;
+public class LabelRequiredValidator {
 
     public static List<Issue> validate(Document doc) {
         List<Issue> result = new ArrayList<>();
@@ -64,8 +65,15 @@ import static com.bpmnlint.Util.*;public class LabelRequiredValidator {
             if (requiresLabel) {
 
                 String name = element.attr("name").trim();
+
                 if (name.isEmpty()) {
-                    result.add(issue(element, "Element is missing label/name"));
+                    String type = element.tagName();
+                    if(type.contains(":")){
+                        type =type.split(":")[1];
+                    }
+                    String id = element.id();
+                    String message = String.format("Label Required: Element '%s' (%s) must have a descriptive name attribute.",id,type);
+                    result.add(issue(element, message));
                 }
             }
         }
