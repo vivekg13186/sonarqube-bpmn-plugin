@@ -38,8 +38,10 @@ public class FakeJoinValidator {
             Elements activities = doc.select(activitySelector);
 
             for (Element activity : activities) {
-                if(activity.select("*|incoming").size()>1){
-                    result.add(issue(activity,"Incoming flows do not join"));
+                int incomingCount=activity.select("*|incoming").size();
+                if(incomingCount>1){
+                    String message =String.format("Fake Join detected: Element '%s' (task) is not a Gateway but has %d incoming sequence flows. Use a Gateway for merging paths." ,activity.attr("id"),incomingCount);
+                    result.add(issue(activity,message));
                 }
             }
             String eventSelector = "*|boundaryEvent," +
@@ -53,8 +55,10 @@ public class FakeJoinValidator {
             Elements events = doc.select(eventSelector);
 
             for (Element event : events) {
-                if(event.select("*|incoming").size()>1){
-                    result.add(issue(event,"Incoming flows do not join"));
+                int incomingCount=event.select("*|incoming").size();
+                if(incomingCount>1){
+                    String message =String.format("Fake Join detected: Element '%s' (event) is not a Gateway but has %d incoming sequence flows. Use a Gateway for merging paths." ,event.attr("id"),incomingCount);
+                    result.add(issue(event,message));
                 }
             }
 

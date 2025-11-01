@@ -1060,7 +1060,7 @@
   "test/fake-join-incorrect.bpmn": [
     {
       "id": "Task_2",
-      "line": 1,
+      "line": 10,
       "message": "Fake Join detected: Element 'Task_2' (task) is not a Gateway but has 2 incoming sequence flows. Use a Gateway for merging paths."
     }
   ],

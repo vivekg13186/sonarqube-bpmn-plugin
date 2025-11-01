@@ -122,13 +122,9 @@ public class RuleTestCase {
         test("test/rules/event-sub-process-typed-start-event/valid-sub-process.bpmn",(EventSubProcessTypedStartEventValidator::validate));
     }
     @Test
-    public void fakeJoinValidator(){
-         assert FakeJoinValidator.validate(loadDoc("test/fake-join-correct.bpmn")).isEmpty();
-        List<Issue> issueList =FakeJoinValidator.validate(loadDoc("test/fake-join-incorrect.bpmn"));
-        assertThat(issueList).extracting("id", "line", "message")
-                .contains(
-                        tuple("Task_2", 10, "Incoming flows do not join") );
-
+    public void fakeJoinValidator() throws Exception{
+        test("test/fake-join-correct.bpmn",(FakeJoinValidator::validate));
+        test("test/fake-join-incorrect.bpmn",(FakeJoinValidator::validate));
 
     }
 
