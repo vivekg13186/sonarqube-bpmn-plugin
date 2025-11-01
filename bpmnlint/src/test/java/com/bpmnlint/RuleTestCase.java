@@ -1,14 +1,19 @@
 package com.bpmnlint;
 
 import com.bpmnlint.validator.*;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.parser.Parser;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,10 +22,10 @@ import static org.assertj.core.api.Assertions.tuple;
 
 import static org.junit.Assert.assertTrue;
 
-public class RuleTest1 {
+public class RuleTestCase {
 
     public static String readFile(String fileName) {
-        InputStream inputStream = RuleTest1.class.getClassLoader().getResourceAsStream(fileName);
+        InputStream inputStream = RuleTestCase.class.getClassLoader().getResourceAsStream(fileName);
         if (inputStream == null) {
             throw new IllegalArgumentException("File not found: " + fileName);
         }
@@ -31,13 +36,35 @@ public class RuleTest1 {
             throw new RuntimeException("Error reading file", e);
         }
     }
-    public Document loadDoc(String path){
+    public static Document loadDoc(String path){
        return Jsoup.parse(readFile(path), Parser.xmlParser().setTrackPosition(true));
     }
 
+    static HashMap<String,List<Issue>> testResults ;
+    @BeforeAll
+    public static void start(){
+        Gson gson = new Gson();
+        Type listType = new TypeToken<HashMap<String,List<Issue>>>(){}.getType();
+        testResults = gson.fromJson(readFile("testResults.json"),listType);
+    }
 
+    interface  Callback{
+        List<Issue> validate(Document document) throws Exception;
+    }
+
+    public static void test(String filename,Callback callback) throws Exception {
+        Document doc = loadDoc(filename);
+        List<Issue> actualResult = callback.validate(doc);
+        List<Issue> expectedResult = testResults.get(filename);
+        assertThat(actualResult).hasSameElementsAs(expectedResult);
+    }
     @Test
-    public void adHocSubProcessValidator(){
+    public void adHocSubProcessValidator() throws Exception {
+   test( "test/ad-hoc-sub-process-correct.bpmn",AdHocSubProcessValidator::validate  );
+        test( "test/ad-hoc-sub-process-incorrect.bpmn",AdHocSubProcessValidator::validate  );
+   /*
+
+
         assert AdHocSubProcessValidator.validate(loadDoc("test/ad-hoc-sub-process-correct.bpmn")).isEmpty();
         List<Issue> issueList = AdHocSubProcessValidator.validate(loadDoc("test/ad-hoc-sub-process-incorrect.bpmn"));
 
@@ -47,6 +74,7 @@ public class RuleTest1 {
                         tuple("Event_03k6pnd", 10, "A <Start Event> is not allowed in <Ad Hoc Sub Process>"),
                         tuple("Event_03gcp25", 13, "An <End Event> is not allowed in <Ad Hoc Sub Process>"));
 
+    */
     }
     @Test
     public void conditionalFlowsValidator(){
