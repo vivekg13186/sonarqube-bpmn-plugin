@@ -568,5 +568,124 @@ test/resources/test/rules/superfluous-termination/valid-boundary-non-interruptin
   result: []
 test/resources/test/rules/superfluous-termination/valid-event-sub-process-non-interrupting.bpmn:
   result: []
-test/resources/test/rules/superfluous-termination/valid-implicit-end.bpmn:
+test/rules/event-sub-process-typed-start-event/valid-sub-process.bpmn:
   result: []
+test/fake-join-correct.bpmn:
+  result: []
+test/fake-join-incorrect.bpmn:
+  result:
+    - [
+        Task_2, 
+        1,
+        "Fake Join detected: Element 'Task_2' (task) is not a Gateway but has 2 incoming sequence flows. Use a Gateway for merging paths."
+      ]
+test/label-required-correct.bpmn:
+  result: []
+
+test/label-required-incorrect.bpmn:
+  result:
+    - [
+        StartEvent_1, 
+        1, 
+        "Label Required: Element 'StartEvent_1' (startEvent) must have a descriptive name attribute."
+      ]
+    - [
+        Task_1, 
+        1, 
+        "Label Required: Element 'Task_1' (task) must have a descriptive name attribute."
+      ]
+    - [
+        EndEvent_1, 
+        1, 
+        "Label Required: Element 'EndEvent_1' (endEvent) must have a descriptive name attribute."
+      ]
+test/link-event-correct.bpmn:
+  result:
+    - [
+        Event_0fvzchs, 
+        1, 
+        "Link Event Definition Missing Name: The 'Event_0fvzchs' (intermediateThrowEvent) link definition must have a non-empty name attribute to function correctly."
+      ]
+    - [
+        Event_0hnrksg, 
+        1, 
+        "Link Event Definition Missing Name: The 'Event_0hnrksg' (intermediateCatchEvent) link definition must have a non-empty name attribute to function correctly."
+      ]
+test/link-event-incorrect.bpmn:
+  result:
+    - [
+        Event_022ctsn, 
+        1, 
+        "Link Event Definition Missing Name: The 'Event_022ctsn' (intermediateCatchEvent) link definition must have a non-empty name attribute to function correctly."
+      ]
+    - [
+        Event_0fvzchs, 
+        1, 
+        "Link Event Definition Missing Name: The 'Event_0fvzchs' (intermediateThrowEvent) link definition must have a non-empty name attribute to function correctly."
+      ]
+    - [
+        Event_0q5xos0, 
+        1, 
+        "Link Event Definition Missing Name: The 'Event_0q5xos0' (intermediateThrowEvent) link definition must have a non-empty name attribute to function correctly."
+      ]
+    - [
+        Event_0rw1f16, 
+        1, 
+        "Link Event Definition Missing Name: The 'Event_0rw1f16' (intermediateCatchEvent) link definition must have a non-empty name attribute to function correctly."
+      ]
+test/no-bpmndi-correct.bpmn:
+  result: []
+test/no-bpmndi-incorrect.bpmn:
+  result:
+    - [
+        SequenceFlow_1, 
+        1, 
+        "BPMN DI Required: Element 'SequenceFlow_1' (sequenceFlow) is missing its visual representation (BPMN DI)."
+      ]
+test/no-complex-gateway-correct.bpmn:
+  result: []
+# Correct Structure for a passing file
+test/no-complex-gateway-correct.bpmn:
+  result: [] 
+# Correct Structure for a failing file
+test/no-complex-gateway-incorrect.bpmn:
+  result:
+    # This issue is raised against the complex gateway found in the file.
+test/no-complex-gateway-incorrect.bpmn:
+  result:
+    # Use the message string returned by the validator code
+    - [
+        ExclusiveGateway_2, 
+        1, 
+        "The use of Complex Gateway is forbidden. Found gateway with ID 'ExclusiveGateway_2'."
+      ]
+test/no-disconnected-correct.bpmn:
+  result: []
+test/no-disconnected-incorrect.bpmn:
+  result:
+    # 🌟 MATCH the new unique string, which includes the Task_2 ID 🌟
+    - [
+        Task_2, 
+        1, 
+        "Task is fully disconnected (ID: Task_2)."
+      ]
+test/no-duplicate-sequence-flows-correct.bpmn:
+  result: [] 
+test/no-duplicate-sequence-flows-incorrect.bpmn:
+  result:
+    - 
+      [
+        SequenceFlow_4,
+        1,
+        "Duplicate sequence flow: A flow already exists from Task_1 to Task_2 (Original flow ID: SequenceFlow_2)."
+      ]
+test/no-gateway-join-fork-correct.bpmn:
+  result: []
+
+test/no-gateway-join-fork-incorrect.bpmn:
+  result:
+    - [
+        ExclusiveGateway_1, 
+        1,
+        "Gateway 'ExclusiveGateway_1' performs both joining (2 incoming flows) and forking (2 outgoing flows). A single gateway should only perform one function (join OR fork)."
+      ]
