@@ -111,13 +111,15 @@ public class RuleTestCase {
     }
 
     @Test
-    public void eventSubProcessTypedStartEventValidator(){
-        assert EventSubProcessTypedStartEventValidator.validate(loadDoc("test/event-sub-process-typed-start-event-correct.bpmn")).isEmpty();
-        List<Issue> issueList =EventSubProcessTypedStartEventValidator.validate(loadDoc("test/event-sub-process-typed-start-event-incorrect.bpmn"));
-        assertThat(issueList).extracting("id", "line", "message")
-                .contains(
-                        tuple("StartEvent_0ydcpql", 5, "Start event is missing event definition") );
-
+    public void eventSubProcessTypedStartEventValidator() throws Exception{
+        test("test/event-sub-process-typed-start-event-correct.bpmn",(EventSubProcessTypedStartEventValidator::validate));
+        test("test/event-sub-process-typed-start-event-incorrect.bpmn",(EventSubProcessTypedStartEventValidator::validate));
+        test("test/rules/event-sub-process-typed-start-event/invalid.bpmn",(EventSubProcessTypedStartEventValidator::validate));
+        test("test/rules/event-sub-process-typed-start-event/valid.bpmn",(EventSubProcessTypedStartEventValidator::validate));
+        test("test/rules/event-sub-process-typed-start-event/valid-empty.bpmn",(EventSubProcessTypedStartEventValidator::validate));
+        test("test/rules/event-sub-process-typed-start-event/valid-empty-sub-process.bpmn",(EventSubProcessTypedStartEventValidator::validate));
+        test("test/rules/event-sub-process-typed-start-event/valid-intermediate-event.bpmn",(EventSubProcessTypedStartEventValidator::validate));
+        test("test/rules/event-sub-process-typed-start-event/valid-sub-process.bpmn",(EventSubProcessTypedStartEventValidator::validate));
     }
     @Test
     public void fakeJoinValidator(){

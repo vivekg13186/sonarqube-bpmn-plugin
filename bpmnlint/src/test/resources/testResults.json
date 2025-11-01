@@ -43,7 +43,7 @@
   "test/event-sub-process-typed-start-event-incorrect.bpmn": [
     {
       "id": "StartEvent_0ydcpql",
-      "line": 1,
+      "line": 5,
       "message": "Start event is missing event definition"
     }
   ],
@@ -247,7 +247,7 @@
   "test/rules/event-sub-process-typed-start-event/invalid.bpmn": [
     {
       "id": "StartEvent",
-      "line": 1,
+      "line": 5,
       "message": "Start event is missing event definition"
     }
   ],
