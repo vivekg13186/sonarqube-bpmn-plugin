@@ -17,13 +17,10 @@ import java.util.List;
  * using the standard JAXP/XPath implementation.
  */
 public class SingleBlankStartEventValidator {
- 
-    /**
-     * Validates the given XML document.
-     *
-     * @param doc The parsed org.w3c.dom.Document to validate.
-     * @return A list of issues found.
-     */
+    public static List<Issue> validate(org.w3c.dom.Document doc) {
+        List<Issue> result = new ArrayList<>();
+        return null;
+    }
     public static List<Issue> validate(Document doc) {
         List<Issue> result = new ArrayList<>();
  

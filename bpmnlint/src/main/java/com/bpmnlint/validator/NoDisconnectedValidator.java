@@ -10,18 +10,18 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 public class NoDisconnectedValidator {
+    public static List<Issue> validate(org.w3c.dom.Document doc) {
+        List<Issue> result = new ArrayList<>();
+        return null;
+    }
+    public static List<Issue> validate(Document doc) {
+        List<Issue> result = new ArrayList<>();
 
-    // --- Embedded Issue Class (For compilation and sorting) ---
-    private static class Issue implements Comparable<Issue> {
-        private final String id;
-        private final int line;
-        private final String message;
-        
-        public Issue(String id, int line, String message) {
-            this.id = id;
-            this.line = line;
-            this.message = message;
-        }
+        // Select all relevant flow elements
+        Elements elements = doc.select("*|task, *|subProcess, *|exclusiveGateway, *|parallelGateway, *|inclusiveGateway, *|startEvent, *|endEvent, *|intermediateCatchEvent, *|intermediateThrowEvent, *|boundaryEvent");
+
+        for (Element element : elements) {
+            String id = element.attr("id");
 
         public String getId() { return id; }
         public int getLine() { return line; }

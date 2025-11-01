@@ -18,40 +18,11 @@ import static com.bpmnlint.Util.getLineNumber;
 // Assuming the Issue constructor is: new Issue(elementId, lineNumber, message)
 
 public class NoGatewayJoinForkValidator {
-
-    // --- Static XPath Setup ---
-
-    /**
-     * Helper class to manage BPMN namespaces for XPath queries.
-     */
-    private static class BPMNNamespaceContext implements NamespaceContext {
-        @Override
-        public String getNamespaceURI(String prefix) {
-            if (prefix.equals("bpmn")) {
-                return "http://www.omg.org/spec/BPMN/20100524/MODEL";
-            }
-            return null;
-        }
-        @Override
-        public String getPrefix(String namespaceURI) { return null; }
-        @Override
-        public Iterator<String> getPrefixes(String namespaceURI) { return null; }
+    public static List<Issue> validate(org.w3c.dom.Document doc) {
+        List<Issue> result = new ArrayList<>();
+        return null;
     }
-
-    private static final XPath XPATH;
-    static {
-        XPathFactory factory = XPathFactory.newInstance();
-        XPATH = factory.newXPath();
-        XPATH.setNamespaceContext(new BPMNNamespaceContext());
-    }
-
-    // --- Public Validation Method ---
-
-    /**
-     * 🔎 Validates a BPMN Document to ensure that no single Gateway is used for both
-     * joining (converging) and splitting (forking/diverging) sequence flows.
-     */
-    public static List<Issue> validate(org.w3c.dom.Document doc) throws XPathExpressionException {
+    public static List<Issue> validate(Document doc) {
         List<Issue> result = new ArrayList<>();
 
         // Use translate for case-insensitive XPath 1.0 selection of all Gateways.

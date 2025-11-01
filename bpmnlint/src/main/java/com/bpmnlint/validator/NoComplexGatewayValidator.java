@@ -18,8 +18,15 @@ import java.util.*;
 import static com.bpmnlint.Util.getLineNumber; 
 
 public class NoComplexGatewayValidator {
+    public static List<Issue> validate(org.w3c.dom.Document doc) {
+        List<Issue> result = new ArrayList<>();
+        return null;
+    }
+    public static List<Issue> validate(Document doc) {
+        List<Issue> result = new ArrayList<>();
 
-    // --- Static XPath Setup ---
+        // Select all complex gateways
+        Elements complexGateways = doc.select("*|complexGateway");
 
     /**
      * Helper class to manage BPMN namespaces for XPath queries.

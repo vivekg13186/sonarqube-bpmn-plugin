@@ -1,34 +1,44 @@
 package com.bpmnlint.validator;
 
 import com.bpmnlint.Issue;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
-import javax.xml.namespace.NamespaceContext;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.*;
+import static com.bpmnlint.Util.*;public class LabelRequiredValidator {
 
-// Assuming these utility methods and classes exist:
-import static com.bpmnlint.Util.getLineNumber; 
-// Assuming the Issue constructor is: new Issue(elementId, lineNumber, message)
+    public static List<Issue> validate(org.w3c.dom.Document doc) {
+        List<Issue> result = new ArrayList<>();
+        return null;
+    }
+    public static List<Issue> validate(Document doc) {
+        List<Issue> result = new ArrayList<>();
 
-public class LabelRequiredValidator {
+        // Select all BPMN elements
+        Elements elements = doc.select("*");
 
-    // --- Static XPath Setup ---
+        for (Element element : elements) {
+            String tag = element.tagName();
 
-    /**
-     * Helper class to manage BPMN namespaces for XPath queries.
-     */
-    private static class BPMNNamespaceContext implements NamespaceContext {
-        @Override
-        public String getNamespaceURI(String prefix) {
-            if (prefix.equals("bpmn")) {
-                return "http://www.omg.org/spec/BPMN/20100524/MODEL";
+            // Skip parallel and event-based gateways
+            if (tag.endsWith(":parallelGateway") || tag.endsWith(":eventBasedGateway")) continue;
+
+            // Skip sub-processes
+            if (tag.endsWith(":subProcess")) continue;
+
+            // Skip gateways that are not forking
+            if (tag.endsWith(":gateway")) {
+                String id = element.attr("id");
+                Elements outgoing = doc.select("*|sequenceFlow[sourceRef=" + id + "]");
+                if (outgoing.size() <= 1) continue;
+            }
+
+            // Skip sequence flows without condition
+            if (tag.endsWith(":sequenceFlow")) {
+                if (element.select("*|conditionExpression").isEmpty()) continue;
             }
             return null;
         }

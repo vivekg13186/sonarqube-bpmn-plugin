@@ -1,23 +1,11 @@
 package com.bpmnlint;
 
 
-import com.bpmnlint.validator.AdHocSubProcessValidator;
-import com.bpmnlint.validator.ConditionalFlowsValidator;
-import com.bpmnlint.validator.EndEventRequiredValidator;
-import com.bpmnlint.validator.EventSubProcessTypedStartEventValidator;
-import com.bpmnlint.validator.FakeJoinValidator;
-import com.bpmnlint.validator.LabelRequiredValidator;
-import com.bpmnlint.validator.LinkEventValidator;
-import com.bpmnlint.validator.NoBPMNDIValidator;
-import com.bpmnlint.validator.NoComplexGatewayValidator;
-import com.bpmnlint.validator.NoDisconnectedValidator;
-import com.bpmnlint.validator.NoDuplicateSequenceFlowsValidator;
-import com.bpmnlint.validator.NoGatewayJoinForkValidator;
-
+import com.bpmnlint.validator.*;
 import org.assertj.core.groups.Tuple;
 
 
-
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
@@ -35,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RuleTest3 {
 
-    private static Yaml yaml;
+
 
     interface  Callback{
         List<Issue> validate(Document document) throws Exception;
@@ -65,7 +53,7 @@ class RuleTest3 {
         }
         Document document =loadDoc(path);
         if(records.isEmpty()){
-            List<Issue> issue = callback.validate(document);
+             callback.validate(document);
             assertTrue(callback.validate(document).isEmpty());
         }else {
             assertThat(callback.validate(document)).extracting("id", "line", "message")

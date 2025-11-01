@@ -38,13 +38,12 @@ public class FakeJoinValidator {
         public Iterator<String> getPrefixes(String namespaceURI) { return null; }
     }
 
-    private static final XPath XPATH;
-    static {
-        // Initialize and configure a static XPath object for reuse with BPMN namespace
-        XPathFactory factory = XPathFactory.newInstance();
-        XPATH = factory.newXPath();
-        XPATH.setNamespaceContext(new BPMNNamespaceContext());
+    public static List<Issue> validate(org.w3c.dom.Document doc) {
+        List<Issue> result = new ArrayList<>();
+        return null;
     }
+    public static List<Issue> validate(Document doc) {
+        List<Issue> result = new ArrayList<>();
 
     // --- Public Validation Method ---
 

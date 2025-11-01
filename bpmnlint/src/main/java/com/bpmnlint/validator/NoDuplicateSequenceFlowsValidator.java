@@ -18,21 +18,18 @@ import static com.bpmnlint.Util.getLineNumber;
 // Assuming the Issue constructor is: new Issue(elementId, lineNumber, message)
 
 public class NoDuplicateSequenceFlowsValidator {
+    public static List<Issue> validate(org.w3c.dom.Document doc) {
+        List<Issue> result = new ArrayList<>();
+        return null;
+    }
+    public static List<Issue> validate(Document doc) {
+        List<Issue> result = new ArrayList<>();
 
-    // --- Static XPath Setup ---
+        Map<String, Element> seenFlows = new HashMap<>();
+        Set<String> reportedSources = new HashSet<>();
+        Set<String> reportedTargets = new HashSet<>();
 
-    /**
-     * Helper class to manage BPMN namespaces for XPath queries.
-     */
-    private static class BPMNNamespaceContext implements NamespaceContext {
-        @Override
-        public String getNamespaceURI(String prefix) {
-            // Standard BPMN 2.0 Model Namespace
-            if (prefix.equals("bpmn")) {
-                return "http://www.omg.org/spec/BPMN/20100524/MODEL";
-            }
-            return null;
-        }
+        Elements sequenceFlows = doc.select("*|sequenceFlow");
 
         @Override
         public String getPrefix(String namespaceURI) { return null; }

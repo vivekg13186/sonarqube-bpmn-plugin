@@ -71,15 +71,38 @@ public class NoBPMNDIValidator {
         }
     }
 
-    // --- Static XPath Setup (Same as before) ---
+public class NoBPMNDIValidator {
+    public static List<Issue> validate(org.w3c.dom.Document doc) {
+        List<Issue> result = new ArrayList<>();
+        return null;
+    }
+    // Only check elements that are expected to have visual representation
+    private static final List<String> visualTags = Arrays.asList(
+            ":startEvent", ":endEvent", ":task", ":userTask", ":serviceTask", ":scriptTask",
+            ":exclusiveGateway", ":parallelGateway", ":inclusiveGateway",
+            ":intermediateCatchEvent", ":intermediateThrowEvent",
+            ":sequenceFlow", ":subProcess", ":callActivity",
+            ":participant", ":lane"
+    );
 
-    private static class BPMNNamespaceContext implements NamespaceContext {
-        @Override
-        public String getNamespaceURI(String prefix) {
-            if (prefix.equals("bpmn")) {
-                return "http://www.omg.org/spec/BPMN/20100524/MODEL";
-            } else if (prefix.equals("bpmndi")) {
-                 return "http://www.omg.org/spec/BPMN/20100524/DI";
+    public static List<Issue> validate(Document doc) {
+        List<Issue> result = new ArrayList<>();
+
+        // Collect all BPMN elements that should be visualized
+        Elements candidates = doc.select("*").stream()
+                .filter(e -> {
+                    String tag = e.tagName();
+                    return visualTags.stream().anyMatch(tag::endsWith);
+                })
+                .collect(Collectors.toCollection(Elements::new));
+
+        // Collect all BPMNDI references
+        Set<String> visualIds = new HashSet<>();
+        Elements shapesAndEdges = doc.select("*|BPMNShape, *|BPMNEdge");
+        for (Element visual : shapesAndEdges) {
+            String ref = visual.attr("bpmnElement");
+            if (!ref.isEmpty()) {
+                visualIds.add(ref);
             }
             return null;
         }
