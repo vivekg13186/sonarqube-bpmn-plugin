@@ -1,1840 +1,1162 @@
-[
-  {
-    "test/resources/test/rules/superfluous-termination/valid.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/ad-hoc-sub-process-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/ad-hoc-sub-process-incorrect.bpmn": [
-      {
-        "id": "Event_0q40via",
-        "line": 1,
-        "message": "An intermediate catch event inside <Ad Hoc Sub Process> must have an outgoing sequence flow"
-      },
-      {
-        "id": "Event_03k6pnd",
-        "line": 1,
-        "message": "A <Start Event> is not allowed in <Ad Hoc Sub Process>"
-      },
-      {
-        "id": "Event_03gcp25",
-        "line": 1,
-        "message": "An <End Event> is not allowed in <Ad Hoc Sub Process>"
-      }
-    ]
-  },
-  {
-    "test/resources/test/conditional-flows-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/conditional-flows-incorrect.bpmn": [
-      {
-        "id": "SequenceFlow_0q9ussl",
-        "line": 1,
-        "message": "Sequence flow is missing condition"
-      }
-    ]
-  },
-  {
-    "test/resources/test/end-event-required-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/end-event-required-incorrect.bpmn": [
-      {
-        "id": "Process_1qgckdh",
-        "line": 1,
-        "message": "Process is missing end event"
-      }
-    ]
-  },
-  {
-    "test/resources/test/event-sub-process-typed-start-event-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/event-sub-process-typed-start-event-incorrect.bpmn": [
-      {
-        "id": "StartEvent_0ydcpql",
-        "line": 1,
-        "message": "Start event is missing event definition"
-      }
-    ]
-  },
-  {
-    "test/resources/test/fake-join-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/fake-join-incorrect.bpmn": [
-      {
-        "id": "Task_2",
-        "line": 1,
-        "message": "Incoming flows do not join"
-      }
-    ]
-  },
-  {
-    "test/resources/test/label-required-incorrect.bpmn": [
-      {
-        "id": "StartEvent_1",
-        "line": 1,
-        "message": "Element is missing label/name"
-      },
-      {
-        "id": "Task_1",
-        "line": 1,
-        "message": "Element is missing label/name"
-      },
-      {
-        "id": "EndEvent_1",
-        "line": 1,
-        "message": "Element is missing label/name"
-      }
-    ]
-  },
-  {
-    "test/resources/test/link-event-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/link-event-incorrect.bpmn": [
-      {
-        "id": "Event_0fvzchs",
-        "line": 1,
-        "message": "Link event is missing link name"
-      },
-      {
-        "id": "Event_0rw1f16",
-        "line": 1,
-        "message": "Link event is missing link name"
-      },
-      {
-        "id": "Event_022ctsn",
-        "line": 1,
-        "message": "Link event is missing link name"
-      },
-      {
-        "id": "Event_0q5xos0",
-        "line": 1,
-        "message": "Link event is missing link name"
-      }
-    ]
-  },
-  {
-    "test/resources/test/no-bpmndi-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/no-bpmndi-incorrect.bpmn": [
-      {
-        "id": "SequenceFlow_1",
-        "line": 1,
-        "message": "Element is missing bpmndi"
-      }
-    ]
-  },
-  {
-    "test/resources/test/no-complex-gateway-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/no-complex-gateway-incorrect.bpmn": [
-      {
-        "id": "ExclusiveGateway_2",
-        "line": 1,
-        "message": "Element type <bpmn:ComplexGateway> is discouraged"
-      }
-    ]
-  },
-  {
-    "test/resources/test/no-disconnected-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/no-disconnected-incorrect.bpmn": [
-      {
-        "id": "Task_2",
-        "line": 1,
-        "message": "Element is not connected"
-      }
-    ]
-  },
-  {
-    "test/resources/test/no-duplicate-sequence-flows-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/no-duplicate-sequence-flows-incorrect.bpmn": [
-      {
-        "id": "SequenceFlow_4",
-        "line": 1,
-        "message": "SequenceFlow is a duplicate"
-      },
-      {
-        "id": "Task_1",
-        "line": 1,
-        "message": "Duplicate outgoing sequence flows"
-      },
-      {
-        "id": "Task_2",
-        "line": 1,
-        "message": "Duplicate incoming sequence flows"
-      }
-    ]
-  },
-  {
-    "test/resources/test/no-gateway-join-fork-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/no-gateway-join-fork-incorrect.bpmn": [
-      {
-        "id": "ExclusiveGateway_1",
-        "line": 1,
-        "message": "Gateway forks and joins"
-      }
-    ]
-  },
-  {
-    "test/resources/test/no-implicit-end-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/no-implicit-end-incorrect.bpmn": [
-      {
-        "id": "Task_1",
-        "line": 1,
-        "message": "Element is an implicit end"
-      }
-    ]
-  },
-  {
-    "test/resources/test/no-implicit-split-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/no-implicit-split-incorrect.bpmn": [
-      {
-        "id": "Task_1",
-        "line": 1,
-        "message": "Flow splits implicitly"
-      }
-    ]
-  },
-  {
-    "test/resources/test/no-implicit-start-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/no-implicit-start-incorrect.bpmn": [
-      {
-        "id": "Task_1",
-        "line": 1,
-        "message": "Element is an implicit start"
-      }
-    ]
-  },
-  {
-    "test/resources/test/no-inclusive-gateway-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/no-inclusive-gateway-incorrect.bpmn": [
-      {
-        "id": "InclusiveGateway_1",
-        "line": 1,
-        "message": "Element type <bpmn:InclusiveGateway> is discouraged"
-      },
-      {
-        "id": "InclusiveGateway_2",
-        "line": 1,
-        "message": "Element type <bpmn:InclusiveGateway> is discouraged"
-      }
-    ]
-  },
-  {
-    "test/resources/test/no-overlapping-elements-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/no-overlapping-elements-incorrect.bpmn": [
-      {
-        "id": "Activity_0g4fgz0",
-        "line": 1,
-        "message": "Element overlaps with other element"
-      },
-      {
-        "id": "Activity_1v5k805",
-        "line": 1,
-        "message": "Element overlaps with other element"
-      }
-    ]
-  },
-  {
-    "test/resources/test/single-blank-start-event-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/single-blank-start-event-incorrect.bpmn": [
-      {
-        "id": "Process_1",
-        "line": 1,
-        "message": "Process has multiple blank start events"
-      }
-    ]
-  },
-  {
-    "test/resources/test/single-event-definition-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/single-event-definition-incorrect.bpmn": [
-      {
-        "id": "IntermediateEvent_1",
-        "line": 1,
-        "message": "Event has multiple event definitions"
-      }
-    ]
-  },
-  {
-    "test/resources/test/start-event-required-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/start-event-required-incorrect.bpmn": [
-      {
-        "id": "Process_1",
-        "line": 1,
-        "message": "Process is missing start event"
-      }
-    ]
-  },
-  {
-    "test/resources/test/sub-process-blank-start-event-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/sub-process-blank-start-event-incorrect.bpmn": [
-      {
-        "id": "StartEvent_1",
-        "line": 1,
-        "message": "Start event must be blank"
-      }
-    ]
-  },
-  {
-    "test/resources/test/superfluous-gateway-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/superfluous-gateway-incorrect.bpmn": [
-      {
-        "id": "Gateway_1",
-        "line": 1,
-        "message": "Gateway is superfluous. It only has one source and target."
-      }
-    ]
-  },
-  {
-    "test/resources/test/superfluous-termination-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/superfluous-termination-incorrect.bpmn": [
-      {
-        "id": "Event_06ykaze",
-        "line": 1,
-        "message": "Termination is superfluous."
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/ad-hoc-sub-process/invalid-start-end.bpmn": [
-      {
-        "id": "StartEvent",
-        "line": 1,
-        "message": "A <Start Event> is not allowed in <Ad Hoc Sub Process>"
-      },
-      {
-        "id": "EndEvent",
-        "line": 1,
-        "message": "An <End Event> is not allowed in <Ad Hoc Sub Process>"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/ad-hoc-sub-process/valid.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/conditional-flows/invalid-fork-after-exclusive-gateway-default.bpmn": [
-      {
-        "id": "Flow_1",
-        "line": 1,
-        "message": "Sequence flow is missing condition"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/conditional-flows/invalid-fork-after-exclusive-gateway.bpmn": [
-      {
-        "id": "Flow_2",
-        "line": 1,
-        "message": "Sequence flow is missing condition"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/conditional-flows/invalid-fork-after-task-default.bpmn": [
-      {
-        "id": "Flow_1",
-        "line": 1,
-        "message": "Sequence flow is missing condition"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/conditional-flows/invalid-fork-after-task.bpmn": [
-      {
-        "id": "Flow_1",
-        "line": 1,
-        "message": "Sequence flow is missing condition"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/conditional-flows/valid-conditional-fork.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/conditional-flows/valid-no-condition-after-merge.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/conditional-flows/valid-split-after-task.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/conditional-flows/valid-split.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/end-event-required/invalid-sub-process-sub-types.bpmn": [
-      {
-        "id": "TRANSACTION",
-        "line": 1,
-        "message": "Sub process is missing end event"
-      },
-      {
-        "id": "EVENT_SUBPROCESS",
-        "line": 1,
-        "message": "Sub process is missing end event"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/end-event-required/invalid-sub-process.bpmn": [
-      {
-        "id": "SubProcess",
-        "line": 1,
-        "message": "Sub process is missing end event"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/end-event-required/invalid.bpmn": [
-      {
-        "id": "Process",
-        "line": 1,
-        "message": "Process is missing end event"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/end-event-required/valid-sub-process-sub-types.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/end-event-required/valid-sub-process.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/end-event-required/valid.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/event-sub-process-typed-start-event/invalid.bpmn": [
-      {
-        "id": "StartEvent",
-        "line": 1,
-        "message": "Start event is missing event definition"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/event-sub-process-typed-start-event/valid-empty-sub-process.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/event-sub-process-typed-start-event/valid-empty.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/event-sub-process-typed-start-event/valid-intermediate-event.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/event-sub-process-typed-start-event/valid-sub-process.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/event-sub-process-typed-start-event/valid.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/fake-join/invalid-callActivity.bpmn": [
-      {
-        "id": "Element",
-        "line": 1,
-        "message": "Incoming flows do not join"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/fake-join/invalid-task.bpmn": [
-      {
-        "id": "Element",
-        "line": 1,
-        "message": "Incoming flows do not join"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/fake-join/valid-gateway.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/fake-join/valid.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/global/invalid-error-duplicate-name.bpmn": [
-      {
-        "id": "Error_1",
-        "line": 1,
-        "message": "Element name is not unique"
-      },
-      {
-        "id": "Error_2",
-        "line": 1,
-        "message": "Element name is not unique"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/global/invalid-error-missing-name.bpmn": [
-      {
-        "id": "Error",
-        "line": 1,
-        "message": "Element is missing name"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/global/invalid-error-missing-reference.bpmn": [
-      {
-        "id": "Error",
-        "line": 1,
-        "message": "Element is unused"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/global/invalid-escalation-duplicate-name.bpmn": [
-      {
-        "id": "Escalation_1",
-        "line": 1,
-        "message": "Element name is not unique"
-      },
-      {
-        "id": "Escalation_2",
-        "line": 1,
-        "message": "Element name is not unique"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/global/invalid-escalation-missing-name.bpmn": [
-      {
-        "id": "Escalation",
-        "line": 1,
-        "message": "Element is missing name"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/global/invalid-escalation-missing-reference.bpmn": [
-      {
-        "id": "Escalation",
-        "line": 1,
-        "message": "Element is unused"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/global/invalid-message-duplicate-name.bpmn": [
-      {
-        "id": "Message_1",
-        "line": 1,
-        "message": "Element name is not unique"
-      },
-      {
-        "id": "Message_2",
-        "line": 1,
-        "message": "Element name is not unique"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/global/invalid-message-missing-name.bpmn": [
-      {
-        "id": "Message",
-        "line": 1,
-        "message": "Element is missing name"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/global/invalid-message-missing-reference.bpmn": [
-      {
-        "id": "Message",
-        "line": 1,
-        "message": "Element is unused"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/global/invalid-signal-duplicate-name.bpmn": [
-      {
-        "id": "Signal_1",
-        "line": 1,
-        "message": "Element name is not unique"
-      },
-      {
-        "id": "Signal_2",
-        "line": 1,
-        "message": "Element name is not unique"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/global/invalid-signal-missing-name.bpmn": [
-      {
-        "id": "Signal",
-        "line": 1,
-        "message": "Element is missing name"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/global/invalid-signal-missing-reference.bpmn": [
-      {
-        "id": "Signal",
-        "line": 1,
-        "message": "Element is unused"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/global/valid-error.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/global/valid-escalation.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/global/valid-message.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/global/valid-no-ref.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/global/valid-signal.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/label-required/invalid-boundary-event.bpmn": [
-      {
-        "id": "Element",
-        "line": 1,
-        "message": "Element is missing label/name"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/label-required/invalid-conditional-flow.bpmn": [
-      {
-        "id": "ConditionalFlow",
-        "line": 1,
-        "message": "Element is missing label/name"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/label-required/invalid-event.bpmn": [
-      {
-        "id": "Element",
-        "line": 1,
-        "message": "Element is missing label/name"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/label-required/invalid-gateway-split.bpmn": [
-      {
-        "id": "Element",
-        "line": 1,
-        "message": "Element is missing label/name"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/label-required/invalid-lane.bpmn": [
-      {
-        "id": "Element",
-        "line": 1,
-        "message": "Element is missing label/name"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/label-required/invalid-participant.bpmn": [
-      {
-        "id": "Element",
-        "line": 1,
-        "message": "Element is missing label/name"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/label-required/invalid-task.bpmn": [
-      {
-        "id": "Element",
-        "line": 1,
-        "message": "Element is missing label/name"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/label-required/valid-boundary-event.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/label-required/valid-conditional-flow.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/label-required/valid-data-objects.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/label-required/valid-gateways.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/label-required/valid-participant-lanes.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/label-required/valid-start-event.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/link-event/invalid.bpmn": [
-      {
-        "id": "CATCH_NO_NAME",
-        "line": 1,
-        "message": "Link event is missing link name"
-      },
-      {
-        "id": "THROW_NO_NAME",
-        "line": 1,
-        "message": "Link event is missing link name"
-      },
-      {
-        "id": "NO_CATCH",
-        "line": 1,
-        "message": "Link catch event with link name <NO_CATCH> missing in scope"
-      },
-      {
-        "id": "NO_THROW",
-        "line": 1,
-        "message": "Link throw event with link name <NO_THROW> missing in scope"
-      },
-      {
-        "id": "SCOPE_BOUNDARY_THROW",
-        "line": 1,
-        "message": "Link catch event with link name <SCOPE_BOUNDARY> missing in scope"
-      },
-      {
-        "id": "DUPLICATE_NAME_CATCH_1",
-        "line": 1,
-        "message": "Duplicate link catch event with link name <DUPLICATE_LINK_NAME> in scope  link-event"
-      },
-      {
-        "id": "DUPLICATE_NAME_CATCH_2",
-        "line": 1,
-        "message": "Duplicate link catch event with link name <DUPLICATE_LINK_NAME> in scope  link-event"
-      },
-      {
-        "id": "SCOPE_BOUNDARY_CATCH",
-        "line": 1,
-        "message": "Link throw event with link name <SCOPE_BOUNDARY> missing in scope"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/link-event/valid-collaboration.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/link-event/valid.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/ignore-edge-without-bpmn-element.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/invalid-catch-event.bpmn": [
-      {
-        "id": "boundaryEvent",
-        "line": 1,
-        "message": "Element is missing bpmndi"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/invalid-collapsed-pool.bpmn": [
-      {
-        "id": "participant1",
-        "line": 1,
-        "message": "Element is missing bpmndi"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/invalid-group.bpmn": [
-      {
-        "id": "Group_1",
-        "line": 1,
-        "message": "Element is missing bpmndi"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/invalid-lane.bpmn": [
-      {
-        "id": "lane2",
-        "line": 1,
-        "message": "Element is missing bpmndi"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/invalid-message-flow.bpmn": [
-      {
-        "id": "danglingMessageFlow",
-        "line": 1,
-        "message": "Element is missing bpmndi"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/invalid-missing-nested-lane-deep.bpmn": [
-      {
-        "id": "lane7",
-        "line": 1,
-        "message": "Element is missing bpmndi"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/invalid-missing-nested-lane.bpmn": [
-      {
-        "id": "lane_1",
-        "line": 1,
-        "message": "Element is missing bpmndi"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/invalid-multiple-nested-levels.bpmn": [
-      {
-        "id": "task1",
-        "line": 1,
-        "message": "Element is missing bpmndi"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/invalid-multiple-sub-processes.bpmn": [
-      {
-        "id": "boundaryEvent",
-        "line": 1,
-        "message": "Element is missing bpmndi"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/invalid-nested-boundary.bpmn": [
-      {
-        "id": "boundaryEvent",
-        "line": 1,
-        "message": "Element is missing bpmndi"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/invalid-nested-lanes.bpmn": [
-      {
-        "id": "task1",
-        "line": 1,
-        "message": "Element is missing bpmndi"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/invalid-no-bpmn-diagram.bpmn": [
-      {
-        "id": "StartEvent_1",
-        "line": 1,
-        "message": "Element is missing bpmndi"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/invalid-participant.bpmn": [
-      {
-        "id": "Participant_1",
-        "line": 1,
-        "message": "Element is missing bpmndi"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/invalid-sequence-flow.bpmn": [
-      {
-        "id": "sequenceFlow",
-        "line": 1,
-        "message": "Element is missing bpmndi"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/invalid-sub-processes.bpmn": [
-      {
-        "id": "boundaryEvent_1",
-        "line": 1,
-        "message": "Element is missing bpmndi"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/valid-complex.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/valid-data-object.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/valid-empty.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/valid-error.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/valid-extension-elements.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/valid-group.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/valid-lanes.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/valid-message-flow.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/valid-multiple-nested-levels.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/valid-nested-boundary.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/valid-no-lanes.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/valid-signavio.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/valid-sub-processes.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-bpmndi/valid.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-complex-gateway/invalid.bpmn": [
-      {
-        "id": "Gateway",
-        "line": 1,
-        "message": "Element type <bpmn:ComplexGateway> is discouraged"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-complex-gateway/valid.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-disconnected/invalid.bpmn": [
-      {
-        "id": "Element",
-        "line": 1,
-        "message": "Element is not connected"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-disconnected/valid-adhoc-subprocess.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-disconnected/valid-compensation.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-disconnected/valid-event-subprocess.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-disconnected/valid-text-annotation.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-disconnected/valid.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-duplicate-sequence-flows/invalid-condition.bpmn": [
-      {
-        "id": "SequenceFlow_1",
-        "line": 1,
-        "message": "SequenceFlow is a duplicate"
-      },
-      {
-        "id": "Task_1",
-        "line": 1,
-        "message": "Duplicate outgoing sequence flows"
-      },
-      {
-        "id": "Task_2",
-        "line": 1,
-        "message": "Duplicate incoming sequence flows"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-duplicate-sequence-flows/invalid-multiple.bpmn": [
-      {
-        "id": "SequenceFlow_2",
-        "line": 1,
-        "message": "SequenceFlow is a duplicate"
-      },
-      {
-        "id": "Task_1",
-        "line": 1,
-        "message": "Duplicate outgoing sequence flows"
-      },
-      {
-        "id": "Task_2",
-        "line": 1,
-        "message": "Duplicate incoming sequence flows"
-      },
-      {
-        "id": "SequenceFlow_3",
-        "line": 1,
-        "message": "SequenceFlow is a duplicate"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-duplicate-sequence-flows/invalid-no-condition.bpmn": [
-      {
-        "id": "SequenceFlow_2",
-        "line": 1,
-        "message": "SequenceFlow is a duplicate"
-      },
-      {
-        "id": "StartEvent_1",
-        "line": 1,
-        "message": "Duplicate outgoing sequence flows"
-      },
-      {
-        "id": "Task_2",
-        "line": 1,
-        "message": "Duplicate incoming sequence flows"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-duplicate-sequence-flows/valid.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-gateway-join-fork/invalid.bpmn": [
-      {
-        "id": "Gateway",
-        "line": 1,
-        "message": "Gateway forks and joins"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-gateway-join-fork/valid-fork-join-task.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-gateway-join-fork/valid-fork.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-gateway-join-fork/valid-join.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-implicit-end/invalid.bpmn": [
-      {
-        "id": "INTERMEDIATE_THROW_EVENT",
-        "line": 1,
-        "message": "Element is an implicit end"
-      },
-      {
-        "id": "TASK",
-        "line": 1,
-        "message": "Element is an implicit end"
-      },
-      {
-        "id": "GATEWAY",
-        "line": 1,
-        "message": "Element is an implicit end"
-      },
-      {
-        "id": "START_EVENT",
-        "line": 1,
-        "message": "Element is an implicit end"
-      },
-      {
-        "id": "SUB_PROCESS",
-        "line": 1,
-        "message": "Element is an implicit end"
-      },
-      {
-        "id": "BOUNDARY",
-        "line": 1,
-        "message": "Element is an implicit end"
-      },
-      {
-        "id": "INTERMEDIATE_CATCH_EVENT",
-        "line": 1,
-        "message": "Element is an implicit end"
-      },
-      {
-        "id": "LINK_CATCH_EVENT",
-        "line": 1,
-        "message": "Element is an implicit end"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-implicit-end/valid-collaboration.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-implicit-end/valid.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-implicit-split/invalid-call-activity.bpmn": [
-      {
-        "id": "Element",
-        "line": 1,
-        "message": "Flow splits implicitly"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-implicit-split/invalid-event.bpmn": [
-      {
-        "id": "Element",
-        "line": 1,
-        "message": "Flow splits implicitly"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-implicit-split/invalid-task.bpmn": [
-      {
-        "id": "Element",
-        "line": 1,
-        "message": "Flow splits implicitly"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-implicit-split/valid-default-conditional-flow.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-implicit-split/valid.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-implicit-start/invalid.bpmn": [
-      {
-        "id": "END_EVENT",
-        "line": 1,
-        "message": "Element is an implicit start"
-      },
-      {
-        "id": "INTERMEDIATE_THROW_EVENT",
-        "line": 1,
-        "message": "Element is an implicit start"
-      },
-      {
-        "id": "TASK",
-        "line": 1,
-        "message": "Element is an implicit start"
-      },
-      {
-        "id": "GATEWAY",
-        "line": 1,
-        "message": "Element is an implicit start"
-      },
-      {
-        "id": "LINK_THROW",
-        "line": 1,
-        "message": "Element is an implicit start"
-      },
-      {
-        "id": "INTERMEDIATE_CATCH_EVENT",
-        "line": 1,
-        "message": "Element is an implicit start"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-implicit-start/valid-collaboration.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-implicit-start/valid.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-inclusive-gateway/invalid.bpmn": [
-      {
-        "id": "Gateway",
-        "line": 1,
-        "message": "Element type <bpmn:InclusiveGateway> is discouraged"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-inclusive-gateway/valid.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-overlapping-elements/ignore-missing-bounds.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-overlapping-elements/ignore-missing-di.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-overlapping-elements/invalid-boundary-event.bpmn": [
-      {
-        "id": "TASK",
-        "line": 1,
-        "message": "Element overlaps with other element"
-      },
-      {
-        "id": "LOOKS_LIKE_BOUNDARY",
-        "line": 1,
-        "message": "Element overlaps with other element"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-overlapping-elements/invalid-collaboration.bpmn": [
-      {
-        "id": "Participant_1af2hnr",
-        "line": 1,
-        "message": "Element overlaps with other element"
-      },
-      {
-        "id": "Participant_06xnivi",
-        "line": 1,
-        "message": "Element overlaps with other element"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-overlapping-elements/invalid-process.bpmn": [
-      {
-        "id": "TASK_1",
-        "line": 1,
-        "message": "Element overlaps with other element"
-      },
-      {
-        "id": "TASK_2",
-        "line": 1,
-        "message": "Element overlaps with other element"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-overlapping-elements/invalid-subprocess-collapsed.bpmn": [
-      {
-        "id": "TASK",
-        "line": 1,
-        "message": "Element overlaps with other element"
-      },
-      {
-        "id": "END_EVENT",
-        "line": 1,
-        "message": "Element overlaps with other element"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-overlapping-elements/invalid-subprocess.bpmn": [
-      {
-        "id": "TASK",
-        "line": 1,
-        "message": "Element is outside of parent boundary"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/no-overlapping-elements/valid-boundary-event.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-overlapping-elements/valid-collaboration-subprocess.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-overlapping-elements/valid-collaboration.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-overlapping-elements/valid-data-objects.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-overlapping-elements/valid-process.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-overlapping-elements/valid-subprocess-collapsed.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/no-overlapping-elements/valid-subprocess.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/single-blank-start-event/invalid-sub-process.bpmn": [
-      {
-        "id": "SubProcess",
-        "line": 1,
-        "message": "Sub process has multiple blank start events"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/single-blank-start-event/invalid.bpmn": [
-      {
-        "id": "Process",
-        "line": 1,
-        "message": "Process has multiple blank start events"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/single-blank-start-event/valid-empty.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/single-blank-start-event/valid-end-event.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/single-blank-start-event/valid-scopes.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/single-blank-start-event/valid-sub-process.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/single-blank-start-event/valid-typed-sub-process.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/single-blank-start-event/valid-typed.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/single-blank-start-event/valid.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/single-event-definition/invalid.bpmn": [
-      {
-        "id": "Event",
-        "line": 1,
-        "message": "Event has multiple event definitions"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/single-event-definition/valid-blank.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/single-event-definition/valid.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/start-event-required/invalid-sub-process-sub-types.bpmn": [
-      {
-        "id": "TRANSACTION",
-        "line": 1,
-        "message": "Sub process is missing start event"
-      },
-      {
-        "id": "EVENT_SUBPROCESS",
-        "line": 1,
-        "message": "Sub process is missing start event"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/start-event-required/invalid-sub-process.bpmn": [
-      {
-        "id": "SubProcess",
-        "line": 1,
-        "message": "Sub process is missing start event"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/start-event-required/invalid.bpmn": [
-      {
-        "id": "Process",
-        "line": 1,
-        "message": "Process is missing start event"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/start-event-required/valid-sub-process-sub-types.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/start-event-required/valid-sub-process.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/start-event-required/valid.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/sub-process-blank-start-event/invalid-ad-hoc.bpmn": [
-      {
-        "id": "StartEvent",
-        "line": 1,
-        "message": "Start event must be blank"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/sub-process-blank-start-event/invalid.bpmn": [
-      {
-        "id": "StartEvent",
-        "line": 1,
-        "message": "Start event must be blank"
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/sub-process-blank-start-event/valid-empty.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/sub-process-blank-start-event/valid-event-sub-process.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/sub-process-blank-start-event/valid-intermediate-event.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/sub-process-blank-start-event/valid.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/superfluous-gateway/invalid.bpmn": [
-      {
-        "id": "Gateway_1",
-        "line": 1,
-        "message": "Gateway is superfluous. It only has one source and target."
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/superfluous-gateway/valid-none-gateway.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/superfluous-gateway/valid.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/superfluous-termination/invalid-boundary-interrupting.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/superfluous-termination/invalid-event-sub-process-interrupting.bpmn": [
-      {
-        "id": "TERMINATE_EVENT",
-        "line": 1,
-        "message": "Termination is superfluous."
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/superfluous-termination/invalid-exclusive-paths.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/superfluous-termination/invalid-sub-process.bpmn": [
-      {
-        "id": "TERMINATE_EVENT",
-        "line": 1,
-        "message": "Termination is superfluous."
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/superfluous-termination/invalid.bpmn": [
-      {
-        "id": "TERMINATE_EVENT",
-        "line": 1,
-        "message": "Termination is superfluous."
-      }
-    ]
-  },
-  {
-    "test/resources/test/rules/superfluous-termination/valid-boundary-non-interrupting.bpmn": [
-
-    ]
-  },
-  {
-    "test/resources/test/rules/superfluous-termination/valid-event-sub-process-non-interrupting.bpmn": [
-
-    ]
-  },
-  {
-    "test/rules/event-sub-process-typed-start-event/valid-sub-process.bpmn": [
-
-    ]
-  },
-  {
-    "test/fake-join-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/fake-join-incorrect.bpmn": [
-      {
-        "id": "Task_2",
-        "line": 1,
-        "message": "Fake Join detected: Element 'Task_2' (task) is not a Gateway but has 2 incoming sequence flows. Use a Gateway for merging paths."
-      }
-    ]
-  },
-  {
-    "test/label-required-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/label-required-incorrect.bpmn": [
-      {
-        "id": "StartEvent_1",
-        "line": 1,
-        "message": "Label Required: Element 'StartEvent_1' (startEvent) must have a descriptive name attribute."
-      },
-      {
-        "id": "Task_1",
-        "line": 1,
-        "message": "Label Required: Element 'Task_1' (task) must have a descriptive name attribute."
-      },
-      {
-        "id": "EndEvent_1",
-        "line": 1,
-        "message": "Label Required: Element 'EndEvent_1' (endEvent) must have a descriptive name attribute."
-      }
-    ]
-  },
-  {
-    "test/link-event-correct.bpmn": [
-      {
-        "id": "Event_0fvzchs",
-        "line": 1,
-        "message": "Link Event Definition Missing Name: The 'Event_0fvzchs' (intermediateThrowEvent) link definition must have a non-empty name attribute to function correctly."
-      },
-      {
-        "id": "Event_0hnrksg",
-        "line": 1,
-        "message": "Link Event Definition Missing Name: The 'Event_0hnrksg' (intermediateCatchEvent) link definition must have a non-empty name attribute to function correctly."
-      }
-    ]
-  },
-  {
-    "test/link-event-incorrect.bpmn": [
-      {
-        "id": "Event_022ctsn",
-        "line": 1,
-        "message": "Link Event Definition Missing Name: The 'Event_022ctsn' (intermediateCatchEvent) link definition must have a non-empty name attribute to function correctly."
-      },
-      {
-        "id": "Event_0fvzchs",
-        "line": 1,
-        "message": "Link Event Definition Missing Name: The 'Event_0fvzchs' (intermediateThrowEvent) link definition must have a non-empty name attribute to function correctly."
-      },
-      {
-        "id": "Event_0q5xos0",
-        "line": 1,
-        "message": "Link Event Definition Missing Name: The 'Event_0q5xos0' (intermediateThrowEvent) link definition must have a non-empty name attribute to function correctly."
-      },
-      {
-        "id": "Event_0rw1f16",
-        "line": 1,
-        "message": "Link Event Definition Missing Name: The 'Event_0rw1f16' (intermediateCatchEvent) link definition must have a non-empty name attribute to function correctly."
-      }
-    ]
-  },
-  {
-    "test/no-bpmndi-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/no-bpmndi-incorrect.bpmn": [
-      {
-        "id": "SequenceFlow_1",
-        "line": 1,
-        "message": "BPMN DI Required: Element 'SequenceFlow_1' (sequenceFlow) is missing its visual representation (BPMN DI)."
-      }
-    ]
-  },
-  {
-    "test/no-complex-gateway-incorrect.bpmn": [
-      {
-        "id": "ExclusiveGateway_2",
-        "line": 1,
-        "message": "The use of Complex Gateway is forbidden. Found gateway with ID 'ExclusiveGateway_2'."
-      }
-    ]
-  },
-  {
-    "test/no-disconnected-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/no-disconnected-incorrect.bpmn": [
-      {
-        "id": "Task_2",
-        "line": 1,
-        "message": "Task is fully disconnected (ID: Task_2)."
-      }
-    ]
-  },
-  {
-    "test/no-duplicate-sequence-flows-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/no-duplicate-sequence-flows-incorrect.bpmn": [
-      {
-        "id": "SequenceFlow_4",
-        "line": 1,
-        "message": "Duplicate sequence flow: A flow already exists from Task_1 to Task_2 (Original flow ID: SequenceFlow_2)."
-      }
-    ]
-  },
-  {
-    "test/no-gateway-join-fork-correct.bpmn": [
-
-    ]
-  },
-  {
-    "test/no-gateway-join-fork-incorrect.bpmn": [
-      {
-        "id": "ExclusiveGateway_1",
-        "line": 1,
-        "message": "Gateway 'ExclusiveGateway_1' performs both joining (2 incoming flows) and forking (2 outgoing flows). A single gateway should only perform one function (join OR fork)."
-      }
-    ]
-  }
-]
+{
+  "test/rules/superfluous-termination/valid.bpmn": [
+  ],
+  "test/ad-hoc-sub-process-correct.bpmn": [
+  ],
+  "test/ad-hoc-sub-process-incorrect.bpmn": [
+    {
+      "id": "Event_0q40via",
+      "line": 5,
+      "message": "An intermediate catch event inside <Ad Hoc Sub Process> must have an outgoing sequence flow"
+    },
+    {
+      "id": "Event_03k6pnd",
+      "line": 10,
+      "message": "A <Start Event> is not allowed in <Ad Hoc Sub Process>"
+    },
+    {
+      "id": "Event_03gcp25",
+      "line": 13,
+      "message": "An <End Event> is not allowed in <Ad Hoc Sub Process>"
+    }
+  ],
+  "test/conditional-flows-correct.bpmn": [
+  ],
+  "test/conditional-flows-incorrect.bpmn": [
+    {
+      "id": "SequenceFlow_0q9ussl",
+      "line": 1,
+      "message": "Sequence flow is missing condition"
+    }
+  ],
+  "test/end-event-required-correct.bpmn": [
+  ],
+  "test/end-event-required-incorrect.bpmn": [
+    {
+      "id": "Process_1qgckdh",
+      "line": 1,
+      "message": "Process is missing end event"
+    }
+  ],
+  "test/event-sub-process-typed-start-event-correct.bpmn": [
+  ],
+  "test/event-sub-process-typed-start-event-incorrect.bpmn": [
+    {
+      "id": "StartEvent_0ydcpql",
+      "line": 1,
+      "message": "Start event is missing event definition"
+    }
+  ],
+
+  "test/no-complex-gateway-correct.bpmn": [
+  ],
+
+
+
+  "test/no-implicit-end-correct.bpmn": [
+  ],
+  "test/no-implicit-end-incorrect.bpmn": [
+    {
+      "id": "Task_1",
+      "line": 1,
+      "message": "Element is an implicit end"
+    }
+  ],
+  "test/no-implicit-split-correct.bpmn": [
+  ],
+  "test/no-implicit-split-incorrect.bpmn": [
+    {
+      "id": "Task_1",
+      "line": 1,
+      "message": "Flow splits implicitly"
+    }
+  ],
+  "test/no-implicit-start-correct.bpmn": [
+  ],
+  "test/no-implicit-start-incorrect.bpmn": [
+    {
+      "id": "Task_1",
+      "line": 1,
+      "message": "Element is an implicit start"
+    }
+  ],
+  "test/no-inclusive-gateway-correct.bpmn": [
+  ],
+  "test/no-inclusive-gateway-incorrect.bpmn": [
+    {
+      "id": "InclusiveGateway_1",
+      "line": 1,
+      "message": "Element type <bpmn:InclusiveGateway> is discouraged"
+    },
+    {
+      "id": "InclusiveGateway_2",
+      "line": 1,
+      "message": "Element type <bpmn:InclusiveGateway> is discouraged"
+    }
+  ],
+  "test/no-overlapping-elements-correct.bpmn": [
+  ],
+  "test/no-overlapping-elements-incorrect.bpmn": [
+    {
+      "id": "Activity_0g4fgz0",
+      "line": 1,
+      "message": "Element overlaps with other element"
+    },
+    {
+      "id": "Activity_1v5k805",
+      "line": 1,
+      "message": "Element overlaps with other element"
+    }
+  ],
+  "test/single-blank-start-event-correct.bpmn": [
+  ],
+  "test/single-blank-start-event-incorrect.bpmn": [
+    {
+      "id": "Process_1",
+      "line": 1,
+      "message": "Process has multiple blank start events"
+    }
+  ],
+  "test/single-event-definition-correct.bpmn": [
+  ],
+  "test/single-event-definition-incorrect.bpmn": [
+    {
+      "id": "IntermediateEvent_1",
+      "line": 1,
+      "message": "Event has multiple event definitions"
+    }
+  ],
+  "test/start-event-required-correct.bpmn": [
+  ],
+  "test/start-event-required-incorrect.bpmn": [
+    {
+      "id": "Process_1",
+      "line": 1,
+      "message": "Process is missing start event"
+    }
+  ],
+  "test/sub-process-blank-start-event-correct.bpmn": [
+  ],
+  "test/sub-process-blank-start-event-incorrect.bpmn": [
+    {
+      "id": "StartEvent_1",
+      "line": 1,
+      "message": "Start event must be blank"
+    }
+  ],
+  "test/superfluous-gateway-correct.bpmn": [
+  ],
+  "test/superfluous-gateway-incorrect.bpmn": [
+    {
+      "id": "Gateway_1",
+      "line": 1,
+      "message": "Gateway is superfluous. It only has one source and target."
+    }
+  ],
+  "test/superfluous-termination-correct.bpmn": [
+  ],
+  "test/superfluous-termination-incorrect.bpmn": [
+    {
+      "id": "Event_06ykaze",
+      "line": 1,
+      "message": "Termination is superfluous."
+    }
+  ],
+  "test/rules/ad-hoc-sub-process/invalid-start-end.bpmn": [
+    {
+      "id": "StartEvent",
+      "line": 5,
+      "message": "A <Start Event> is not allowed in <Ad Hoc Sub Process>"
+    },
+    {
+      "id": "EndEvent",
+      "line": 6,
+      "message": "An <End Event> is not allowed in <Ad Hoc Sub Process>"
+    }
+  ],
+  "test/rules/ad-hoc-sub-process/valid.bpmn": [
+  ],
+  "test/rules/conditional-flows/invalid-fork-after-exclusive-gateway-default.bpmn": [
+    {
+      "id": "Flow_1",
+      "line": 1,
+      "message": "Sequence flow is missing condition"
+    }
+  ],
+  "test/rules/conditional-flows/invalid-fork-after-exclusive-gateway.bpmn": [
+    {
+      "id": "Flow_2",
+      "line": 1,
+      "message": "Sequence flow is missing condition"
+    }
+  ],
+  "test/rules/conditional-flows/invalid-fork-after-task-default.bpmn": [
+    {
+      "id": "Flow_1",
+      "line": 1,
+      "message": "Sequence flow is missing condition"
+    }
+  ],
+  "test/rules/conditional-flows/invalid-fork-after-task.bpmn": [
+    {
+      "id": "Flow_1",
+      "line": 1,
+      "message": "Sequence flow is missing condition"
+    }
+  ],
+  "test/rules/conditional-flows/valid-conditional-fork.bpmn": [
+  ],
+  "test/rules/conditional-flows/valid-no-condition-after-merge.bpmn": [
+  ],
+  "test/rules/conditional-flows/valid-split-after-task.bpmn": [
+  ],
+  "test/rules/conditional-flows/valid-split.bpmn": [
+  ],
+  "test/rules/end-event-required/invalid-sub-process-sub-types.bpmn": [
+    {
+      "id": "TRANSACTION",
+      "line": 1,
+      "message": "Sub process is missing end event"
+    },
+    {
+      "id": "EVENT_SUBPROCESS",
+      "line": 1,
+      "message": "Sub process is missing end event"
+    }
+  ],
+  "test/rules/end-event-required/invalid-sub-process.bpmn": [
+    {
+      "id": "SubProcess",
+      "line": 1,
+      "message": "Sub process is missing end event"
+    }
+  ],
+  "test/rules/end-event-required/invalid.bpmn": [
+    {
+      "id": "Process",
+      "line": 1,
+      "message": "Process is missing end event"
+    }
+  ],
+  "test/rules/end-event-required/valid-sub-process-sub-types.bpmn": [
+  ],
+  "test/rules/end-event-required/valid-sub-process.bpmn": [
+  ],
+  "test/rules/end-event-required/valid.bpmn": [
+  ],
+  "test/rules/event-sub-process-typed-start-event/invalid.bpmn": [
+    {
+      "id": "StartEvent",
+      "line": 1,
+      "message": "Start event is missing event definition"
+    }
+  ],
+  "test/rules/event-sub-process-typed-start-event/valid-empty-sub-process.bpmn": [
+  ],
+  "test/rules/event-sub-process-typed-start-event/valid-empty.bpmn": [
+  ],
+  "test/rules/event-sub-process-typed-start-event/valid-intermediate-event.bpmn": [
+  ],
+
+  "test/rules/event-sub-process-typed-start-event/valid.bpmn": [
+  ],
+  "test/rules/fake-join/invalid-callActivity.bpmn": [
+    {
+      "id": "Element",
+      "line": 1,
+      "message": "Incoming flows do not join"
+    }
+  ],
+  "test/rules/fake-join/invalid-task.bpmn": [
+    {
+      "id": "Element",
+      "line": 1,
+      "message": "Incoming flows do not join"
+    }
+  ],
+  "test/rules/fake-join/valid-gateway.bpmn": [
+  ],
+  "test/rules/fake-join/valid.bpmn": [
+  ],
+  "test/rules/global/invalid-error-duplicate-name.bpmn": [
+    {
+      "id": "Error_1",
+      "line": 1,
+      "message": "Element name is not unique"
+    },
+    {
+      "id": "Error_2",
+      "line": 1,
+      "message": "Element name is not unique"
+    }
+  ],
+  "test/rules/global/invalid-error-missing-name.bpmn": [
+    {
+      "id": "Error",
+      "line": 1,
+      "message": "Element is missing name"
+    }
+  ],
+  "test/rules/global/invalid-error-missing-reference.bpmn": [
+    {
+      "id": "Error",
+      "line": 1,
+      "message": "Element is unused"
+    }
+  ],
+  "test/rules/global/invalid-escalation-duplicate-name.bpmn": [
+    {
+      "id": "Escalation_1",
+      "line": 1,
+      "message": "Element name is not unique"
+    },
+    {
+      "id": "Escalation_2",
+      "line": 1,
+      "message": "Element name is not unique"
+    }
+  ],
+  "test/rules/global/invalid-escalation-missing-name.bpmn": [
+    {
+      "id": "Escalation",
+      "line": 1,
+      "message": "Element is missing name"
+    }
+  ],
+  "test/rules/global/invalid-escalation-missing-reference.bpmn": [
+    {
+      "id": "Escalation",
+      "line": 1,
+      "message": "Element is unused"
+    }
+  ],
+  "test/rules/global/invalid-message-duplicate-name.bpmn": [
+    {
+      "id": "Message_1",
+      "line": 1,
+      "message": "Element name is not unique"
+    },
+    {
+      "id": "Message_2",
+      "line": 1,
+      "message": "Element name is not unique"
+    }
+  ],
+  "test/rules/global/invalid-message-missing-name.bpmn": [
+    {
+      "id": "Message",
+      "line": 1,
+      "message": "Element is missing name"
+    }
+  ],
+  "test/rules/global/invalid-message-missing-reference.bpmn": [
+    {
+      "id": "Message",
+      "line": 1,
+      "message": "Element is unused"
+    }
+  ],
+  "test/rules/global/invalid-signal-duplicate-name.bpmn": [
+    {
+      "id": "Signal_1",
+      "line": 1,
+      "message": "Element name is not unique"
+    },
+    {
+      "id": "Signal_2",
+      "line": 1,
+      "message": "Element name is not unique"
+    }
+  ],
+  "test/rules/global/invalid-signal-missing-name.bpmn": [
+    {
+      "id": "Signal",
+      "line": 1,
+      "message": "Element is missing name"
+    }
+  ],
+  "test/rules/global/invalid-signal-missing-reference.bpmn": [
+    {
+      "id": "Signal",
+      "line": 1,
+      "message": "Element is unused"
+    }
+  ],
+  "test/rules/global/valid-error.bpmn": [
+  ],
+  "test/rules/global/valid-escalation.bpmn": [
+  ],
+  "test/rules/global/valid-message.bpmn": [
+  ],
+  "test/rules/global/valid-no-ref.bpmn": [
+  ],
+  "test/rules/global/valid-signal.bpmn": [
+  ],
+  "test/rules/label-required/invalid-boundary-event.bpmn": [
+    {
+      "id": "Element",
+      "line": 1,
+      "message": "Element is missing label/name"
+    }
+  ],
+  "test/rules/label-required/invalid-conditional-flow.bpmn": [
+    {
+      "id": "ConditionalFlow",
+      "line": 1,
+      "message": "Element is missing label/name"
+    }
+  ],
+  "test/rules/label-required/invalid-event.bpmn": [
+    {
+      "id": "Element",
+      "line": 1,
+      "message": "Element is missing label/name"
+    }
+  ],
+  "test/rules/label-required/invalid-gateway-split.bpmn": [
+    {
+      "id": "Element",
+      "line": 1,
+      "message": "Element is missing label/name"
+    }
+  ],
+  "test/rules/label-required/invalid-lane.bpmn": [
+    {
+      "id": "Element",
+      "line": 1,
+      "message": "Element is missing label/name"
+    }
+  ],
+  "test/rules/label-required/invalid-participant.bpmn": [
+    {
+      "id": "Element",
+      "line": 1,
+      "message": "Element is missing label/name"
+    }
+  ],
+  "test/rules/label-required/invalid-task.bpmn": [
+    {
+      "id": "Element",
+      "line": 1,
+      "message": "Element is missing label/name"
+    }
+  ],
+  "test/rules/label-required/valid-boundary-event.bpmn": [
+  ],
+  "test/rules/label-required/valid-conditional-flow.bpmn": [
+  ],
+  "test/rules/label-required/valid-data-objects.bpmn": [
+  ],
+  "test/rules/label-required/valid-gateways.bpmn": [
+  ],
+  "test/rules/label-required/valid-participant-lanes.bpmn": [
+  ],
+  "test/rules/label-required/valid-start-event.bpmn": [
+  ],
+  "test/rules/link-event/invalid.bpmn": [
+    {
+      "id": "CATCH_NO_NAME",
+      "line": 1,
+      "message": "Link event is missing link name"
+    },
+    {
+      "id": "THROW_NO_NAME",
+      "line": 1,
+      "message": "Link event is missing link name"
+    },
+    {
+      "id": "NO_CATCH",
+      "line": 1,
+      "message": "Link catch event with link name <NO_CATCH> missing in scope"
+    },
+    {
+      "id": "NO_THROW",
+      "line": 1,
+      "message": "Link throw event with link name <NO_THROW> missing in scope"
+    },
+    {
+      "id": "SCOPE_BOUNDARY_THROW",
+      "line": 1,
+      "message": "Link catch event with link name <SCOPE_BOUNDARY> missing in scope"
+    },
+    {
+      "id": "DUPLICATE_NAME_CATCH_1",
+      "line": 1,
+      "message": "Duplicate link catch event with link name <DUPLICATE_LINK_NAME> in scope  link-event"
+    },
+    {
+      "id": "DUPLICATE_NAME_CATCH_2",
+      "line": 1,
+      "message": "Duplicate link catch event with link name <DUPLICATE_LINK_NAME> in scope  link-event"
+    },
+    {
+      "id": "SCOPE_BOUNDARY_CATCH",
+      "line": 1,
+      "message": "Link throw event with link name <SCOPE_BOUNDARY> missing in scope"
+    }
+  ],
+  "test/rules/link-event/valid-collaboration.bpmn": [
+  ],
+  "test/rules/link-event/valid.bpmn": [
+  ],
+  "test/rules/no-bpmndi/ignore-edge-without-bpmn-element.bpmn": [
+  ],
+  "test/rules/no-bpmndi/invalid-catch-event.bpmn": [
+    {
+      "id": "boundaryEvent",
+      "line": 1,
+      "message": "Element is missing bpmndi"
+    }
+  ],
+  "test/rules/no-bpmndi/invalid-collapsed-pool.bpmn": [
+    {
+      "id": "participant1",
+      "line": 1,
+      "message": "Element is missing bpmndi"
+    }
+  ],
+  "test/rules/no-bpmndi/invalid-group.bpmn": [
+    {
+      "id": "Group_1",
+      "line": 1,
+      "message": "Element is missing bpmndi"
+    }
+  ],
+  "test/rules/no-bpmndi/invalid-lane.bpmn": [
+    {
+      "id": "lane2",
+      "line": 1,
+      "message": "Element is missing bpmndi"
+    }
+  ],
+  "test/rules/no-bpmndi/invalid-message-flow.bpmn": [
+    {
+      "id": "danglingMessageFlow",
+      "line": 1,
+      "message": "Element is missing bpmndi"
+    }
+  ],
+  "test/rules/no-bpmndi/invalid-missing-nested-lane-deep.bpmn": [
+    {
+      "id": "lane7",
+      "line": 1,
+      "message": "Element is missing bpmndi"
+    }
+  ],
+  "test/rules/no-bpmndi/invalid-missing-nested-lane.bpmn": [
+    {
+      "id": "lane_1",
+      "line": 1,
+      "message": "Element is missing bpmndi"
+    }
+  ],
+  "test/rules/no-bpmndi/invalid-multiple-nested-levels.bpmn": [
+    {
+      "id": "task1",
+      "line": 1,
+      "message": "Element is missing bpmndi"
+    }
+  ],
+  "test/rules/no-bpmndi/invalid-multiple-sub-processes.bpmn": [
+    {
+      "id": "boundaryEvent",
+      "line": 1,
+      "message": "Element is missing bpmndi"
+    }
+  ],
+  "test/rules/no-bpmndi/invalid-nested-boundary.bpmn": [
+    {
+      "id": "boundaryEvent",
+      "line": 1,
+      "message": "Element is missing bpmndi"
+    }
+  ],
+  "test/rules/no-bpmndi/invalid-nested-lanes.bpmn": [
+    {
+      "id": "task1",
+      "line": 1,
+      "message": "Element is missing bpmndi"
+    }
+  ],
+  "test/rules/no-bpmndi/invalid-no-bpmn-diagram.bpmn": [
+    {
+      "id": "StartEvent_1",
+      "line": 1,
+      "message": "Element is missing bpmndi"
+    }
+  ],
+  "test/rules/no-bpmndi/invalid-participant.bpmn": [
+    {
+      "id": "Participant_1",
+      "line": 1,
+      "message": "Element is missing bpmndi"
+    }
+  ],
+  "test/rules/no-bpmndi/invalid-sequence-flow.bpmn": [
+    {
+      "id": "sequenceFlow",
+      "line": 1,
+      "message": "Element is missing bpmndi"
+    }
+  ],
+  "test/rules/no-bpmndi/invalid-sub-processes.bpmn": [
+    {
+      "id": "boundaryEvent_1",
+      "line": 1,
+      "message": "Element is missing bpmndi"
+    }
+  ],
+  "test/rules/no-bpmndi/valid-complex.bpmn": [
+  ],
+  "test/rules/no-bpmndi/valid-data-object.bpmn": [
+  ],
+  "test/rules/no-bpmndi/valid-empty.bpmn": [
+  ],
+  "test/rules/no-bpmndi/valid-error.bpmn": [
+  ],
+  "test/rules/no-bpmndi/valid-extension-elements.bpmn": [
+  ],
+  "test/rules/no-bpmndi/valid-group.bpmn": [
+  ],
+  "test/rules/no-bpmndi/valid-lanes.bpmn": [
+  ],
+  "test/rules/no-bpmndi/valid-message-flow.bpmn": [
+  ],
+  "test/rules/no-bpmndi/valid-multiple-nested-levels.bpmn": [
+  ],
+  "test/rules/no-bpmndi/valid-nested-boundary.bpmn": [
+  ],
+  "test/rules/no-bpmndi/valid-no-lanes.bpmn": [
+  ],
+  "test/rules/no-bpmndi/valid-signavio.bpmn": [
+  ],
+  "test/rules/no-bpmndi/valid-sub-processes.bpmn": [
+  ],
+  "test/rules/no-bpmndi/valid.bpmn": [
+  ],
+  "test/rules/no-complex-gateway/invalid.bpmn": [
+    {
+      "id": "Gateway",
+      "line": 1,
+      "message": "Element type <bpmn:ComplexGateway> is discouraged"
+    }
+  ],
+  "test/rules/no-complex-gateway/valid.bpmn": [
+  ],
+  "test/rules/no-disconnected/invalid.bpmn": [
+    {
+      "id": "Element",
+      "line": 1,
+      "message": "Element is not connected"
+    }
+  ],
+  "test/rules/no-disconnected/valid-adhoc-subprocess.bpmn": [
+  ],
+  "test/rules/no-disconnected/valid-compensation.bpmn": [
+  ],
+  "test/rules/no-disconnected/valid-event-subprocess.bpmn": [
+  ],
+  "test/rules/no-disconnected/valid-text-annotation.bpmn": [
+  ],
+  "test/rules/no-disconnected/valid.bpmn": [
+  ],
+  "test/rules/no-duplicate-sequence-flows/invalid-condition.bpmn": [
+    {
+      "id": "SequenceFlow_1",
+      "line": 1,
+      "message": "SequenceFlow is a duplicate"
+    },
+    {
+      "id": "Task_1",
+      "line": 1,
+      "message": "Duplicate outgoing sequence flows"
+    },
+    {
+      "id": "Task_2",
+      "line": 1,
+      "message": "Duplicate incoming sequence flows"
+    }
+  ],
+  "test/rules/no-duplicate-sequence-flows/invalid-multiple.bpmn": [
+    {
+      "id": "SequenceFlow_2",
+      "line": 1,
+      "message": "SequenceFlow is a duplicate"
+    },
+    {
+      "id": "Task_1",
+      "line": 1,
+      "message": "Duplicate outgoing sequence flows"
+    },
+    {
+      "id": "Task_2",
+      "line": 1,
+      "message": "Duplicate incoming sequence flows"
+    },
+    {
+      "id": "SequenceFlow_3",
+      "line": 1,
+      "message": "SequenceFlow is a duplicate"
+    }
+  ],
+  "test/rules/no-duplicate-sequence-flows/invalid-no-condition.bpmn": [
+    {
+      "id": "SequenceFlow_2",
+      "line": 1,
+      "message": "SequenceFlow is a duplicate"
+    },
+    {
+      "id": "StartEvent_1",
+      "line": 1,
+      "message": "Duplicate outgoing sequence flows"
+    },
+    {
+      "id": "Task_2",
+      "line": 1,
+      "message": "Duplicate incoming sequence flows"
+    }
+  ],
+  "test/rules/no-duplicate-sequence-flows/valid.bpmn": [
+  ],
+  "test/rules/no-gateway-join-fork/invalid.bpmn": [
+    {
+      "id": "Gateway",
+      "line": 1,
+      "message": "Gateway forks and joins"
+    }
+  ],
+  "test/rules/no-gateway-join-fork/valid-fork-join-task.bpmn": [
+  ],
+  "test/rules/no-gateway-join-fork/valid-fork.bpmn": [
+  ],
+  "test/rules/no-gateway-join-fork/valid-join.bpmn": [
+  ],
+  "test/rules/no-implicit-end/invalid.bpmn": [
+    {
+      "id": "INTERMEDIATE_THROW_EVENT",
+      "line": 1,
+      "message": "Element is an implicit end"
+    },
+    {
+      "id": "TASK",
+      "line": 1,
+      "message": "Element is an implicit end"
+    },
+    {
+      "id": "GATEWAY",
+      "line": 1,
+      "message": "Element is an implicit end"
+    },
+    {
+      "id": "START_EVENT",
+      "line": 1,
+      "message": "Element is an implicit end"
+    },
+    {
+      "id": "SUB_PROCESS",
+      "line": 1,
+      "message": "Element is an implicit end"
+    },
+    {
+      "id": "BOUNDARY",
+      "line": 1,
+      "message": "Element is an implicit end"
+    },
+    {
+      "id": "INTERMEDIATE_CATCH_EVENT",
+      "line": 1,
+      "message": "Element is an implicit end"
+    },
+    {
+      "id": "LINK_CATCH_EVENT",
+      "line": 1,
+      "message": "Element is an implicit end"
+    }
+  ],
+  "test/rules/no-implicit-end/valid-collaboration.bpmn": [
+  ],
+  "test/rules/no-implicit-end/valid.bpmn": [
+  ],
+  "test/rules/no-implicit-split/invalid-call-activity.bpmn": [
+    {
+      "id": "Element",
+      "line": 1,
+      "message": "Flow splits implicitly"
+    }
+  ],
+  "test/rules/no-implicit-split/invalid-event.bpmn": [
+    {
+      "id": "Element",
+      "line": 1,
+      "message": "Flow splits implicitly"
+    }
+  ],
+  "test/rules/no-implicit-split/invalid-task.bpmn": [
+    {
+      "id": "Element",
+      "line": 1,
+      "message": "Flow splits implicitly"
+    }
+  ],
+  "test/rules/no-implicit-split/valid-default-conditional-flow.bpmn": [
+  ],
+  "test/rules/no-implicit-split/valid.bpmn": [
+  ],
+  "test/rules/no-implicit-start/invalid.bpmn": [
+    {
+      "id": "END_EVENT",
+      "line": 1,
+      "message": "Element is an implicit start"
+    },
+    {
+      "id": "INTERMEDIATE_THROW_EVENT",
+      "line": 1,
+      "message": "Element is an implicit start"
+    },
+    {
+      "id": "TASK",
+      "line": 1,
+      "message": "Element is an implicit start"
+    },
+    {
+      "id": "GATEWAY",
+      "line": 1,
+      "message": "Element is an implicit start"
+    },
+    {
+      "id": "LINK_THROW",
+      "line": 1,
+      "message": "Element is an implicit start"
+    },
+    {
+      "id": "INTERMEDIATE_CATCH_EVENT",
+      "line": 1,
+      "message": "Element is an implicit start"
+    }
+  ],
+  "test/rules/no-implicit-start/valid-collaboration.bpmn": [
+  ],
+  "test/rules/no-implicit-start/valid.bpmn": [
+  ],
+  "test/rules/no-inclusive-gateway/invalid.bpmn": [
+    {
+      "id": "Gateway",
+      "line": 1,
+      "message": "Element type <bpmn:InclusiveGateway> is discouraged"
+    }
+  ],
+  "test/rules/no-inclusive-gateway/valid.bpmn": [
+  ],
+  "test/rules/no-overlapping-elements/ignore-missing-bounds.bpmn": [
+  ],
+  "test/rules/no-overlapping-elements/ignore-missing-di.bpmn": [
+  ],
+  "test/rules/no-overlapping-elements/invalid-boundary-event.bpmn": [
+    {
+      "id": "TASK",
+      "line": 1,
+      "message": "Element overlaps with other element"
+    },
+    {
+      "id": "LOOKS_LIKE_BOUNDARY",
+      "line": 1,
+      "message": "Element overlaps with other element"
+    }
+  ],
+  "test/rules/no-overlapping-elements/invalid-collaboration.bpmn": [
+    {
+      "id": "Participant_1af2hnr",
+      "line": 1,
+      "message": "Element overlaps with other element"
+    },
+    {
+      "id": "Participant_06xnivi",
+      "line": 1,
+      "message": "Element overlaps with other element"
+    }
+  ],
+  "test/rules/no-overlapping-elements/invalid-process.bpmn": [
+    {
+      "id": "TASK_1",
+      "line": 1,
+      "message": "Element overlaps with other element"
+    },
+    {
+      "id": "TASK_2",
+      "line": 1,
+      "message": "Element overlaps with other element"
+    }
+  ],
+  "test/rules/no-overlapping-elements/invalid-subprocess-collapsed.bpmn": [
+    {
+      "id": "TASK",
+      "line": 1,
+      "message": "Element overlaps with other element"
+    },
+    {
+      "id": "END_EVENT",
+      "line": 1,
+      "message": "Element overlaps with other element"
+    }
+  ],
+  "test/rules/no-overlapping-elements/invalid-subprocess.bpmn": [
+    {
+      "id": "TASK",
+      "line": 1,
+      "message": "Element is outside of parent boundary"
+    }
+  ],
+  "test/rules/no-overlapping-elements/valid-boundary-event.bpmn": [
+  ],
+  "test/rules/no-overlapping-elements/valid-collaboration-subprocess.bpmn": [
+  ],
+  "test/rules/no-overlapping-elements/valid-collaboration.bpmn": [
+  ],
+  "test/rules/no-overlapping-elements/valid-data-objects.bpmn": [
+  ],
+  "test/rules/no-overlapping-elements/valid-process.bpmn": [
+  ],
+  "test/rules/no-overlapping-elements/valid-subprocess-collapsed.bpmn": [
+  ],
+  "test/rules/no-overlapping-elements/valid-subprocess.bpmn": [
+  ],
+  "test/rules/single-blank-start-event/invalid-sub-process.bpmn": [
+    {
+      "id": "SubProcess",
+      "line": 1,
+      "message": "Sub process has multiple blank start events"
+    }
+  ],
+  "test/rules/single-blank-start-event/invalid.bpmn": [
+    {
+      "id": "Process",
+      "line": 1,
+      "message": "Process has multiple blank start events"
+    }
+  ],
+  "test/rules/single-blank-start-event/valid-empty.bpmn": [
+  ],
+  "test/rules/single-blank-start-event/valid-end-event.bpmn": [
+  ],
+  "test/rules/single-blank-start-event/valid-scopes.bpmn": [
+  ],
+  "test/rules/single-blank-start-event/valid-sub-process.bpmn": [
+  ],
+  "test/rules/single-blank-start-event/valid-typed-sub-process.bpmn": [
+  ],
+  "test/rules/single-blank-start-event/valid-typed.bpmn": [
+  ],
+  "test/rules/single-blank-start-event/valid.bpmn": [
+  ],
+  "test/rules/single-event-definition/invalid.bpmn": [
+    {
+      "id": "Event",
+      "line": 1,
+      "message": "Event has multiple event definitions"
+    }
+  ],
+  "test/rules/single-event-definition/valid-blank.bpmn": [
+  ],
+  "test/rules/single-event-definition/valid.bpmn": [
+  ],
+  "test/rules/start-event-required/invalid-sub-process-sub-types.bpmn": [
+    {
+      "id": "TRANSACTION",
+      "line": 1,
+      "message": "Sub process is missing start event"
+    },
+    {
+      "id": "EVENT_SUBPROCESS",
+      "line": 1,
+      "message": "Sub process is missing start event"
+    }
+  ],
+  "test/rules/start-event-required/invalid-sub-process.bpmn": [
+    {
+      "id": "SubProcess",
+      "line": 1,
+      "message": "Sub process is missing start event"
+    }
+  ],
+  "test/rules/start-event-required/invalid.bpmn": [
+    {
+      "id": "Process",
+      "line": 1,
+      "message": "Process is missing start event"
+    }
+  ],
+  "test/rules/start-event-required/valid-sub-process-sub-types.bpmn": [
+  ],
+  "test/rules/start-event-required/valid-sub-process.bpmn": [
+  ],
+  "test/rules/start-event-required/valid.bpmn": [
+  ],
+  "test/rules/sub-process-blank-start-event/invalid-ad-hoc.bpmn": [
+    {
+      "id": "StartEvent",
+      "line": 1,
+      "message": "Start event must be blank"
+    }
+  ],
+  "test/rules/sub-process-blank-start-event/invalid.bpmn": [
+    {
+      "id": "StartEvent",
+      "line": 1,
+      "message": "Start event must be blank"
+    }
+  ],
+  "test/rules/sub-process-blank-start-event/valid-empty.bpmn": [
+  ],
+  "test/rules/sub-process-blank-start-event/valid-event-sub-process.bpmn": [
+  ],
+  "test/rules/sub-process-blank-start-event/valid-intermediate-event.bpmn": [
+  ],
+  "test/rules/sub-process-blank-start-event/valid.bpmn": [
+  ],
+  "test/rules/superfluous-gateway/invalid.bpmn": [
+    {
+      "id": "Gateway_1",
+      "line": 1,
+      "message": "Gateway is superfluous. It only has one source and target."
+    }
+  ],
+  "test/rules/superfluous-gateway/valid-none-gateway.bpmn": [
+  ],
+  "test/rules/superfluous-gateway/valid.bpmn": [
+  ],
+  "test/rules/superfluous-termination/invalid-boundary-interrupting.bpmn": [
+  ],
+  "test/rules/superfluous-termination/invalid-event-sub-process-interrupting.bpmn": [
+    {
+      "id": "TERMINATE_EVENT",
+      "line": 1,
+      "message": "Termination is superfluous."
+    }
+  ],
+  "test/rules/superfluous-termination/invalid-exclusive-paths.bpmn": [
+  ],
+  "test/rules/superfluous-termination/invalid-sub-process.bpmn": [
+    {
+      "id": "TERMINATE_EVENT",
+      "line": 1,
+      "message": "Termination is superfluous."
+    }
+  ],
+  "test/rules/superfluous-termination/invalid.bpmn": [
+    {
+      "id": "TERMINATE_EVENT",
+      "line": 1,
+      "message": "Termination is superfluous."
+    }
+  ],
+  "test/rules/superfluous-termination/valid-boundary-non-interrupting.bpmn": [
+  ],
+  "test/rules/superfluous-termination/valid-event-sub-process-non-interrupting.bpmn": [
+  ],
+  "test/rules/event-sub-process-typed-start-event/valid-sub-process.bpmn": [
+  ],
+  "test/fake-join-correct.bpmn": [
+  ],
+  "test/fake-join-incorrect.bpmn": [
+    {
+      "id": "Task_2",
+      "line": 1,
+      "message": "Fake Join detected: Element 'Task_2' (task) is not a Gateway but has 2 incoming sequence flows. Use a Gateway for merging paths."
+    }
+  ],
+  "test/label-required-correct.bpmn": [
+  ],
+  "test/label-required-incorrect.bpmn": [
+    {
+      "id": "StartEvent_1",
+      "line": 1,
+      "message": "Label Required: Element 'StartEvent_1' (startEvent) must have a descriptive name attribute."
+    },
+    {
+      "id": "Task_1",
+      "line": 1,
+      "message": "Label Required: Element 'Task_1' (task) must have a descriptive name attribute."
+    },
+    {
+      "id": "EndEvent_1",
+      "line": 1,
+      "message": "Label Required: Element 'EndEvent_1' (endEvent) must have a descriptive name attribute."
+    }
+  ],
+  "test/link-event-correct.bpmn": [
+    {
+      "id": "Event_0fvzchs",
+      "line": 1,
+      "message": "Link Event Definition Missing Name: The 'Event_0fvzchs' (intermediateThrowEvent) link definition must have a non-empty name attribute to function correctly."
+    },
+    {
+      "id": "Event_0hnrksg",
+      "line": 1,
+      "message": "Link Event Definition Missing Name: The 'Event_0hnrksg' (intermediateCatchEvent) link definition must have a non-empty name attribute to function correctly."
+    }
+  ],
+  "test/link-event-incorrect.bpmn": [
+    {
+      "id": "Event_022ctsn",
+      "line": 1,
+      "message": "Link Event Definition Missing Name: The 'Event_022ctsn' (intermediateCatchEvent) link definition must have a non-empty name attribute to function correctly."
+    },
+    {
+      "id": "Event_0fvzchs",
+      "line": 1,
+      "message": "Link Event Definition Missing Name: The 'Event_0fvzchs' (intermediateThrowEvent) link definition must have a non-empty name attribute to function correctly."
+    },
+    {
+      "id": "Event_0q5xos0",
+      "line": 1,
+      "message": "Link Event Definition Missing Name: The 'Event_0q5xos0' (intermediateThrowEvent) link definition must have a non-empty name attribute to function correctly."
+    },
+    {
+      "id": "Event_0rw1f16",
+      "line": 1,
+      "message": "Link Event Definition Missing Name: The 'Event_0rw1f16' (intermediateCatchEvent) link definition must have a non-empty name attribute to function correctly."
+    }
+  ],
+
+  "test/no-bpmndi-incorrect.bpmn": [
+    {
+      "id": "SequenceFlow_1",
+      "line": 1,
+      "message": "BPMN DI Required: Element 'SequenceFlow_1' (sequenceFlow) is missing its visual representation (BPMN DI)."
+    }
+  ],
+  "test/no-complex-gateway-incorrect.bpmn": [
+    {
+      "id": "ExclusiveGateway_2",
+      "line": 1,
+      "message": "The use of Complex Gateway is forbidden. Found gateway with ID 'ExclusiveGateway_2'."
+    }
+  ],
+  "test/no-disconnected-correct.bpmn": [
+  ],
+  "test/no-disconnected-incorrect.bpmn": [
+    {
+      "id": "Task_2",
+      "line": 1,
+      "message": "Task is fully disconnected (ID: Task_2)."
+    }
+  ],
+  "test/no-duplicate-sequence-flows-correct.bpmn": [
+  ],
+  "test/no-duplicate-sequence-flows-incorrect.bpmn": [
+    {
+      "id": "SequenceFlow_4",
+      "line": 1,
+      "message": "Duplicate sequence flow: A flow already exists from Task_1 to Task_2 (Original flow ID: SequenceFlow_2)."
+    }
+  ],
+  "test/no-gateway-join-fork-correct.bpmn": [
+  ],
+  "test/no-gateway-join-fork-incorrect.bpmn": [
+    {
+      "id": "ExclusiveGateway_1",
+      "line": 1,
+      "message": "Gateway 'ExclusiveGateway_1' performs both joining (2 incoming flows) and forking (2 outgoing flows). A single gateway should only perform one function (join OR fork)."
+    }
+  ]
+}

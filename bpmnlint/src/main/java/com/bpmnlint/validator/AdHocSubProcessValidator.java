@@ -17,25 +17,33 @@ public class AdHocSubProcessValidator {
         Elements adHocSubProcesses = doc.select("*|adHocSubProcess");
 
         for (Element subProcess : adHocSubProcesses) {
-            Elements flowElements = subProcess.select("*"); // all child elements
+            Elements flowElements = subProcess.children(); // all child elements
 
-            for (Element flowElement : flowElements) {
-                String tagName = flowElement.tagName();
+            for (Element fe : flowElements) {
 
-                if ("startEvent".equals(tagName)) {
-                    result.add(issue(flowElement, "A <Start Event> is not allowed in <Ad Hoc Sub Process>"));
+                if(!fe.select("*|startEvent").isEmpty()){
+                    result.add(issue(fe, "A <Start Event> is not allowed in <Ad Hoc Sub Process>"));
                 }
 
-                if ("endEvent".equals(tagName)) {
-                    result.add(issue(flowElement, "An <End Event> is not allowed in <Ad Hoc Sub Process>"));
+
+                if (!fe.select("*|endEvent").isEmpty()) {
+                    result.add(issue(fe, "An <End Event> is not allowed in <Ad Hoc Sub Process>"));
                 }
 
-                if ("intermediateCatchEvent".equals(tagName) || "intermediateThrowEvent".equals(tagName)) {
-                    Elements outgoing = flowElement.select("*|outgoing");
+                if(!fe.select("*|intermediateCatchEvent").isEmpty()){
+                    Elements outgoing = fe.select("*|outgoing");
                     if (outgoing.isEmpty()) {
-                        result.add(issue(flowElement, "An intermediate catch event inside <Ad Hoc Sub Process> must have an outgoing sequence flow"));
+                        result.add(issue(fe, "An intermediate catch event inside <Ad Hoc Sub Process> must have an outgoing sequence flow"));
                     }
                 }
+                if(!fe.select("*|intermediateThrowEvent").isEmpty()){
+                    Elements outgoing = fe.select("*|outgoing");
+                    if (outgoing.isEmpty()) {
+                        result.add(issue(fe, "An intermediate catch event inside <Ad Hoc Sub Process> must have an outgoing sequence flow"));
+                    }
+                }
+
+
             }
 
         }

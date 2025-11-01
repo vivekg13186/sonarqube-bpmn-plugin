@@ -3,11 +3,13 @@ package com.bpmnlint;
 import com.bpmnlint.validator.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.assertj.core.groups.Tuple;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.parser.Parser;
-import org.junit.Test;
+
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -53,16 +55,32 @@ public class RuleTestCase {
     }
 
     public static void test(String filename,Callback callback) throws Exception {
+        System.out.printf("🚩%s \n",filename);
         Document doc = loadDoc(filename);
         List<Issue> actualResult = callback.validate(doc);
         List<Issue> expectedResult = testResults.get(filename);
-        assertThat(actualResult).hasSameElementsAs(expectedResult);
+
+        assertThat(actualResult)
+        .extracting("id", "line", "message")
+                .containsExactlyInAnyOrder(toTuples(expectedResult));
+        System.out.printf("✅ %s \n",filename);
+    }
+    public static Tuple[] toTuples(List<Issue> issueList){
+        Tuple[] tuples = new Tuple[issueList.size()];
+        int i=0;
+        for(Issue issue:issueList){
+            tuples[i] =new Tuple(issue.getId(),issue.getLine(),issue.getMessage());
+            i++;
+        }
+        return tuples;
     }
     @Test
     public void adHocSubProcessValidator() throws Exception {
    test( "test/ad-hoc-sub-process-correct.bpmn",AdHocSubProcessValidator::validate  );
         test( "test/ad-hoc-sub-process-incorrect.bpmn",AdHocSubProcessValidator::validate  );
-   /*
+        test("test/rules/ad-hoc-sub-process/valid.bpmn",(AdHocSubProcessValidator::validate));
+        test("test/rules/ad-hoc-sub-process/invalid-start-end.bpmn",(AdHocSubProcessValidator::validate));
+        /*
 
 
         assert AdHocSubProcessValidator.validate(loadDoc("test/ad-hoc-sub-process-correct.bpmn")).isEmpty();
