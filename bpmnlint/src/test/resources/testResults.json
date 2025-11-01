@@ -25,7 +25,7 @@
   "test/conditional-flows-incorrect.bpmn": [
     {
       "id": "SequenceFlow_0q9ussl",
-      "line": 1,
+      "line": 15,
       "message": "Sequence flow is missing condition"
     }
   ],
@@ -179,28 +179,28 @@
   "test/rules/conditional-flows/invalid-fork-after-exclusive-gateway-default.bpmn": [
     {
       "id": "Flow_1",
-      "line": 1,
+      "line": 11,
       "message": "Sequence flow is missing condition"
     }
   ],
   "test/rules/conditional-flows/invalid-fork-after-exclusive-gateway.bpmn": [
     {
       "id": "Flow_2",
-      "line": 1,
+      "line": 17,
       "message": "Sequence flow is missing condition"
     }
   ],
   "test/rules/conditional-flows/invalid-fork-after-task-default.bpmn": [
     {
       "id": "Flow_1",
-      "line": 1,
+      "line": 14,
       "message": "Sequence flow is missing condition"
     }
   ],
   "test/rules/conditional-flows/invalid-fork-after-task.bpmn": [
     {
       "id": "Flow_1",
-      "line": 1,
+      "line": 14,
       "message": "Sequence flow is missing condition"
     }
   ],

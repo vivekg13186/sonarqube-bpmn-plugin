@@ -16,11 +16,24 @@ public class ConditionalFlowsValidator {
     public static List<Issue> validate(Document doc) {
         List<Issue> result = new ArrayList<>();
 
-        // Select all gateways and activities that can have conditional flows
-        Elements nodes = doc.select("*|exclusiveGateway, *|inclusiveGateway, *|activity");
+        // Select all gateways and tasks
+        Elements nodes = doc.select("*|exclusiveGateway, *|inclusiveGateway, *|task");
 
         for (Element node : nodes) {
-            Elements outgoingFlows = doc.select("*|sequenceFlow[sourceRef=" + node.attr("id") + "]");
+            String nodeId = node.attr("id");
+            Elements outgoingFlows = doc.select("*|sequenceFlow[sourceRef=" + nodeId + "]");
+
+            // Skip if only one outgoing flow
+            if (outgoingFlows.size() <= 1) {
+                continue;
+            }
+
+            boolean isConditionalForking = node.hasAttr("default") ||
+                    outgoingFlows.stream().anyMatch(flow -> !flow.select("*|conditionExpression").isEmpty());
+
+            if (!isConditionalForking) {
+                continue;
+            }
 
             for (Element flow : outgoingFlows) {
                 boolean hasCondition = !flow.select("*|conditionExpression").isEmpty();
@@ -34,4 +47,6 @@ public class ConditionalFlowsValidator {
 
         return result;
     }
+
+
 }

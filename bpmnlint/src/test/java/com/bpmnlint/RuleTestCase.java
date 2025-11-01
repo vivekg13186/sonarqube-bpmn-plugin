@@ -55,7 +55,7 @@ public class RuleTestCase {
     }
 
     public static void test(String filename,Callback callback) throws Exception {
-        System.out.printf("🚩%s \n",filename);
+        System.out.printf("🚩 %s \n",filename);
         Document doc = loadDoc(filename);
         List<Issue> actualResult = callback.validate(doc);
         List<Issue> expectedResult = testResults.get(filename);
@@ -76,31 +76,24 @@ public class RuleTestCase {
     }
     @Test
     public void adHocSubProcessValidator() throws Exception {
-   test( "test/ad-hoc-sub-process-correct.bpmn",AdHocSubProcessValidator::validate  );
+        test( "test/ad-hoc-sub-process-correct.bpmn",AdHocSubProcessValidator::validate  );
         test( "test/ad-hoc-sub-process-incorrect.bpmn",AdHocSubProcessValidator::validate  );
         test("test/rules/ad-hoc-sub-process/valid.bpmn",(AdHocSubProcessValidator::validate));
         test("test/rules/ad-hoc-sub-process/invalid-start-end.bpmn",(AdHocSubProcessValidator::validate));
-        /*
 
-
-        assert AdHocSubProcessValidator.validate(loadDoc("test/ad-hoc-sub-process-correct.bpmn")).isEmpty();
-        List<Issue> issueList = AdHocSubProcessValidator.validate(loadDoc("test/ad-hoc-sub-process-incorrect.bpmn"));
-
-        assertThat(issueList).extracting("id", "line", "message")
-                .contains(
-                        tuple("Event_0q40via", 5, "An intermediate catch event inside <Ad Hoc Sub Process> must have an outgoing sequence flow"),
-                        tuple("Event_03k6pnd", 10, "A <Start Event> is not allowed in <Ad Hoc Sub Process>"),
-                        tuple("Event_03gcp25", 13, "An <End Event> is not allowed in <Ad Hoc Sub Process>"));
-
-    */
     }
     @Test
-    public void conditionalFlowsValidator(){
-        assert ConditionalFlowsValidator.validate(loadDoc("test/conditional-flows-correct.bpmn")).isEmpty();
-        List<Issue> issueList =ConditionalFlowsValidator.validate(loadDoc("test/conditional-flows-incorrect.bpmn"));
-        assertThat(issueList).extracting("id", "line", "message")
-                .contains(
-                        tuple("SequenceFlow_0q9ussl", 15, "Sequence flow is missing condition") );
+    public void conditionalFlowsValidator() throws Exception{
+        test("test/conditional-flows-correct.bpmn",(ConditionalFlowsValidator::validate));
+        test("test/conditional-flows-incorrect.bpmn",(ConditionalFlowsValidator::validate));
+        test("test/rules/conditional-flows/invalid-fork-after-exclusive-gateway.bpmn",(ConditionalFlowsValidator::validate));
+        test("test/rules/conditional-flows/invalid-fork-after-exclusive-gateway-default.bpmn",(ConditionalFlowsValidator::validate));
+        test("test/rules/conditional-flows/invalid-fork-after-task.bpmn",(ConditionalFlowsValidator::validate));
+        test("test/rules/conditional-flows/invalid-fork-after-task-default.bpmn",(ConditionalFlowsValidator::validate));
+        test("test/rules/conditional-flows/valid-conditional-fork.bpmn",(ConditionalFlowsValidator::validate));
+        test("test/rules/conditional-flows/valid-no-condition-after-merge.bpmn",(ConditionalFlowsValidator::validate));
+        test("test/rules/conditional-flows/valid-split.bpmn",(ConditionalFlowsValidator::validate));
+        test("test/rules/conditional-flows/valid-split-after-task.bpmn",(ConditionalFlowsValidator::validate));
 
     }
     @Test
