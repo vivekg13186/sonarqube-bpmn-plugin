@@ -12,16 +12,27 @@ import static com.bpmnlint.Util.*;
 
 public class SingleBlankStartEventValidator {
 
+
+    public static boolean hasDefinition(Element start){
+        Elements elements =start.children();
+        boolean hasDef =false;
+        for(Element element:elements){
+            if(element.tagName().toLowerCase().endsWith("eventdefinition")){
+                hasDef = true;
+            }
+        }
+        return hasDef;
+    }
     public static List<Issue> validate(Document doc) {
         List<Issue> result = new ArrayList<>();
         Elements containers = doc.select("*|process, *|subProcess");
 
         for (Element container : containers) {
-            Elements startEvents = container.select("*|startEvent");
+            Elements startEvents = container.select("> *|startEvent");
             int blankCount = 0;
 
             for (Element start : startEvents) {
-                if (start.select("*|eventDefinition").isEmpty()) {
+                if (!hasDefinition(start)) {
                     blankCount++;
                 }
             }

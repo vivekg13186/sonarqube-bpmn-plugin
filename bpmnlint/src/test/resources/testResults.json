@@ -932,7 +932,7 @@
   "test/rules/single-blank-start-event/invalid.bpmn": [
     {
       "id": "Process",
-      "line": 1,
+      "line": 3,
       "message": "Process has multiple blank start events"
     }
   ],
