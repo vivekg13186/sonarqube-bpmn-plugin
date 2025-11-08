@@ -99,13 +99,13 @@
   "test/no-overlapping-elements-incorrect.bpmn": [
     {
       "id": "Activity_0g4fgz0",
-      "line": 1,
-      "message": "Element overlaps with other element"
+      "line": 4,
+      "message": "Overlaps with element"
     },
     {
       "id": "Activity_1v5k805",
-      "line": 1,
-      "message": "Element overlaps with other element"
+      "line": 7,
+      "message": "Overlaps with element"
     }
   ],
   "test/single-blank-start-event-correct.bpmn": [
@@ -855,25 +855,25 @@
   "test/rules/no-overlapping-elements/invalid-boundary-event.bpmn": [
     {
       "id": "TASK",
-      "line": 1,
-      "message": "Element overlaps with other element"
+      "line": 4,
+      "message": "Overlaps with element"
     },
     {
       "id": "LOOKS_LIKE_BOUNDARY",
-      "line": 1,
-      "message": "Element overlaps with other element"
+      "line": 5,
+      "message": "Overlaps with element"
     }
   ],
   "test/rules/no-overlapping-elements/invalid-collaboration.bpmn": [
     {
       "id": "Participant_1af2hnr",
-      "line": 1,
-      "message": "Element overlaps with other element"
+      "line": 4,
+      "message": "Overlaps with element"
     },
     {
       "id": "Participant_06xnivi",
-      "line": 1,
-      "message": "Element overlaps with other element"
+      "line": 5,
+      "message": "Overlaps with element"
     }
   ],
   "test/rules/no-overlapping-elements/invalid-process.bpmn": [

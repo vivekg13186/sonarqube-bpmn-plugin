@@ -49,10 +49,10 @@ public class NoOverlappingElementsValidator {
                     Element el2 = doc.selectFirst("*[id=" + id2 + "]");
 
                     if (el1 != null) {
-                        result.add(issue(el1, "Overlaps with element '" + id2 + "'"));
+                        result.add(issue(el1, "Overlaps with element"));
                     }
                     if (el2 != null) {
-                        result.add(issue(el2, "Overlaps with element '" + id1 + "'"));
+                        result.add(issue(el2, "Overlaps with element"));
                     }
                 }
             }

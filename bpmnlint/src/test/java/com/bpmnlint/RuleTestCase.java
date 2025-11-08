@@ -290,7 +290,7 @@ public class RuleTestCase {
     public void noOverlappingElementsValidator    ()throws Exception {
         match("test/no-overlapping-elements-correct.bpmn",NoOverlappingElementsValidator::validate);
         match("test/no-overlapping-elements-incorrect.bpmn",NoOverlappingElementsValidator::validate);
-        match("test/rules/no-overlapping-elements/ignore-missing-bound.bpmn",NoOverlappingElementsValidator::validate);
+        match("test/rules/no-overlapping-elements/ignore-missing-bounds.bpmn",NoOverlappingElementsValidator::validate);
         match("test/rules/no-overlapping-elements/ignore-missing-di.bpmn",NoOverlappingElementsValidator::validate);
         match("test/rules/no-overlapping-elements/invalid-boundary-event.bpmn",NoOverlappingElementsValidator::validate);
         match("test/rules/no-overlapping-elements/invalid-collaboration.bpmn",NoOverlappingElementsValidator::validate);
