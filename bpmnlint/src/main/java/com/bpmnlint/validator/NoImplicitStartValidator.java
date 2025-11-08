@@ -25,11 +25,11 @@ public class NoImplicitStartValidator {
             String id = el.attr("id");
             Elements incoming = doc.select("*|sequenceFlow[targetRef=" + id + "]");
 
-            boolean isStartEvent = el.tagName().endsWith(":startEvent");
-            boolean isBoundaryEvent = el.tagName().endsWith(":boundaryEvent");
+            boolean isStartEvent = el.tagName().endsWith("startEvent");
+            boolean isBoundaryEvent = el.tagName().endsWith("boundaryEvent");
             boolean isCompensation = "true".equals(el.attr("isForCompensation"));
             boolean isTriggeredByEvent = "true".equals(el.attr("triggeredByEvent"));
-            boolean isAdHoc = el.parent() != null && el.parent().tagName().endsWith(":adHocSubProcess");
+            boolean isAdHoc = el.parent() != null && el.parent().tagName().endsWith("adHocSubProcess");
 
             if (incoming.isEmpty() && !isStartEvent && !isBoundaryEvent && !isCompensation && !isTriggeredByEvent && !isAdHoc) {
                 result.add(issue(el, "Element is an implicit start"));

@@ -23,10 +23,10 @@ public class LabelRequiredValidator {
             String tag = element.tagName();
 
             // Skip parallel and event-based gateways
-            if (tag.endsWith(":parallelGateway") || tag.endsWith(":eventBasedGateway")) continue;
+            if (tag.endsWith("parallelGateway") || tag.endsWith("eventBasedGateway")) continue;
 
             // Skip sub-processes
-            if (tag.endsWith(":subProcess")) continue;
+            if (tag.endsWith("subProcess")) continue;
 
             // Skip gateways that are not forking all gateway nodes
             if (tag.endsWith("Gateway")) {
@@ -36,31 +36,31 @@ public class LabelRequiredValidator {
             }
 
             // Skip sequence flows without condition
-            if (tag.endsWith(":sequenceFlow")) {
+            if (tag.endsWith("sequenceFlow")) {
                 if (element.select("*|conditionExpression").isEmpty()) continue;
             }
 
 
             // Check for label on relevant BPMN elements
-            boolean requiresLabel = tag.endsWith(":startEvent") ||
-                    tag.endsWith(":endEvent") ||
-                    tag.endsWith(":intermediateCatchEvent") ||
-                    tag.endsWith(":intermediateThrowEvent") ||
-                    tag.endsWith(":boundaryEvent") ||
-                    tag.endsWith(":task") ||
-                    tag.endsWith(":callActivity") ||
-                    tag.endsWith(":userTask") ||
-                    tag.endsWith(":manualTask") ||
-                    tag.endsWith(":scriptTask") ||
-                    tag.endsWith(":receiveTask") ||
-                    tag.endsWith(":sendTask") ||
-                    tag.endsWith(":businessRuleTask") ||
-                    tag.endsWith(":sequenceFlow") ||
-                    tag.endsWith(":participant") ||
-                    tag.endsWith(":lane") ||
-                    tag.endsWith(":exclusiveGateway") ||
-                    tag.endsWith(":inclusiveGateway") ||
-                    tag.endsWith(":complexGateway");
+            boolean requiresLabel = tag.endsWith("startEvent") ||
+                    tag.endsWith("endEvent") ||
+                    tag.endsWith("intermediateCatchEvent") ||
+                    tag.endsWith("intermediateThrowEvent") ||
+                    tag.endsWith("boundaryEvent") ||
+                    tag.endsWith("task") ||
+                    tag.endsWith("callActivity") ||
+                    tag.endsWith("userTask") ||
+                    tag.endsWith("manualTask") ||
+                    tag.endsWith("scriptTask") ||
+                    tag.endsWith("receiveTask") ||
+                    tag.endsWith("sendTask") ||
+                    tag.endsWith("businessRuleTask") ||
+                    tag.endsWith("sequenceFlow") ||
+                    tag.endsWith("participant") ||
+                    tag.endsWith("lane") ||
+                    tag.endsWith("exclusiveGateway") ||
+                    tag.endsWith("inclusiveGateway") ||
+                    tag.endsWith("complexGateway");
 
             if (requiresLabel) {
 

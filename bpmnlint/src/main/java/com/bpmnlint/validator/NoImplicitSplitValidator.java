@@ -12,17 +12,37 @@ import static com.bpmnlint.Util.*;
 
 public class NoImplicitSplitValidator {
 
+    public static boolean isDefault(Element root,Element outgoing){
+        String id = outgoing.text();
+        if(root.hasAttr("default")){
+             return id.equals(root.attr("default"));
+        }
+        return false;
+    }
+
+    public static boolean hasConditionExpression(Elements seq){
+        if(!seq.isEmpty()){
+            return !seq.select("*|conditionExpression").isEmpty();
+        }
+        return false;
+    }
     public static List<Issue> validate(Document doc) {
         List<Issue> result = new ArrayList<>();
 
         // Select all elements that could have outgoing flows
-        Elements candidates = doc.select("*|task, *|subProcess, *|callActivity, *|sendTask, *|receiveTask, *|userTask, *|manualTask, *|scriptTask, *|businessRuleTask");
+        Elements candidates = doc.select("*|startEvent,*|task, *|subProcess, *|callActivity, *|sendTask, *|receiveTask, *|userTask, *|manualTask, *|scriptTask, *|businessRuleTask");
 
         for (Element el : candidates) {
-            String id = el.attr("id");
-            Elements outgoing = doc.select("*|sequenceFlow[sourceRef=" + id + "]");
+            Elements outgoings = el.select("*|outgoing");
+            int outGoingWithoutCondition =0;
+            for(Element o : outgoings){
+                Elements seq = doc.select("#"+o.text());
+                if(!isDefault(el,o) && !hasConditionExpression(seq)){
+                    outGoingWithoutCondition++;
+                }
+            }
 
-            if (outgoing.size() > 1) {
+            if (outGoingWithoutCondition > 1) {
                 result.add(issue(el, "Element has multiple outgoing flows but is not a gateway—implicit split detected"));
             }
         }

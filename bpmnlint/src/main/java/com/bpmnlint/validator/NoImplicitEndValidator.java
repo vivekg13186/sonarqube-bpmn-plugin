@@ -20,7 +20,7 @@ public class NoImplicitEndValidator {
         Elements candidates = doc.select(
                 "*|startEvent, *|endEvent, *|intermediateCatchEvent, *|intermediateThrowEvent, *|boundaryEvent, " +
                         "*|task, *|subProcess, *|callActivity, *|receiveTask, *|sendTask, *|userTask, *|manualTask, *|scriptTask, *|businessRuleTask, " +
-                        "*|exclusiveGateway, *|inclusiveGateway, *|parallelGateway, *|complexGateway, *|eventBasedGateway"
+                            "*|exclusiveGateway, *|inclusiveGateway, *|parallelGateway, *|complexGateway, *|eventBasedGateway"
         );
 
 
@@ -28,14 +28,14 @@ public class NoImplicitEndValidator {
             String id = node.attr("id");
 
             // Skip if it's an EndEvent
-            if (node.tagName().endsWith(":endEvent")) continue;
+            if (node.tagName().endsWith("endEvent")) continue;
 
             // Skip if it's a Link Throw Event
-            if (node.tagName().endsWith(":intermediateThrowEvent") &&
+            if (node.tagName().endsWith("intermediateThrowEvent") &&
                     !node.select("*|linkEventDefinition").isEmpty()) continue;
 
             // Skip if it's a boundary event with compensation and has association
-            if (node.tagName().endsWith(":boundaryEvent") &&
+            if (node.tagName().endsWith("boundaryEvent") &&
                     !node.select("*|compensateEventDefinition").isEmpty() &&
                     hasCompensationAssociation(doc, id)) continue;
 
@@ -44,11 +44,11 @@ public class NoImplicitEndValidator {
 
             // Skip if it's inside an ad-hoc sub-process
             Element parent = node.parent();
-            if (parent != null && parent.tagName().endsWith(":adHocSubProcess")) continue;
+            if (parent != null && parent.tagName().endsWith("adHocSubProcess")) continue;
 
             // Skip if it's an event sub-process
-            if (parent != null && parent.tagName().endsWith(":subProcess") &&
-                    "true".equals(parent.attr("triggeredByEvent"))) continue;
+            if ( node.tagName().endsWith("subProcess") &&
+                    "true".equals(node.attr("triggeredByEvent"))) continue;
 
 
             // Check outgoing sequence flows

@@ -67,8 +67,8 @@
   "test/no-implicit-split-incorrect.bpmn": [
     {
       "id": "Task_1",
-      "line": 1,
-      "message": "Flow splits implicitly"
+      "line": 7,
+      "message": "Element has multiple outgoing flows but is not a gateway—implicit split detected"
     }
   ],
   "test/no-implicit-start-correct.bpmn": [
@@ -735,43 +735,43 @@
   "test/rules/no-implicit-end/invalid.bpmn": [
     {
       "id": "INTERMEDIATE_THROW_EVENT",
-      "line": 1,
-      "message": "Element is an implicit end"
+      "line": 5,
+      "message": "Element is an implicit end (no outgoing sequence flow)"
     },
     {
       "id": "TASK",
-      "line": 1,
-      "message": "Element is an implicit end"
+      "line": 6,
+      "message": "Element is an implicit end (no outgoing sequence flow)"
     },
     {
       "id": "GATEWAY",
-      "line": 1,
-      "message": "Element is an implicit end"
+      "line": 7,
+      "message": "Element is an implicit end (no outgoing sequence flow)"
     },
     {
       "id": "START_EVENT",
-      "line": 1,
-      "message": "Element is an implicit end"
+      "line": 8,
+      "message": "Element is an implicit end (no outgoing sequence flow)"
     },
     {
       "id": "SUB_PROCESS",
-      "line": 1,
-      "message": "Element is an implicit end"
+      "line": 9,
+      "message": "Element is an implicit end (no outgoing sequence flow)"
     },
     {
       "id": "BOUNDARY",
-      "line": 1,
-      "message": "Element is an implicit end"
+      "line": 10,
+      "message": "Element is an implicit end (no outgoing sequence flow)"
     },
     {
       "id": "INTERMEDIATE_CATCH_EVENT",
-      "line": 1,
-      "message": "Element is an implicit end"
+      "line": 11,
+      "message": "Element is an implicit end (no outgoing sequence flow)"
     },
     {
       "id": "LINK_CATCH_EVENT",
-      "line": 1,
-      "message": "Element is an implicit end"
+      "line": 12,
+      "message": "Element is an implicit end (no outgoing sequence flow)"
     }
   ],
   "test/rules/no-implicit-end/valid-collaboration.bpmn": [
@@ -781,22 +781,22 @@
   "test/rules/no-implicit-split/invalid-call-activity.bpmn": [
     {
       "id": "Element",
-      "line": 1,
-      "message": "Flow splits implicitly"
+      "line": 12,
+      "message": "Element has multiple outgoing flows but is not a gateway—implicit split detected"
     }
   ],
   "test/rules/no-implicit-split/invalid-event.bpmn": [
     {
       "id": "Element",
-      "line": 1,
-      "message": "Flow splits implicitly"
+      "line": 4,
+      "message": "Element has multiple outgoing flows but is not a gateway—implicit split detected"
     }
   ],
   "test/rules/no-implicit-split/invalid-task.bpmn": [
     {
       "id": "Element",
-      "line": 1,
-      "message": "Flow splits implicitly"
+      "line": 4,
+      "message": "Element has multiple outgoing flows but is not a gateway—implicit split detected"
     }
   ],
   "test/rules/no-implicit-split/valid-default-conditional-flow.bpmn": [

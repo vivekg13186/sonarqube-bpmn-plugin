@@ -27,7 +27,7 @@ public class SingleBlankStartEventValidator {
             }
 
             if (blankCount > 1) {
-                String type = container.tagName().endsWith(":subProcess") ? "Sub process" : "Process";
+                String type = container.tagName().endsWith("subProcess") ? "Sub process" : "Process";
                 result.add(issue(container, type + " has multiple blank start events"));
             }
         }

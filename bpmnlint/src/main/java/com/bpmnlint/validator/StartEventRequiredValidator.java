@@ -17,11 +17,11 @@ public class StartEventRequiredValidator {
         Elements containers = doc.select("*|process, *|subProcess");
 
         for (Element container : containers) {
-            if (container.tagName().endsWith(":adHocSubProcess")) continue;
+            if (container.tagName().endsWith("adHocSubProcess")) continue;
 
             Elements startEvents = container.select("*|startEvent");
             if (startEvents.isEmpty()) {
-                String type = container.tagName().endsWith(":subProcess") ? "Sub process" : "Process";
+                String type = container.tagName().endsWith("subProcess") ? "Sub process" : "Process";
                 result.add(issue(container, type + " is missing start event"));
             }
         }

@@ -29,7 +29,7 @@ public class NoDisconnectedValidator {
 
             // Skip ad-hoc sub-process children
             Element parent = element.parent();
-            if (parent != null && "true".equals(parent.attr("triggeredByEvent")) && parent.tagName().endsWith(":subProcess")) {
+            if (parent != null && "true".equals(parent.attr("triggeredByEvent")) && parent.tagName().endsWith("subProcess")) {
                 continue;
             }
 
@@ -52,7 +52,7 @@ public class NoDisconnectedValidator {
 
     private static boolean isCompensationLinked(Element element) {
         // Check if it's a boundary event with compensate definition
-        if (element.tagName().endsWith(":boundaryEvent")) {
+        if (element.tagName().endsWith("boundaryEvent")) {
             Elements defs = element.select("*|compensateEventDefinition");
             return !defs.isEmpty();
         }
