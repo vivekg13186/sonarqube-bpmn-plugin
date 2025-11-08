@@ -86,12 +86,12 @@
     {
       "id": "InclusiveGateway_1",
       "line": 1,
-      "message": "Element type <bpmn:InclusiveGateway> is discouraged"
+      "message": "Use of <Complex Gateway> is discouraged"
     },
     {
       "id": "InclusiveGateway_2",
       "line": 1,
-      "message": "Element type <bpmn:InclusiveGateway> is discouraged"
+      "message": "Use of <Complex Gateway> is discouraged"
     }
   ],
   "test/no-overlapping-elements-correct.bpmn": [
@@ -263,15 +263,15 @@
   "test/rules/fake-join/invalid-callActivity.bpmn": [
     {
       "id": "Element",
-      "line": 1,
-      "message": "Incoming flows do not join"
+      "line": 12,
+      "message": "Fake Join detected: Element 'Element' (task) is not a Gateway but has 2 incoming sequence flows. Use a Gateway for merging paths."
     }
   ],
   "test/rules/fake-join/invalid-task.bpmn": [
     {
       "id": "Element",
-      "line": 1,
-      "message": "Incoming flows do not join"
+      "line": 7,
+      "message": "Fake Join detected: Element 'Element' (task) is not a Gateway but has 2 incoming sequence flows. Use a Gateway for merging paths."
     }
   ],
   "test/rules/fake-join/valid-gateway.bpmn": [
@@ -395,50 +395,50 @@
   "test/rules/label-required/invalid-boundary-event.bpmn": [
     {
       "id": "Element",
-      "line": 1,
-      "message": "Element is missing label/name"
+      "line": 5,
+      "message": "Label Required: Element 'Element' (boundaryEvent) must have a descriptive name attribute."
     }
   ],
   "test/rules/label-required/invalid-conditional-flow.bpmn": [
     {
       "id": "ConditionalFlow",
-      "line": 1,
-      "message": "Element is missing label/name"
+      "line": 10,
+      "message": "Label Required: Element 'ConditionalFlow' (sequenceFlow) must have a descriptive name attribute."
     }
   ],
   "test/rules/label-required/invalid-event.bpmn": [
     {
       "id": "Element",
-      "line": 1,
-      "message": "Element is missing label/name"
+      "line": 4,
+      "message": "Label Required: Element 'Element' (intermediateThrowEvent) must have a descriptive name attribute."
     }
   ],
   "test/rules/label-required/invalid-gateway-split.bpmn": [
     {
       "id": "Element",
-      "line": 1,
-      "message": "Element is missing label/name"
+      "line": 4,
+      "message": "Label Required: Element 'Element' (exclusiveGateway) must have a descriptive name attribute."
     }
   ],
   "test/rules/label-required/invalid-lane.bpmn": [
     {
       "id": "Element",
-      "line": 1,
-      "message": "Element is missing label/name"
+      "line": 9,
+      "message": "Label Required: Element 'Element' (lane) must have a descriptive name attribute."
     }
   ],
   "test/rules/label-required/invalid-participant.bpmn": [
     {
       "id": "Element",
-      "line": 1,
-      "message": "Element is missing label/name"
+      "line": 4,
+      "message": "Label Required: Element 'Element' (participant) must have a descriptive name attribute."
     }
   ],
   "test/rules/label-required/invalid-task.bpmn": [
     {
       "id": "Element",
-      "line": 1,
-      "message": "Element is missing label/name"
+      "line": 4,
+      "message": "Label Required: Element 'Element' (task) must have a descriptive name attribute."
     }
   ],
   "test/rules/label-required/valid-boundary-event.bpmn": [
@@ -456,45 +456,46 @@
   "test/rules/link-event/invalid.bpmn": [
     {
       "id": "CATCH_NO_NAME",
-      "line": 1,
+      "line": 24,
       "message": "Link event is missing link name"
     },
     {
       "id": "THROW_NO_NAME",
-      "line": 1,
+      "line": 27,
       "message": "Link event is missing link name"
     },
     {
       "id": "NO_CATCH",
-      "line": 1,
+      "line": 4,
       "message": "Link catch event with link name <NO_CATCH> missing in scope"
     },
     {
       "id": "NO_THROW",
-      "line": 1,
+      "line": 7,
       "message": "Link throw event with link name <NO_THROW> missing in scope"
     },
     {
       "id": "SCOPE_BOUNDARY_THROW",
-      "line": 1,
+      "line": 15,
       "message": "Link catch event with link name <SCOPE_BOUNDARY> missing in scope"
     },
     {
       "id": "DUPLICATE_NAME_CATCH_1",
-      "line": 1,
+      "line": 18,
       "message": "Duplicate link catch event with link name <DUPLICATE_LINK_NAME> in scope  link-event"
     },
     {
       "id": "DUPLICATE_NAME_CATCH_2",
-      "line": 1,
+      "line": 21,
       "message": "Duplicate link catch event with link name <DUPLICATE_LINK_NAME> in scope  link-event"
     },
     {
       "id": "SCOPE_BOUNDARY_CATCH",
-      "line": 1,
+      "line": 11,
       "message": "Link throw event with link name <SCOPE_BOUNDARY> missing in scope"
     }
   ],
+  "test/no-bpmndi-correct.bpmn":[],
   "test/rules/link-event/valid-collaboration.bpmn": [
   ],
   "test/rules/link-event/valid.bpmn": [
@@ -504,105 +505,105 @@
   "test/rules/no-bpmndi/invalid-catch-event.bpmn": [
     {
       "id": "boundaryEvent",
-      "line": 1,
+      "line": 16,
       "message": "Element is missing bpmndi"
     }
   ],
   "test/rules/no-bpmndi/invalid-collapsed-pool.bpmn": [
     {
       "id": "participant1",
-      "line": 1,
+      "line": 4,
       "message": "Element is missing bpmndi"
     }
   ],
   "test/rules/no-bpmndi/invalid-group.bpmn": [
     {
       "id": "Group_1",
-      "line": 1,
+      "line": 16,
       "message": "Element is missing bpmndi"
     }
   ],
   "test/rules/no-bpmndi/invalid-lane.bpmn": [
     {
       "id": "lane2",
-      "line": 1,
+      "line": 12,
       "message": "Element is missing bpmndi"
     }
   ],
   "test/rules/no-bpmndi/invalid-message-flow.bpmn": [
     {
       "id": "danglingMessageFlow",
-      "line": 1,
+      "line": 6,
       "message": "Element is missing bpmndi"
     }
   ],
   "test/rules/no-bpmndi/invalid-missing-nested-lane-deep.bpmn": [
     {
       "id": "lane7",
-      "line": 1,
+      "line": 22,
       "message": "Element is missing bpmndi"
     }
   ],
   "test/rules/no-bpmndi/invalid-missing-nested-lane.bpmn": [
     {
       "id": "lane_1",
-      "line": 1,
+      "line": 14,
       "message": "Element is missing bpmndi"
     }
   ],
   "test/rules/no-bpmndi/invalid-multiple-nested-levels.bpmn": [
     {
       "id": "task1",
-      "line": 1,
+      "line": 13,
       "message": "Element is missing bpmndi"
     }
   ],
   "test/rules/no-bpmndi/invalid-multiple-sub-processes.bpmn": [
     {
       "id": "boundaryEvent",
-      "line": 1,
+      "line": 49,
       "message": "Element is missing bpmndi"
     }
   ],
   "test/rules/no-bpmndi/invalid-nested-boundary.bpmn": [
     {
       "id": "boundaryEvent",
-      "line": 1,
+      "line": 36,
       "message": "Element is missing bpmndi"
     }
   ],
   "test/rules/no-bpmndi/invalid-nested-lanes.bpmn": [
     {
       "id": "task1",
-      "line": 1,
+      "line": 38,
       "message": "Element is missing bpmndi"
     }
   ],
   "test/rules/no-bpmndi/invalid-no-bpmn-diagram.bpmn": [
     {
       "id": "StartEvent_1",
-      "line": 1,
+      "line": 4,
       "message": "Element is missing bpmndi"
     }
   ],
   "test/rules/no-bpmndi/invalid-participant.bpmn": [
     {
       "id": "Participant_1",
-      "line": 1,
+      "line": 4,
       "message": "Element is missing bpmndi"
     }
   ],
   "test/rules/no-bpmndi/invalid-sequence-flow.bpmn": [
     {
       "id": "sequenceFlow",
-      "line": 1,
+      "line": 11,
       "message": "Element is missing bpmndi"
     }
   ],
   "test/rules/no-bpmndi/invalid-sub-processes.bpmn": [
     {
       "id": "boundaryEvent_1",
-      "line": 1,
+      "line": 20,
       "message": "Element is missing bpmndi"
     }
   ],
@@ -637,8 +638,8 @@
   "test/rules/no-complex-gateway/invalid.bpmn": [
     {
       "id": "Gateway",
-      "line": 1,
-      "message": "Element type <bpmn:ComplexGateway> is discouraged"
+      "line": 4,
+      "message": "Use of <Complex Gateway> is discouraged"
     }
   ],
   "test/rules/no-complex-gateway/valid.bpmn": [
@@ -1086,34 +1087,34 @@
   "test/link-event-correct.bpmn": [
     {
       "id": "Event_0fvzchs",
-      "line": 1,
+      "line": 4,
       "message": "Link Event Definition Missing Name: The 'Event_0fvzchs' (intermediateThrowEvent) link definition must have a non-empty name attribute to function correctly."
     },
     {
       "id": "Event_0hnrksg",
-      "line": 1,
+      "line": 15,
       "message": "Link Event Definition Missing Name: The 'Event_0hnrksg' (intermediateCatchEvent) link definition must have a non-empty name attribute to function correctly."
     }
   ],
   "test/link-event-incorrect.bpmn": [
     {
       "id": "Event_022ctsn",
-      "line": 1,
+      "line": 13,
       "message": "Link Event Definition Missing Name: The 'Event_022ctsn' (intermediateCatchEvent) link definition must have a non-empty name attribute to function correctly."
     },
     {
       "id": "Event_0fvzchs",
-      "line": 1,
+      "line": 4,
       "message": "Link Event Definition Missing Name: The 'Event_0fvzchs' (intermediateThrowEvent) link definition must have a non-empty name attribute to function correctly."
     },
     {
       "id": "Event_0q5xos0",
-      "line": 1,
+      "line": 17,
       "message": "Link Event Definition Missing Name: The 'Event_0q5xos0' (intermediateThrowEvent) link definition must have a non-empty name attribute to function correctly."
     },
     {
       "id": "Event_0rw1f16",
-      "line": 1,
+      "line": 23,
       "message": "Link Event Definition Missing Name: The 'Event_0rw1f16' (intermediateCatchEvent) link definition must have a non-empty name attribute to function correctly."
     }
   ],
@@ -1121,15 +1122,15 @@
   "test/no-bpmndi-incorrect.bpmn": [
     {
       "id": "SequenceFlow_1",
-      "line": 1,
-      "message": "BPMN DI Required: Element 'SequenceFlow_1' (sequenceFlow) is missing its visual representation (BPMN DI)."
+      "line": 7,
+      "message": "Element is missing bpmndi"
     }
   ],
   "test/no-complex-gateway-incorrect.bpmn": [
     {
       "id": "ExclusiveGateway_2",
-      "line": 1,
-      "message": "The use of Complex Gateway is forbidden. Found gateway with ID 'ExclusiveGateway_2'."
+      "line": 29,
+      "message": "Use of <Complex Gateway> is discouraged"
     }
   ],
   "test/no-disconnected-correct.bpmn": [

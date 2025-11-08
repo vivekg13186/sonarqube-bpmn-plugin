@@ -14,10 +14,7 @@ import static com.bpmnlint.Util.*;
 
 public class FakeJoinValidator {
 
-    private static boolean isActivityOrEvent(Element element) {
-        String tag = element.tagName();
-        return tag.endsWith(":activity") || tag.endsWith(":event");
-    }
+
 
     public static List<Issue> validate(Document doc) {
         List<Issue> result = new ArrayList<>();

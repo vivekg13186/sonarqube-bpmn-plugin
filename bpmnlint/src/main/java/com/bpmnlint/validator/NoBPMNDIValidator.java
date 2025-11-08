@@ -26,7 +26,7 @@ public class NoBPMNDIValidator {
             ":exclusiveGateway", ":parallelGateway", ":inclusiveGateway",
             ":intermediateCatchEvent", ":intermediateThrowEvent",
             ":sequenceFlow", ":subProcess", ":callActivity",
-            ":participant", ":lane"
+            ":participant", ":lane",":boundaryEvent",":group","messageFlow"
     );
 
     public static List<Issue> validate(Document doc) {
@@ -54,7 +54,7 @@ public class NoBPMNDIValidator {
         for (Element element : candidates) {
             String id = element.attr("id");
             if (!id.isEmpty() && !visualIds.contains(id)) {
-                result.add(issue(element, "Element <" + element.tagName() + "> with id \"" + id + "\" is missing BPMNDI visual representation"));
+                result.add(issue(element, "Element is missing bpmndi"));
             }
         }
 

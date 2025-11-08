@@ -28,8 +28,8 @@ public class LabelRequiredValidator {
             // Skip sub-processes
             if (tag.endsWith(":subProcess")) continue;
 
-            // Skip gateways that are not forking
-            if (tag.endsWith(":gateway")) {
+            // Skip gateways that are not forking all gateway nodes
+            if (tag.endsWith("Gateway")) {
                 String id = element.attr("id");
                 Elements outgoing = doc.select("*|sequenceFlow[sourceRef=" + id + "]");
                 if (outgoing.size() <= 1) continue;
