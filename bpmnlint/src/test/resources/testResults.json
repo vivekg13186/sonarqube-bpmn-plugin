@@ -158,7 +158,7 @@
   "test/superfluous-termination-incorrect.bpmn": [
     {
       "id": "Event_06ykaze",
-      "line": 1,
+      "line": 19,
       "message": "Termination is superfluous."
     }
   ],
@@ -722,8 +722,8 @@
   "test/rules/no-gateway-join-fork/invalid.bpmn": [
     {
       "id": "Gateway",
-      "line": 1,
-      "message": "Gateway forks and joins"
+      "line": 10,
+      "message": "Gateway forks and joins simultaneously, which may lead to ambiguous logic"
     }
   ],
   "test/rules/no-gateway-join-fork/valid-fork-join-task.bpmn": [
@@ -1156,8 +1156,8 @@
   "test/no-gateway-join-fork-incorrect.bpmn": [
     {
       "id": "ExclusiveGateway_1",
-      "line": 1,
-      "message": "Gateway 'ExclusiveGateway_1' performs both joining (2 incoming flows) and forking (2 outgoing flows). A single gateway should only perform one function (join OR fork)."
+      "line": 10,
+      "message": "Gateway forks and joins simultaneously, which may lead to ambiguous logic"
     }
   ]
 }
