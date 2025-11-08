@@ -58,8 +58,8 @@
   "test/no-implicit-end-incorrect.bpmn": [
     {
       "id": "Task_1",
-      "line": 1,
-      "message": "Element is an implicit end"
+      "line": 7,
+      "message": "Element is an implicit end (no outgoing sequence flow)"
     }
   ],
   "test/no-implicit-split-correct.bpmn": [
@@ -85,13 +85,13 @@
   "test/no-inclusive-gateway-incorrect.bpmn": [
     {
       "id": "InclusiveGateway_1",
-      "line": 1,
-      "message": "Use of <Complex Gateway> is discouraged"
+      "line": 24,
+      "message": "Inclusive gateways are discouraged"
     },
     {
       "id": "InclusiveGateway_2",
-      "line": 1,
-      "message": "Use of <Complex Gateway> is discouraged"
+      "line": 29,
+      "message": "Inclusive gateways are discouraged"
     }
   ],
   "test/no-overlapping-elements-correct.bpmn": [
@@ -113,7 +113,7 @@
   "test/single-blank-start-event-incorrect.bpmn": [
     {
       "id": "Process_1",
-      "line": 1,
+      "line": 3,
       "message": "Process has multiple blank start events"
     }
   ],
@@ -122,7 +122,7 @@
   "test/single-event-definition-incorrect.bpmn": [
     {
       "id": "IntermediateEvent_1",
-      "line": 1,
+      "line": 4,
       "message": "Event has multiple event definitions"
     }
   ],
@@ -131,7 +131,7 @@
   "test/start-event-required-incorrect.bpmn": [
     {
       "id": "Process_1",
-      "line": 1,
+      "line": 3,
       "message": "Process is missing start event"
     }
   ],
@@ -140,7 +140,7 @@
   "test/sub-process-blank-start-event-incorrect.bpmn": [
     {
       "id": "StartEvent_1",
-      "line": 1,
+      "line": 5,
       "message": "Start event must be blank"
     }
   ],
@@ -647,8 +647,8 @@
   "test/rules/no-disconnected/invalid.bpmn": [
     {
       "id": "Element",
-      "line": 1,
-      "message": "Element is not connected"
+      "line": 4,
+      "message": "Element <bpmn:task> is not connected to any sequence flow"
     }
   ],
   "test/rules/no-disconnected/valid-adhoc-subprocess.bpmn": [
@@ -842,8 +842,8 @@
   "test/rules/no-inclusive-gateway/invalid.bpmn": [
     {
       "id": "Gateway",
-      "line": 1,
-      "message": "Element type <bpmn:InclusiveGateway> is discouraged"
+      "line": 4,
+      "message": "Inclusive gateways are discouraged"
     }
   ],
   "test/rules/no-inclusive-gateway/valid.bpmn": [
@@ -952,7 +952,7 @@
   "test/rules/single-event-definition/invalid.bpmn": [
     {
       "id": "Event",
-      "line": 1,
+      "line": 4,
       "message": "Event has multiple event definitions"
     }
   ],
@@ -968,7 +968,7 @@
     },
     {
       "id": "EVENT_SUBPROCESS",
-      "line": 1,
+      "line": 6,
       "message": "Sub process is missing start event"
     }
   ],
@@ -1138,8 +1138,8 @@
   "test/no-disconnected-incorrect.bpmn": [
     {
       "id": "Task_2",
-      "line": 1,
-      "message": "Task is fully disconnected (ID: Task_2)."
+      "line": 16,
+      "message": "Element <bpmn:task> is not connected to any sequence flow"
     }
   ],
   "test/no-duplicate-sequence-flows-correct.bpmn": [
