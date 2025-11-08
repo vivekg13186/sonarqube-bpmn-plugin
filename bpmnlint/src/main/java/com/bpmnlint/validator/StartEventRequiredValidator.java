@@ -14,7 +14,7 @@ public class StartEventRequiredValidator {
 
     public static List<Issue> validate(Document doc) {
         List<Issue> result = new ArrayList<>();
-        Elements containers = doc.select("*|process, *|subProcess");
+        Elements containers = doc.select("*|process, *|subProcess,*|transaction");
 
         for (Element container : containers) {
             if (container.tagName().endsWith("adHocSubProcess")) continue;

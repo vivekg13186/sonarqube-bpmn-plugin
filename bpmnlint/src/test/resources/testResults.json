@@ -924,7 +924,7 @@
   "test/rules/single-blank-start-event/invalid-sub-process.bpmn": [
     {
       "id": "SubProcess",
-      "line": 1,
+      "line": 4,
       "message": "Sub process has multiple blank start events"
     }
   ],
@@ -963,8 +963,8 @@
   "test/rules/start-event-required/invalid-sub-process-sub-types.bpmn": [
     {
       "id": "TRANSACTION",
-      "line": 1,
-      "message": "Sub process is missing start event"
+      "line": 5,
+      "message": "Process is missing start event"
     },
     {
       "id": "EVENT_SUBPROCESS",
@@ -975,14 +975,14 @@
   "test/rules/start-event-required/invalid-sub-process.bpmn": [
     {
       "id": "SubProcess",
-      "line": 1,
+      "line": 5,
       "message": "Sub process is missing start event"
     }
   ],
   "test/rules/start-event-required/invalid.bpmn": [
     {
       "id": "Process",
-      "line": 1,
+      "line": 3,
       "message": "Process is missing start event"
     }
   ],
