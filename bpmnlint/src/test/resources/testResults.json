@@ -149,8 +149,8 @@
   "test/superfluous-gateway-incorrect.bpmn": [
     {
       "id": "Gateway_1",
-      "line": 1,
-      "message": "Gateway is superfluous. It only has one source and target."
+      "line": 7,
+      "message": "Gateway is superfluous (1 incoming, 1 outgoing)"
     }
   ],
   "test/superfluous-termination-correct.bpmn": [
@@ -1017,8 +1017,8 @@
   "test/rules/superfluous-gateway/invalid.bpmn": [
     {
       "id": "Gateway_1",
-      "line": 1,
-      "message": "Gateway is superfluous. It only has one source and target."
+      "line": 7,
+      "message": "Gateway is superfluous (1 incoming, 1 outgoing)"
     }
   ],
   "test/rules/superfluous-gateway/valid-none-gateway.bpmn": [
