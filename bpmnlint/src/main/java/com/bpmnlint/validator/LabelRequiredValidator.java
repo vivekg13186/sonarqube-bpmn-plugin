@@ -19,10 +19,13 @@ public class LabelRequiredValidator {
         // Select all BPMN elements
         Elements elements = doc.select("*");
 
+
         for (Element element : elements) {
             String tag = element.tagName();
 
-            // Skip parallel and event-based gateways
+
+            if(!element.tag().normalName().startsWith("bpmn:")) continue;
+              // Skip parallel and event-based gateways
             if (tag.endsWith("parallelGateway") || tag.endsWith("eventBasedGateway")) continue;
 
             // Skip sub-processes
