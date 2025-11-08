@@ -76,7 +76,7 @@
   "test/no-implicit-start-incorrect.bpmn": [
     {
       "id": "Task_1",
-      "line": 1,
+      "line": 4,
       "message": "Element is an implicit start"
     }
   ],
@@ -806,32 +806,32 @@
   "test/rules/no-implicit-start/invalid.bpmn": [
     {
       "id": "END_EVENT",
-      "line": 1,
+      "line": 4,
       "message": "Element is an implicit start"
     },
     {
       "id": "INTERMEDIATE_THROW_EVENT",
-      "line": 1,
+      "line": 5,
       "message": "Element is an implicit start"
     },
     {
       "id": "TASK",
-      "line": 1,
+      "line": 6,
       "message": "Element is an implicit start"
     },
     {
       "id": "GATEWAY",
-      "line": 1,
+      "line": 7,
       "message": "Element is an implicit start"
     },
     {
       "id": "LINK_THROW",
-      "line": 1,
+      "line": 9,
       "message": "Element is an implicit start"
     },
     {
       "id": "INTERMEDIATE_CATCH_EVENT",
-      "line": 1,
+      "line": 12,
       "message": "Element is an implicit start"
     }
   ],

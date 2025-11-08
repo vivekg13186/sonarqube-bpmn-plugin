@@ -11,6 +11,20 @@ import java.util.List;
 import static com.bpmnlint.Util.*;
 public class NoImplicitStartValidator {
 
+    public static boolean isLinkEvent(Element element) {
+        Elements children = element.children();
+        if (!children.isEmpty()) {
+            for (int i = 0; i < children.size(); i++) {
+                if (!children.get(i).tagName().endsWith("linkEventDefinition")) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        return false;
+    }
+
     public static List<Issue> validate(Document doc) {
         List<Issue> result = new ArrayList<>();
         Elements elements = doc.select(
@@ -22,20 +36,29 @@ public class NoImplicitStartValidator {
         ;
 
         for (Element el : elements) {
-            String id = el.attr("id");
-            Elements incoming = doc.select("*|sequenceFlow[targetRef=" + id + "]");
 
-            boolean isStartEvent = el.tagName().endsWith("startEvent");
-            boolean isBoundaryEvent = el.tagName().endsWith("boundaryEvent");
-            boolean isCompensation = "true".equals(el.attr("isForCompensation"));
-            boolean isTriggeredByEvent = "true".equals(el.attr("triggeredByEvent"));
-            boolean isAdHoc = el.parent() != null && el.parent().tagName().endsWith("adHocSubProcess");
+            if (el.tagName().endsWith("intermediateCatchEvent") ) {
+                if( !isLinkEvent(el)) {
+                    result.add(issue(el, "Element is an implicit start"));
+                }
+            } else {
+                String id = el.attr("id");
 
-            if (incoming.isEmpty() && !isStartEvent && !isBoundaryEvent && !isCompensation && !isTriggeredByEvent && !isAdHoc) {
-                result.add(issue(el, "Element is an implicit start"));
+                Elements incoming = doc.select("*|sequenceFlow[targetRef=" + id + "]");
+
+                boolean isStartEvent = el.tagName().endsWith("startEvent");
+                boolean isBoundaryEvent = el.tagName().endsWith("boundaryEvent");
+                boolean isCompensation = "true".equals(el.attr("isForCompensation"));
+                boolean isTriggeredByEvent = "true".equals(el.attr("triggeredByEvent"));
+                boolean isAdHoc = el.parent() != null && el.parent().tagName().endsWith("adHocSubProcess");
+
+                if (incoming.isEmpty() && !isStartEvent && !isBoundaryEvent && !isCompensation && !isTriggeredByEvent && !isAdHoc) {
+                     result.add(issue(el, "Element is an implicit start"));
+                }
+
             }
         }
 
-        return result;
+            return result;
+        }
     }
-}
