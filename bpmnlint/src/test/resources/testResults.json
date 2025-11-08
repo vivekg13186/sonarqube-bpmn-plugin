@@ -653,6 +653,7 @@
   ],
   "test/rules/no-disconnected/valid-adhoc-subprocess.bpmn": [
   ],
+  "test/rules/no-duplicate-sequence-flows/valid-adhoc-subprocess.bpmn": [],
   "test/rules/no-disconnected/valid-compensation.bpmn": [
   ],
   "test/rules/no-disconnected/valid-event-subprocess.bpmn": [
@@ -664,56 +665,56 @@
   "test/rules/no-duplicate-sequence-flows/invalid-condition.bpmn": [
     {
       "id": "SequenceFlow_1",
-      "line": 1,
+      "line": 11,
       "message": "SequenceFlow is a duplicate"
     },
     {
       "id": "Task_1",
-      "line": 1,
+      "line": 4,
       "message": "Duplicate outgoing sequence flows"
     },
     {
       "id": "Task_2",
-      "line": 1,
+      "line": 14,
       "message": "Duplicate incoming sequence flows"
     }
   ],
   "test/rules/no-duplicate-sequence-flows/invalid-multiple.bpmn": [
     {
       "id": "SequenceFlow_2",
-      "line": 1,
+      "line": 15,
       "message": "SequenceFlow is a duplicate"
     },
     {
       "id": "Task_1",
-      "line": 1,
+      "line": 9,
       "message": "Duplicate outgoing sequence flows"
     },
     {
       "id": "Task_2",
-      "line": 1,
+      "line": 4,
       "message": "Duplicate incoming sequence flows"
     },
     {
       "id": "SequenceFlow_3",
-      "line": 1,
+      "line": 16,
       "message": "SequenceFlow is a duplicate"
     }
   ],
   "test/rules/no-duplicate-sequence-flows/invalid-no-condition.bpmn": [
     {
       "id": "SequenceFlow_2",
-      "line": 1,
+      "line": 13,
       "message": "SequenceFlow is a duplicate"
     },
     {
       "id": "StartEvent_1",
-      "line": 1,
+      "line": 4,
       "message": "Duplicate outgoing sequence flows"
     },
     {
       "id": "Task_2",
-      "line": 1,
+      "line": 8,
       "message": "Duplicate incoming sequence flows"
     }
   ],
@@ -1147,8 +1148,18 @@
   "test/no-duplicate-sequence-flows-incorrect.bpmn": [
     {
       "id": "SequenceFlow_4",
-      "line": 1,
-      "message": "Duplicate sequence flow: A flow already exists from Task_1 to Task_2 (Original flow ID: SequenceFlow_2)."
+      "line": 23,
+      "message": "SequenceFlow is a duplicate"
+    },
+    {
+      "id": "Task_1",
+      "line": 7,
+      "message": "Duplicate outgoing sequence flows"
+    },
+    {
+      "id": "Task_2",
+      "line": 13,
+      "message": "Duplicate incoming sequence flows"
     }
   ],
   "test/no-gateway-join-fork-correct.bpmn": [
