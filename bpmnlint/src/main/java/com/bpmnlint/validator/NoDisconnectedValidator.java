@@ -22,6 +22,7 @@ public class NoDisconnectedValidator {
         for (Element element : elements) {
             String id = element.attr("id");
 
+
             // Skip event sub-processes
             if ("true".equals(element.attr("triggeredByEvent"))) {
                 continue;
@@ -29,6 +30,8 @@ public class NoDisconnectedValidator {
 
             // Skip ad-hoc sub-process children
             Element parent = element.parent();
+
+            if(parent!=null && parent.tagName().endsWith("adHocSubProcess"))continue;
             if (parent != null && "true".equals(parent.attr("triggeredByEvent")) && parent.tagName().endsWith("subProcess")) {
                 continue;
             }
@@ -43,6 +46,7 @@ public class NoDisconnectedValidator {
             boolean hasOutgoing = !doc.select("*|sequenceFlow[sourceRef=" + id + "]").isEmpty();
 
             if (!hasIncoming && !hasOutgoing) {
+                System.out.printf("%s %s\n",element.tagName(),element.attr("id"));
                 result.add(issue(element, "Element <" + element.tagName() + "> is not connected to any sequence flow"));
             }
         }
