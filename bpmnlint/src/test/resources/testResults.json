@@ -996,14 +996,14 @@
   "test/rules/sub-process-blank-start-event/invalid-ad-hoc.bpmn": [
     {
       "id": "StartEvent",
-      "line": 1,
+      "line": 5,
       "message": "Start event must be blank"
     }
   ],
   "test/rules/sub-process-blank-start-event/invalid.bpmn": [
     {
       "id": "StartEvent",
-      "line": 1,
+      "line": 5,
       "message": "Start event must be blank"
     }
   ],
