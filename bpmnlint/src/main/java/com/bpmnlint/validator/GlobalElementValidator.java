@@ -11,11 +11,7 @@ import java.util.*;
 import static com.bpmnlint.Util.*;
 
 public class GlobalElementValidator {
-
-    private static final List<String> GLOBAL_TYPES = Arrays.asList(
-            "error", "escalation", "message", "signal"
-    );
-
+ 
     public static List<Issue> validate(Document doc) {
         List<Issue> result = new ArrayList<>();
 
@@ -28,7 +24,7 @@ public class GlobalElementValidator {
         for (Element global : globals) {
             String type = global.tagName().replace("bpmn:", "").toLowerCase();
             String name = global.attr("name").trim();
-            String id = global.attr("id");
+      
 
             // 1. Must have a name
             if (name.isEmpty()) {

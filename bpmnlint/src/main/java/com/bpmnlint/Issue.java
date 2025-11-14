@@ -1,6 +1,6 @@
 package com.bpmnlint;
 
-import org.jsoup.nodes.Element;
+ 
 
 public class Issue {
 

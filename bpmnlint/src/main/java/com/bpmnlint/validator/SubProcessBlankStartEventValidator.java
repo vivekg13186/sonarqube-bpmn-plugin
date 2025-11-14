@@ -26,7 +26,7 @@ public class SubProcessBlankStartEventValidator {
 
     public static List<Issue> validate(Document doc) {
         List<Issue> result = new ArrayList<>();
-        Elements subProcesses = doc.select("*|subProcess");
+        Elements subProcesses = doc.select("*|subProcess,*|adHocSubProcess");
 
         for (Element sub : subProcesses) {
             if ("true".equals(sub.attr("triggeredByEvent"))) continue;
@@ -37,6 +37,7 @@ public class SubProcessBlankStartEventValidator {
 
                 for (String tag : EVENT_DEFINITION_TAGS) {
                     count += start.select("*|" + tag).size();
+                    
                 }
 
 
